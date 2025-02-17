@@ -6,5 +6,10 @@ export default defineConfig({
     minify: true,
     outDir: './pages',
   },
+  resolve: {
+    alias: {
+      "@": "./src",
+    },
+  },
   plugins: [react()],
 })
