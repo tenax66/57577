@@ -6,6 +6,13 @@ export default defineConfig({
     minify: true,
     outDir: './pages',
   },
+  css: {
+    preprocessorOptions: {
+       sass: {
+       api: "modern-compiler",
+       },
+    },
+  },
   resolve: {
     alias: {
       "@": "./src",
