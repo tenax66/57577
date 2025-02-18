@@ -28,10 +28,10 @@ const App = () => {
           {!isLoggedIn ? (
             <>
               <button className={styles.button} onClick={handleLogin}>
-                Googleでログイン
+                ログイン
               </button>
               <button className={styles.button}>
-                ユーザー登録
+                登録
               </button>
             </>
           ) : (
