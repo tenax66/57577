@@ -5,7 +5,12 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    }
+    },
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "target": "ESNext",
+    "types": ["@cloudflare/workers-types", "@types/react", "@types/react-dom"],
+    "skipLibCheck": true,
+    "moduleResolution": "node"
   },
   "include": ["src/**/*", "vite-env.d.ts"]
 }
