@@ -2,6 +2,10 @@ import { useState, useEffect } from 'react'
 import styles from '@/App.module.scss'
 import type { Tanka } from './types/tanka'
 
+type APIResponse = {
+  tankas: Tanka[]
+}
+
 const App = () => {
   const [newTanka, setNewTanka] = useState('')
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -14,7 +18,7 @@ const App = () => {
       try {
         const response = await fetch('/api/tankas')
         if (!response.ok) throw new Error('Failed to fetch tankas')
-        const data = await response.json()
+        const data = await response.json() as APIResponse
         setTankas(data.tankas)
       } catch (e) {
         setError(e instanceof Error ? e.message : '短歌の取得に失敗しました')
