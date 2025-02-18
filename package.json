@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "wrangler pages dev ./pages",
     "build": "vite build",
-    "deploy": "yarn build && wrangler pages publish pages",
+    "deploy": "yarn build && wrangler pages deploy pages",
     "db:migrate-local": "npx wrangler d1 migrations apply 57577"
   },
   "license": "MIT",
