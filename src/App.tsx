@@ -1,14 +1,30 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import styles from '@/App.module.scss'
-
-const mockTankas = [
-  { id: 1, text: "春の日に 心うきたつ 花の色 風にそよげる 若葉のように", author: "user1" },
-  { id: 2, text: "夏の夜の まどろみの中 虫の音 遠き記憶を 呼び覚ますか", author: "user2" },
-]
+import type { Tanka } from './types/tanka'
 
 const App = () => {
   const [newTanka, setNewTanka] = useState('')
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [tankas, setTankas] = useState<Tanka[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchTankas = async () => {
+      try {
+        const response = await fetch('/api/tankas')
+        if (!response.ok) throw new Error('Failed to fetch tankas')
+        const data = await response.json()
+        setTankas(data.tankas)
+      } catch (e) {
+        setError(e instanceof Error ? e.message : '短歌の取得に失敗しました')
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchTankas()
+  }, [])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -45,14 +61,20 @@ const App = () => {
       <main>
         <div className={styles.tankaBox}>
           <h2>最新の短歌</h2>
-          <ul className={styles.tankaList}>
-            {mockTankas.map(tanka => (
-              <li key={tanka.id} className={styles.tankaItem}>
-                <p>{tanka.text}</p>
-                <small>by {tanka.author}</small>
-              </li>
-            ))}
-          </ul>
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : error ? (
+            <p className={styles.error}>{error}</p>
+          ) : (
+            <ul className={styles.tankaList}>
+              {tankas.map(tanka => (
+                <li key={tanka.id} className={styles.tankaItem}>
+                  <p>{tanka.content}</p>
+                  <small>by {tanka.user_id}</small>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
         <form className={styles.postForm} onSubmit={handleSubmit}>
