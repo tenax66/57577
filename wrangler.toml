@@ -1,5 +1,6 @@
 name = "57577"
 pages_build_output_dir = "./pages"
+compatibility_date = "2025-02-04"
 
 [[d1_databases]]
 binding = "DB"
