@@ -1,6 +1,8 @@
 node_modules
 pages
 
+.env
+
 # Cloudflare
 .wrangler
 .dev.vars

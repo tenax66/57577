@@ -10,7 +10,8 @@
     "target": "ESNext",
     "types": ["@cloudflare/workers-types", "@types/react", "@types/react-dom"],
     "skipLibCheck": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "module": "esnext"
   },
   "include": ["src/**/*", "vite-env.d.ts"]
 }

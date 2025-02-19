@@ -4,6 +4,7 @@ import type { D1Database } from '@cloudflare/workers-types'
 
 type Bindings = {
   DB: D1Database
+  CLERK_SECRET_KEY: string
 }
 
 const app = new Hono<{ Bindings: Bindings }>()

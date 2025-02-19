@@ -1,17 +1,29 @@
 import { useState, useEffect } from 'react'
 import styles from '@/App.module.scss'
 import type { Tanka } from './types/tanka'
+import { ClerkProvider, SignIn, SignUp, useUser, UserButton } from '@clerk/clerk-react'
 
 type APIResponse = {
   tankas: Tanka[]
 }
 
+const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
+
 const App = () => {
+  return (
+    <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
+      <TankaApp />
+    </ClerkProvider>
+  )
+}
+
+const TankaApp = () => {
   const [newTanka, setNewTanka] = useState('')
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [tankas, setTankas] = useState<Tanka[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const { user, isLoaded } = useUser()
 
   useEffect(() => {
     const fetchTankas = async () => {
@@ -30,6 +42,10 @@ const App = () => {
     fetchTankas()
   }, [])
 
+  useEffect(() => {
+    setIsLoggedIn(!!user)
+  }, [user])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
@@ -40,7 +56,7 @@ const App = () => {
         },
         body: JSON.stringify({ content: newTanka }),
       })
-      
+
       if (!response.ok) throw new Error('Failed to post tanka')
       
       // 投稿成功後に短歌一覧を再取得
@@ -61,19 +77,15 @@ const App = () => {
       <header className={styles.toolbar}>
         <a href="/" className={styles.logo}>57577.net</a>
         <div className={styles.auth}>
-          {!isLoggedIn ? (
+          {!isLoaded ? (
+            <p>Loading...</p>
+          ) : !user ? (
             <>
-              <button className={styles.button} onClick={handleLogin}>
-                ログイン
-              </button>
-              <button className={styles.button}>
-                登録
-              </button>
+              <SignIn />
+              <SignUp />
             </>
           ) : (
-            <button className={styles.button} onClick={() => setIsLoggedIn(false)}>
-              ログアウト
-            </button>
+            <UserButton />
           )}
         </div>
       </header>
