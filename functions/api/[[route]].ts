@@ -36,4 +36,27 @@ app.get('/api/tankas', async (c) => {
   }
 })
 
+// 短歌投稿
+app.post('/api/tankas', async (c) => {
+  try {
+    const { content } = await c.req.json()
+    
+    // TODO: 認証機能実装後にuser_idを動的に設定
+    const user_id = 'dummy_user1'
+    
+    const { success } = await c.env.DB.prepare(
+      'INSERT INTO tankas (content, user_id) VALUES (?, ?)'
+    )
+    .bind(content, user_id)
+    .run()
+
+    if (!success) throw new Error('Failed to insert tanka')
+    
+    return c.json({ message: 'Created' }, 201)
+  } catch (e) {
+    console.error(e)
+    return c.json({ error: 'Internal Server Error' }, 500)
+  }
+})
+
 export const onRequest = handle(app)

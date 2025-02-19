@@ -30,10 +30,26 @@ const App = () => {
     fetchTankas()
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('投稿された短歌:', newTanka)
-    setNewTanka('')
+    try {
+      const response = await fetch('/api/tankas', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ content: newTanka }),
+      })
+      
+      if (!response.ok) throw new Error('Failed to post tanka')
+      
+      // 投稿成功後に短歌一覧を再取得
+      const data = await (await fetch('/api/tankas')).json() as APIResponse
+      setTankas(data.tankas)
+      setNewTanka('')
+    } catch (e) {
+      setError(e instanceof Error ? e.message : '短歌の投稿に失敗しました')
+    }
   }
 
   const handleLogin = () => {
@@ -86,10 +102,15 @@ const App = () => {
           <textarea
             value={newTanka}
             onChange={(e) => setNewTanka(e.target.value)}
-            placeholder="ここに短歌を入力してください"
+            placeholder={isLoggedIn ? "ここに短歌を入力してください" : "投稿するにはログインが必要です"}
             required
+            disabled={!isLoggedIn}
           />
-          <button className={styles.button} type="submit">
+          <button 
+            className={styles.button} 
+            type="submit"
+            disabled={!isLoggedIn}
+          >
             投稿する
           </button>
         </form>
