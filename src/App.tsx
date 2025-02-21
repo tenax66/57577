@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import styles from '@/App.module.scss'
 import type { Tanka } from './types/tanka'
-import { ClerkProvider, SignIn, SignUp, useUser, UserButton } from '@clerk/clerk-react'
+import { ClerkProvider, SignInButton, SignUpButton, useUser, UserButton } from '@clerk/clerk-react'
 
 type APIResponse = {
   tankas: Tanka[]
@@ -81,8 +81,12 @@ const TankaApp = () => {
             <p>Loading...</p>
           ) : !user ? (
             <>
-              <SignIn />
-              <SignUp />
+              <SignInButton mode="modal">
+                <button className={styles.button}>ログイン</button>
+              </SignInButton>
+              <SignUpButton mode="modal">
+                <button className={styles.button}>新規登録</button>
+              </SignUpButton>
             </>
           ) : (
             <UserButton />
