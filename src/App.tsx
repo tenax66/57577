@@ -4,6 +4,8 @@ import type { Tanka } from './types/tanka'
 import { ClerkProvider, SignInButton, SignUpButton, useUser } from '@clerk/clerk-react'
 import { jaLocalization } from './localization/ja'
 import { UserMenu } from './components/UserMenu'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { UserPage } from './components/UserPage'
 
 type APIResponse = {
   tankas: Tanka[]
@@ -17,7 +19,12 @@ const App = () => {
       publishableKey={CLERK_PUBLISHABLE_KEY}
       localization={jaLocalization}
     >
-      <TankaApp />
+      <Router>
+        <Routes>
+          <Route path="/" element={<TankaApp />} />
+          <Route path="/users/:userId" element={<UserPage />} />
+        </Routes>
+      </Router>
     </ClerkProvider>
   )
 }
