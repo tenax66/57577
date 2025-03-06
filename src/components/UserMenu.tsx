@@ -1,5 +1,5 @@
 import { useUser, useClerk } from '@clerk/clerk-react'
-import styles from '@/App.module.scss'
+import styles from './UserMenu.module.scss'
 
 export const UserMenu = () => {
   const { user } = useUser()
