@@ -78,4 +78,46 @@
   color: #e00;
   padding: 1rem;
   border: 1px solid #e00;
+}
+
+.userMenu {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.userProfile {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  
+  &:hover {
+    background-color: #f5f5f5;
+  }
+}
+
+.userAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userName {
+  font-size: 0.9rem;
+}
+
+.logoutButton {
+  background-color: #fff;
+  border-color: #e00;
+  color: #e00;
+  
+  &:hover {
+    background-color: #e00;
+    color: #fff;
+  }
 } 
