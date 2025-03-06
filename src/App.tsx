@@ -24,7 +24,6 @@ const App = () => {
 
 const TankaApp = () => {
   const [newTanka, setNewTanka] = useState('')
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [tankas, setTankas] = useState<Tanka[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -47,10 +46,6 @@ const TankaApp = () => {
     fetchTankas()
   }, [])
 
-  useEffect(() => {
-    setIsLoggedIn(!!user)
-  }, [user])
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     try {
@@ -71,10 +66,6 @@ const TankaApp = () => {
     } catch (e) {
       setError(e instanceof Error ? e.message : '短歌の投稿に失敗しました')
     }
-  }
-
-  const handleLogin = () => {
-    setIsLoggedIn(true)
   }
 
   return (
@@ -123,14 +114,14 @@ const TankaApp = () => {
           <textarea
             value={newTanka}
             onChange={(e) => setNewTanka(e.target.value)}
-            placeholder={isLoggedIn ? "ここに短歌を入力してください" : "投稿するにはログインが必要です"}
+            placeholder={user ? "ここに短歌を入力してください" : "投稿するにはログインが必要です"}
             required
-            disabled={!isLoggedIn}
+            disabled={!user}
           />
           <button 
             className={styles.button} 
             type="submit"
-            disabled={!isLoggedIn}
+            disabled={!user}
           >
             投稿する
           </button>
