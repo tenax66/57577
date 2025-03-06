@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import styles from '@/App.module.scss'
 import type { Tanka } from './types/tanka'
 import { ClerkProvider, SignInButton, SignUpButton, useUser, UserButton } from '@clerk/clerk-react'
+import { jaLocalization } from './localization/ja'
 
 type APIResponse = {
   tankas: Tanka[]
@@ -11,7 +12,10 @@ const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
 const App = () => {
   return (
-    <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
+    <ClerkProvider 
+      publishableKey={CLERK_PUBLISHABLE_KEY}
+      localization={jaLocalization}
+    >
       <TankaApp />
     </ClerkProvider>
   )
