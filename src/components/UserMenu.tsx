@@ -1,21 +1,54 @@
-import { useUser, useClerk } from '@clerk/clerk-react'
+import { useUser } from '@clerk/clerk-react'
+import { useClerk } from '@clerk/clerk-react'
+import { useState, useEffect } from 'react'
 import styles from './UserMenu.module.scss'
 
-export const UserMenu = () => {
-  const { user } = useUser()
-  const { signOut } = useClerk()
+type User = {
+  id: number
+  clerk_id: string
+  display_name: string
+  avatar_url: string | null
+  created_at: string
+  updated_at: string
+}
 
-  if (!user) return null
+type UserResponse = {
+  user: User
+}
+
+export const UserMenu = () => {
+  const { user: clerkUser } = useUser()
+  const { signOut } = useClerk()
+  const [user, setUser] = useState<User | null>(null)
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (!clerkUser) return
+
+      try {
+        const response = await fetch(`/api/users/${clerkUser.id}`)
+        if (!response.ok) throw new Error('Failed to fetch user')
+        const data = await response.json() as UserResponse
+        setUser(data.user)
+      } catch (e) {
+        console.error('Error fetching user:', e)
+      }
+    }
+
+    fetchUser()
+  }, [clerkUser])
+
+  if (!clerkUser || !user) return null
 
   return (
     <div className={styles.userMenu}>
-      <a href={`/users/${user.id}`} className={styles.userProfile}>
+      <a href={`/users/${clerkUser.id}`} className={styles.userProfile}>
         <img 
-          src={user.imageUrl} 
-          alt={user.username || ''}
+          src={user.avatar_url || ''} 
+          alt={user.display_name} 
           className={styles.userAvatar}
         />
-        <span className={styles.userName}>{user.username || 'ユーザー'}</span>
+        <span className={styles.userName}>{user.display_name}</span>
       </a>
       <button 
         onClick={() => signOut()} 

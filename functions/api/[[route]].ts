@@ -20,6 +20,15 @@ type Tanka = {
   created_at: string
 }
 
+type User = {
+  id: number
+  clerk_id: string
+  display_name: string
+  avatar_url: string | null
+  created_at: string
+  updated_at: string
+}
+
 app.get('/api', (c) => {
   return c.json({
     message: 'Hello',
@@ -154,6 +163,57 @@ app.post('/api/webhooks/clerk', async (c) => {
   } catch (e) {
     console.error('Webhook error:', e)
     return c.json({ error: 'Webhook processing failed' }, 500)
+  }
+})
+
+// ユーザー情報取得API
+app.get('/api/users/:clerk_id', async (c) => {
+  try {
+    const clerk_id = c.req.param('clerk_id')
+    const { results } = await c.env.DB.prepare(
+      'SELECT * FROM users WHERE clerk_id = ?'
+    )
+    .bind(clerk_id)
+    .all<User>()
+
+    if (results.length === 0) {
+      return c.json({ error: 'User not found' }, 404)
+    }
+
+    return c.json({ user: results[0] })
+  } catch (e) {
+    console.error(e)
+    return c.json({ error: 'Internal Server Error' }, 500)
+  }
+})
+
+// ユーザーの短歌一覧取得API
+app.get('/api/users/:clerk_id/tankas', async (c) => {
+  try {
+    const clerk_id = c.req.param('clerk_id')
+    
+    // まずユーザーIDを取得
+    const { results: users } = await c.env.DB.prepare(
+      'SELECT id FROM users WHERE clerk_id = ?'
+    )
+    .bind(clerk_id)
+    .all<{ id: number }>()
+
+    if (users.length === 0) {
+      return c.json({ error: 'User not found' }, 404)
+    }
+
+    // ユーザーの短歌を取得
+    const { results: tankas } = await c.env.DB.prepare(
+      'SELECT * FROM tankas WHERE user_id = ? ORDER BY created_at DESC'
+    )
+    .bind(users[0].id)
+    .all<Tanka>()
+
+    return c.json({ tankas })
+  } catch (e) {
+    console.error(e)
+    return c.json({ error: 'Internal Server Error' }, 500)
   }
 })
 

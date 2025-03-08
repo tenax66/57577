@@ -13,6 +13,10 @@ yarn dev
 
 > Writing your Functions files in the `/functions` directory will automatically generate a Worker with custom functionality at predesignated routes.
 
+### Routing
+
+[Routing](https://developers.cloudflare.com/pages/functions/routing/)
+
 ## wrangler
 
 ### migration
