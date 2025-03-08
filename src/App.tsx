@@ -55,13 +55,18 @@ const TankaApp = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!user) return
+
     try {
       const response = await fetch('/api/tankas', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ content: newTanka }),
+        body: JSON.stringify({ 
+          content: newTanka,
+          clerk_id: user.id 
+        }),
       })
 
       if (!response.ok) throw new Error('Failed to post tanka')

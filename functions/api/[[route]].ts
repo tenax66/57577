@@ -52,10 +52,20 @@ app.get('/api/tankas', async (c) => {
 // 短歌投稿
 app.post('/api/tankas', async (c) => {
   try {
-    const { content } = await c.req.json()
+    const { content, clerk_id } = await c.req.json()
     
-    // TODO: 認証機能実装後にuser_idを動的に設定
-    const user_id = 'dummy_user1'
+    // ユーザーIDの取得
+    const { results } = await c.env.DB.prepare(
+      'SELECT id FROM users WHERE clerk_id = ?'
+    )
+    .bind(clerk_id)
+    .all<{ id: number }>()
+
+    if (results.length === 0) {
+      return c.json({ error: 'User not found' }, 404)
+    }
+
+    const user_id = results[0].id
     
     const { success } = await c.env.DB.prepare(
       'INSERT INTO tankas (content, user_id) VALUES (?, ?)'
