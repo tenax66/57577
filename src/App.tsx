@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react'
 import styles from '@/App.module.scss'
 import type { Tanka } from './types/tanka'
-import { ClerkProvider, SignInButton, SignUpButton, useUser, UserButton } from '@clerk/clerk-react'
+import { ClerkProvider, SignInButton, SignUpButton, useUser } from '@clerk/clerk-react'
+import { jaLocalization } from './localization/ja'
+import { UserMenu } from './components/UserMenu'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { UserPage } from './components/UserPage'
 
 type APIResponse = {
   tankas: Tanka[]
@@ -11,15 +15,22 @@ const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
 const App = () => {
   return (
-    <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
-      <TankaApp />
+    <ClerkProvider 
+      publishableKey={CLERK_PUBLISHABLE_KEY}
+      localization={jaLocalization}
+    >
+      <Router>
+        <Routes>
+          <Route path="/" element={<TankaApp />} />
+          <Route path="/users/:userId" element={<UserPage />} />
+        </Routes>
+      </Router>
     </ClerkProvider>
   )
 }
 
 const TankaApp = () => {
   const [newTanka, setNewTanka] = useState('')
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [tankas, setTankas] = useState<Tanka[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -41,10 +52,6 @@ const TankaApp = () => {
 
     fetchTankas()
   }, [])
-
-  useEffect(() => {
-    setIsLoggedIn(!!user)
-  }, [user])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -68,10 +75,6 @@ const TankaApp = () => {
     }
   }
 
-  const handleLogin = () => {
-    setIsLoggedIn(true)
-  }
-
   return (
     <div className={styles.container}>
       <header className={styles.toolbar}>
@@ -89,7 +92,7 @@ const TankaApp = () => {
               </SignUpButton>
             </>
           ) : (
-            <UserButton />
+            <UserMenu />
           )}
         </div>
       </header>
@@ -118,14 +121,14 @@ const TankaApp = () => {
           <textarea
             value={newTanka}
             onChange={(e) => setNewTanka(e.target.value)}
-            placeholder={isLoggedIn ? "ここに短歌を入力してください" : "投稿するにはログインが必要です"}
+            placeholder={user ? "ここに短歌を入力してください" : "投稿するにはログインが必要です"}
             required
-            disabled={!isLoggedIn}
+            disabled={!user}
           />
           <button 
             className={styles.button} 
             type="submit"
-            disabled={!isLoggedIn}
+            disabled={!user}
           >
             投稿する
           </button>
