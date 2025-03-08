@@ -114,7 +114,7 @@ const TankaApp = () => {
               {tankas.map(tanka => (
                 <li key={tanka.id} className={styles.tankaItem}>
                   <p>{tanka.content}</p>
-                  <small>by {tanka.user_id}</small>
+                  <small>by <a href={`/users/${tanka.clerk_id}`}>{tanka.display_name}</a></small>
                 </li>
               ))}
             </ul>

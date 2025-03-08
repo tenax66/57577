@@ -38,9 +38,16 @@ app.get('/api', (c) => {
 app.get('/api/tankas', async (c) => {
   try {
     const db = c.env.DB as D1Database
-    const { results } = await db.prepare(
-      'SELECT * FROM tankas ORDER BY created_at DESC LIMIT 20'
-    ).all<Tanka>()
+    const { results } = await db.prepare(`
+      SELECT 
+        t.*,
+        u.display_name,
+        u.clerk_id
+      FROM tankas t
+      JOIN users u ON t.user_id = u.id
+      ORDER BY t.created_at DESC 
+      LIMIT 20
+    `).all<Tanka & { display_name: string, clerk_id: string }>()
     
     return c.json({ tankas: results })
   } catch (e) {
