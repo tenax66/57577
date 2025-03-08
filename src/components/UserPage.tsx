@@ -1,5 +1,6 @@
 import { useUser } from '@clerk/clerk-react'
 import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import type { Tanka } from '../types/tanka'
 import styles from './UserPage.module.scss'
 
@@ -21,6 +22,7 @@ type UserResponse = {
 }
 
 export const UserPage = () => {
+  const { userId } = useParams<{ userId: string }>()
   const { user: clerkUser } = useUser()
   const [user, setUser] = useState<User | null>(null)
   const [tankas, setTankas] = useState<Tanka[]>([])
@@ -29,17 +31,17 @@ export const UserPage = () => {
 
   useEffect(() => {
     const fetchUserData = async () => {
-      if (!clerkUser) return
+      if (!userId) return
 
       try {
         // ユーザー情報を取得
-        const userResponse = await fetch(`/api/users/${clerkUser.id}`)
+        const userResponse = await fetch(`/api/users/${userId}`)
         if (!userResponse.ok) throw new Error('ユーザー情報の取得に失敗しました')
         const userData = await userResponse.json() as UserResponse
         setUser(userData.user)
 
         // 短歌を取得
-        const tankasResponse = await fetch(`/api/users/${clerkUser.id}/tankas`)
+        const tankasResponse = await fetch(`/api/users/${userId}/tankas`)
         if (!tankasResponse.ok) throw new Error('短歌の取得に失敗しました')
         const tankasData = await tankasResponse.json() as APIResponse
         setTankas(tankasData.tankas)
@@ -51,7 +53,10 @@ export const UserPage = () => {
     }
 
     fetchUserData()
-  }, [clerkUser])
+  }, [userId])
+
+  if (!userId) return <div>ユーザーが見つかりません</div>
+  if (isLoading) return <div>Loading...</div>
 
   if (!clerkUser || !user) return <div>ログインが必要です</div>
 
