@@ -17,9 +17,17 @@ yarn dev
 
 ### migration
 
+#### local
+
 ```bash
 npx wrangler d1 migrations list 57577
 npx wrangler d1 migrations apply 57577
+```
+
+#### remote
+
+```bash
+npx wrangler d1 migrations apply --remote 57577
 ```
 
 #### delete migration history
