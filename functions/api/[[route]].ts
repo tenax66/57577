@@ -125,7 +125,7 @@ app.post('/api/webhooks/clerk', async (c) => {
         `)
         .bind(
           clerk_id,
-          'ゲスト',
+          'ユーザー',
           image_url || null
         )
         .run()
