@@ -8,7 +8,7 @@ import { clerkMiddleware, getAuth } from '@hono/clerk-auth'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
-app.get('/', (c) => {
+app.get('/health-check', (c) => {
   return c.json({
     message: 'Hello',
   })
