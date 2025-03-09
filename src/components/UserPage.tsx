@@ -30,6 +30,7 @@ export const UserPage = () => {
   const [error, setError] = useState<string | null>(null)
   const [isEditing, setIsEditing] = useState(false)
   const [newDisplayName, setNewDisplayName] = useState('')
+  const [isUpdatingAvatar, setIsUpdatingAvatar] = useState(false)
 
   // 自分のページかどうかを判定
   const isOwnProfile = clerkUser?.id === userId
@@ -85,6 +86,44 @@ export const UserPage = () => {
     }
   }
 
+  const handleAvatarUpdate = async () => {
+    if (!clerkUser || !isOwnProfile) return
+    
+    try {
+      setIsUpdatingAvatar(true)
+      
+      const input = document.createElement('input')
+      input.type = 'file'
+      input.accept = 'image/*'
+      
+      input.onchange = async (e) => {
+        const file = (e.target as HTMLInputElement).files?.[0]
+        if (!file) return
+
+        try {
+          // Clerkのアバター画像を更新
+          await clerkUser.setProfileImage({
+            file: file
+          })
+
+          // バックグラウンドでDBの情報も更新
+          const userResponse = await fetch(`/api/users/${userId}`)
+          const userData = await userResponse.json() as UserResponse
+          setUser(userData.user)
+        } catch (e) {
+          setError(e instanceof Error ? e.message : 'アバター画像の更新に失敗しました')
+        } finally {
+          setIsUpdatingAvatar(false)
+        }
+      }
+
+      input.click()
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'アバター画像の更新に失敗しました')
+      setIsUpdatingAvatar(false)
+    }
+  }
+
   if (!userId) return <div>ユーザーが見つかりません</div>
   if (isLoading) return <div>Loading...</div>
   if (!user) return <div>ユーザーが見つかりません</div>
@@ -92,11 +131,22 @@ export const UserPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.userProfile}>
-        <img 
-          src={user.avatar_url || ''} 
-          alt={user.display_name} 
-          className={styles.userAvatar}
-        />
+        <div className={styles.avatarContainer}>
+          <img 
+            src={user.avatar_url || ''} 
+            alt={user.display_name} 
+            className={styles.userAvatar}
+          />
+          {isOwnProfile && (
+            <button 
+              onClick={handleAvatarUpdate}
+              className={styles.updateAvatarButton}
+              disabled={isUpdatingAvatar}
+            >
+              {isUpdatingAvatar ? '更新中...' : '画像を変更'}
+            </button>
+          )}
+        </div>
         <div className={styles.userInfo}>
           {isEditing ? (
             <div className={styles.editNameForm}>
