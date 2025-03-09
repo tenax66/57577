@@ -67,4 +67,30 @@ app.post('/', clerkMiddleware(), async (c) => {
   }
 })
 
+app.get('/:id', async (c) => {
+  try {
+    const id = c.req.param('id')
+    const { results } = await c.env.DB.prepare(`
+      SELECT 
+        t.*,
+        u.display_name,
+        u.clerk_id
+      FROM tankas t
+      JOIN users u ON t.user_id = u.id
+      WHERE t.id = ?
+    `)
+    .bind(id)
+    .all<Tanka & { display_name: string, clerk_id: string }>()
+
+    if (results.length === 0) {
+      return c.json({ error: 'Tanka not found' }, 404)
+    }
+
+    return c.json({ tanka: results[0] })
+  } catch (e) {
+    console.error(e)
+    return c.json({ error: 'Internal Server Error' }, 500)
+  }
+})
+
 export default app 

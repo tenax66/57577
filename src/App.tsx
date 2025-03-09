@@ -4,8 +4,9 @@ import type { Tanka } from './types/tanka'
 import { ClerkProvider, SignInButton, SignUpButton, useUser } from '@clerk/clerk-react'
 import { jaLocalization } from './localization/ja'
 import { UserMenu } from './components/UserMenu'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import { UserPage } from './components/UserPage'
+import { TankaPage } from './components/TankaPage'
 
 type APIResponse = {
   tankas: Tanka[]
@@ -23,6 +24,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<TankaApp />} />
           <Route path="/users/:userId" element={<UserPage />} />
+          <Route path="/tankas/:tankaId" element={<TankaPage />} />
         </Routes>
       </Router>
     </ClerkProvider>
@@ -113,8 +115,13 @@ const TankaApp = () => {
             <ul className={styles.tankaList}>
               {tankas.map(tanka => (
                 <li key={tanka.id} className={styles.tankaItem}>
-                  <p>{tanka.content}</p>
-                  <small>by <a href={`/users/${tanka.clerk_id}`}>{tanka.display_name}</a></small>
+                  <Link to={`/tankas/${tanka.id}`} className={styles.tankaLink}>
+                    <p>{tanka.content}</p>
+                    <div className={styles.tankaMetadata}>
+                      <small>by <a href={`/users/${tanka.clerk_id}`}>{tanka.display_name}</a></small>
+                      <small>{new Date(tanka.created_at).toLocaleDateString('ja-JP')}</small>
+                    </div>
+                  </Link>
                 </li>
               ))}
             </ul>

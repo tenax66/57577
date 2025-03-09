@@ -1,0 +1,41 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.tankaCard {
+  border: 1px solid #000;
+  padding: 2rem;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.content {
+  font-size: 1.5rem;
+  line-height: 1.8;
+  margin: 0 0 1.5rem;
+  text-align: center;
+}
+
+.metadata {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.author {
+  color: #000;
+  text-decoration: none;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.date {
+  color: #666;
+  font-size: 0.9rem;
+} 
