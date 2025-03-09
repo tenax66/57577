@@ -132,9 +132,26 @@ export const UserPage = () => {
     }
   }
 
-  if (!userId) return <div>ユーザーが見つかりません</div>
-  if (isLoading) return <div>Loading...</div>
-  if (!user) return <div>ユーザーが見つかりません</div>
+  if (!userId) return (
+    <div className={styles.container}>
+      <Header />
+      <div>ユーザーが見つかりません</div>
+    </div>
+  )
+  
+  if (isLoading) return (
+    <div className={styles.container}>
+      <Header />
+      <div>Loading...</div>
+    </div>
+  )
+  
+  if (!user) return (
+    <div className={styles.container}>
+      <Header />
+      <div>ユーザーが見つかりません</div>
+    </div>
+  )
 
   return (
     <div className={styles.container}>

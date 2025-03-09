@@ -33,9 +33,26 @@ export const TankaPage = () => {
     fetchTanka()
   }, [tankaId])
 
-  if (!tankaId) return <div>短歌が見つかりません</div>
-  if (isLoading) return <div>Loading...</div>
-  if (!tanka) return <div>短歌が見つかりません</div>
+  if (!tankaId) return (
+    <div className={styles.container}>
+      <Header />
+      <div>短歌が見つかりません</div>
+    </div>
+  )
+  
+  if (isLoading) return (
+    <div className={styles.container}>
+      <Header />
+      <div>Loading...</div>
+    </div>
+  )
+  
+  if (!tanka) return (
+    <div className={styles.container}>
+      <Header />
+      <div>短歌が見つかりません</div>
+    </div>
+  )
 
   return (
     <div className={styles.container}>
