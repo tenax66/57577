@@ -98,11 +98,11 @@ const TankaApp = () => {
                 <li key={tanka.id} className={styles.tankaItem}>
                   <Link to={`/tankas/${tanka.id}`} className={styles.tankaLink}>
                     <p>{tanka.content}</p>
+                  </Link>
                     <div className={styles.tankaMetadata}>
                       <small>by <a href={`/users/${tanka.clerk_id}`}>{tanka.display_name}</a></small>
                       <small>{new Date(tanka.created_at).toLocaleDateString('ja-JP')}</small>
                     </div>
-                  </Link>
                 </li>
               ))}
             </ul>
