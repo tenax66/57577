@@ -3,17 +3,9 @@ import { handle } from 'hono/cloudflare-pages'
 import { Webhook } from 'svix'
 import { WebhookEvent } from '@clerk/backend'
 import tankaRoutes from './tankas'
-import type { Bindings, User } from '../types'
+import type { Bindings, User, Tanka} from '../types'
 
 const app = new Hono<{ Bindings: Bindings }>()
-
-// 型定義
-type Tanka = {
-  id: number
-  content: string
-  user_id: string
-  created_at: string
-}
 
 app.get('/', (c) => {
   return c.json({
