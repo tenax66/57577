@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import type { D1Database } from '@cloudflare/workers-types'
 import type { Bindings, Tanka } from '../../types'
+import { clerkMiddleware, getAuth } from '@hono/clerk-auth'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
@@ -25,10 +26,18 @@ app.get('/', async (c) => {
   }
 })
 
-// 短歌投稿
-app.post('/', async (c) => {
+// 短歌投稿 - 認証必須
+app.post('/', clerkMiddleware(), async (c) => {
+  const auth = getAuth(c)
+  if (!auth?.userId) {
+    return c.json({ error: 'Unauthorized' }, 401)
+  }
+
   try {
-    const { content, clerk_id } = await c.req.json()
+    const { content } = await c.req.json()
+    
+    // clerk_idはリクエストボディからではなく、認証情報から取得
+    const clerk_id = auth.userId
     
     // ユーザーIDの取得
     const { results } = await c.env.DB.prepare(
