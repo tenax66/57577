@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import type { Tanka } from '../types/tanka'
+import { Header } from './Header/Header'
 import styles from './TankaPage.module.scss'
 
 type APIResponse = {
@@ -38,6 +39,7 @@ export const TankaPage = () => {
 
   return (
     <div className={styles.container}>
+      <Header />
       <div className={styles.tankaCard}>
         <p className={styles.content}>{tanka.content}</p>
         <div className={styles.metadata}>

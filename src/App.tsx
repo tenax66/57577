@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import styles from '@/App.module.scss'
 import type { Tanka } from './types/tanka'
-import { ClerkProvider, SignInButton, SignUpButton, useUser } from '@clerk/clerk-react'
+import { ClerkProvider, useUser } from '@clerk/clerk-react'
 import { jaLocalization } from './localization/ja'
-import { UserMenu } from './components/UserMenu'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import { UserPage } from './components/UserPage'
 import { TankaPage } from './components/TankaPage'
+import { Header } from './components/Header/Header'
 
 type APIResponse = {
   tankas: Tanka[]
@@ -84,26 +84,7 @@ const TankaApp = () => {
 
   return (
     <div className={styles.container}>
-      <header className={styles.toolbar}>
-        <a href="/" className={styles.logo}>57577.net</a>
-        <div className={styles.auth}>
-          {!isLoaded ? (
-            <p>Loading...</p>
-          ) : !user ? (
-            <>
-              <SignInButton mode="modal">
-                <button className={styles.button}>ログイン</button>
-              </SignInButton>
-              <SignUpButton mode="modal">
-                <button className={styles.button}>新規登録</button>
-              </SignUpButton>
-            </>
-          ) : (
-            <UserMenu />
-          )}
-        </div>
-      </header>
-
+      <Header />
       <main>
         <div className={styles.tankaBox}>
           <h2>最新の短歌</h2>

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import type { Tanka } from '../types/tanka'
 import styles from './UserPage.module.scss'
+import { Header } from './Header/Header'
 
 type User = {
   id: number
@@ -137,6 +138,7 @@ export const UserPage = () => {
 
   return (
     <div className={styles.container}>
+      <Header />
       <div className={styles.userProfile}>
         <div className={styles.avatarContainer}>
           <img 
