@@ -4,6 +4,7 @@ import { Webhook } from 'svix'
 import { WebhookEvent } from '@clerk/backend'
 import tankaRoutes from './tankas'
 import type { Bindings, User, Tanka} from '../types'
+import { clerkMiddleware, getAuth } from '@hono/clerk-auth'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
@@ -155,6 +156,38 @@ app.get('/api/users/:clerk_id/tankas', async (c) => {
     .all<Tanka>()
 
     return c.json({ tankas })
+  } catch (e) {
+    console.error(e)
+    return c.json({ error: 'Internal Server Error' }, 500)
+  }
+})
+
+// ユーザー情報更新API
+app.patch('/api/users/:clerk_id', clerkMiddleware(), async (c) => {
+  const auth = getAuth(c)
+  const clerk_id = c.req.param('clerk_id')
+
+  // 自分のデータのみ更新可能
+  if (!auth?.userId || auth.userId !== clerk_id) {
+    return c.json({ error: 'Unauthorized' }, 401)
+  }
+
+  try {
+    const { display_name } = await c.req.json()
+    
+    const { success } = await c.env.DB.prepare(`
+      UPDATE users 
+      SET display_name = ?
+      WHERE clerk_id = ?
+    `)
+    .bind(display_name, clerk_id)
+    .run()
+
+    if (!success) {
+      throw new Error('Failed to update user')
+    }
+
+    return c.json({ message: 'User updated successfully' })
   } catch (e) {
     console.error(e)
     return c.json({ error: 'Internal Server Error' }, 500)

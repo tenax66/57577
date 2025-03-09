@@ -68,4 +68,72 @@
   padding: 1rem;
   border: 1px solid #e00;
   border-radius: 4px;
+}
+
+.nameContainer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.editButton {
+  padding: 0.5rem 1rem;
+  border: 1px solid #000;
+  background: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  
+  &:hover {
+    background: #000;
+    color: #fff;
+  }
+}
+
+.editNameForm {
+  margin-bottom: 1rem;
+}
+
+.nameInput {
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  border: 1px solid #000;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  width: 100%;
+}
+
+.editButtons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.saveButton, .cancelButton {
+  padding: 0.5rem 1rem;
+  border: 1px solid #000;
+  border-radius: 4px;
+  cursor: pointer;
+  
+  &:hover {
+    background: #000;
+    color: #fff;
+  }
+}
+
+.saveButton {
+  background: #000;
+  color: #fff;
+  
+  &:hover {
+    background: #333;
+  }
+}
+
+.cancelButton {
+  background: none;
+  
+  &:hover {
+    background: #eee;
+    color: #000;
+  }
 } 

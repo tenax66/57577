@@ -28,6 +28,11 @@ export const UserPage = () => {
   const [tankas, setTankas] = useState<Tanka[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [isEditing, setIsEditing] = useState(false)
+  const [newDisplayName, setNewDisplayName] = useState('')
+
+  // 自分のページかどうかを判定
+  const isOwnProfile = clerkUser?.id === userId
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -39,6 +44,7 @@ export const UserPage = () => {
         if (!userResponse.ok) throw new Error('ユーザー情報の取得に失敗しました')
         const userData = await userResponse.json() as UserResponse
         setUser(userData.user)
+        setNewDisplayName(userData.user.display_name) // 初期値をセット
 
         // 短歌を取得
         const tankasResponse = await fetch(`/api/users/${userId}/tankas`)
@@ -55,10 +61,33 @@ export const UserPage = () => {
     fetchUserData()
   }, [userId])
 
+  const handleUpdateDisplayName = async () => {
+    if (!user || !isOwnProfile) return
+
+    try {
+      const response = await fetch(`/api/users/${user.clerk_id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ display_name: newDisplayName }),
+      })
+
+      if (!response.ok) throw new Error('Failed to update display name')
+
+      // 更新成功後、ユーザー情報を再取得
+      const userResponse = await fetch(`/api/users/${userId}`)
+      const userData = await userResponse.json() as UserResponse
+      setUser(userData.user)
+      setIsEditing(false)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : '表示名の更新に失敗しました')
+    }
+  }
+
   if (!userId) return <div>ユーザーが見つかりません</div>
   if (isLoading) return <div>Loading...</div>
-
-  if (!clerkUser || !user) return <div>ログインが必要です</div>
+  if (!user) return <div>ユーザーが見つかりません</div>
 
   return (
     <div className={styles.container}>
@@ -69,7 +98,45 @@ export const UserPage = () => {
           className={styles.userAvatar}
         />
         <div className={styles.userInfo}>
-          <h1 className={styles.userName}>{user.display_name}</h1>
+          {isEditing ? (
+            <div className={styles.editNameForm}>
+              <input
+                type="text"
+                value={newDisplayName}
+                onChange={(e) => setNewDisplayName(e.target.value)}
+                className={styles.nameInput}
+              />
+              <div className={styles.editButtons}>
+                <button 
+                  onClick={handleUpdateDisplayName}
+                  className={styles.saveButton}
+                >
+                  保存
+                </button>
+                <button 
+                  onClick={() => {
+                    setIsEditing(false)
+                    setNewDisplayName(user.display_name)
+                  }}
+                  className={styles.cancelButton}
+                >
+                  キャンセル
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className={styles.nameContainer}>
+              <h1 className={styles.userName}>{user.display_name}</h1>
+              {isOwnProfile && (
+                <button 
+                  onClick={() => setIsEditing(true)}
+                  className={styles.editButton}
+                >
+                  編集
+                </button>
+              )}
+            </div>
+          )}
           <p className={styles.userStats}>投稿数: {tankas.length}</p>
         </div>
       </div>
