@@ -31,6 +31,7 @@ export const UserPage = () => {
   const [isEditing, setIsEditing] = useState(false)
   const [newDisplayName, setNewDisplayName] = useState('')
   const [isUpdatingAvatar, setIsUpdatingAvatar] = useState(false)
+  const [avatarHash, setAvatarHash] = useState<string>(Date.now().toString())
 
   // 自分のページかどうかを判定
   const isOwnProfile = clerkUser?.id === userId
@@ -106,10 +107,16 @@ export const UserPage = () => {
             file: file
           })
 
-          // バックグラウンドでDBの情報も更新
+          // 少し待つ
+          await new Promise(resolve => setTimeout(resolve, 1000))
+
+          // ユーザ情報取得
           const userResponse = await fetch(`/api/users/${userId}`)
           const userData = await userResponse.json() as UserResponse
           setUser(userData.user)
+          
+          // 画像更新時にハッシュを更新して強制的に再レンダリング
+          setAvatarHash(Date.now().toString())
         } catch (e) {
           setError(e instanceof Error ? e.message : 'アバター画像の更新に失敗しました')
         } finally {
@@ -133,8 +140,8 @@ export const UserPage = () => {
       <div className={styles.userProfile}>
         <div className={styles.avatarContainer}>
           <img 
-            src={user.avatar_url || ''} 
-            alt={user.display_name} 
+            src={`${user?.avatar_url || ''}${user?.avatar_url?.includes('?') ? '&' : '?'}h=${avatarHash}`}
+            alt={user?.display_name} 
             className={styles.userAvatar}
           />
           {isOwnProfile && (
