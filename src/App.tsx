@@ -8,8 +8,16 @@ import { UserPage } from './components/UserPage'
 import { TankaPage } from './components/TankaPage'
 import { Header } from './components/Header/Header'
 
+type PaginationInfo = {
+  current_page: number
+  total_pages: number
+  total_items: number
+  per_page: number
+}
+
 type APIResponse = {
   tankas: Tanka[]
+  pagination: PaginationInfo
 }
 
 const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
@@ -34,17 +42,20 @@ const App = () => {
 const TankaApp = () => {
   const [newTanka, setNewTanka] = useState('')
   const [tankas, setTankas] = useState<Tanka[]>([])
+  const [pagination, setPagination] = useState<PaginationInfo | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const { user, isLoaded } = useUser()
+  const [currentPage, setCurrentPage] = useState(1)
 
   useEffect(() => {
     const fetchTankas = async () => {
       try {
-        const response = await fetch('/api/tankas')
+        const response = await fetch(`/api/tankas?page=${currentPage}`)
         if (!response.ok) throw new Error('Failed to fetch tankas')
         const data = await response.json() as APIResponse
         setTankas(data.tankas)
+        setPagination(data.pagination)
       } catch (e) {
         setError(e instanceof Error ? e.message : '短歌の取得に失敗しました')
       } finally {
@@ -53,7 +64,7 @@ const TankaApp = () => {
     }
 
     fetchTankas()
-  }, [])
+  }, [currentPage])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -93,19 +104,43 @@ const TankaApp = () => {
           ) : error ? (
             <p className={styles.error}>{error}</p>
           ) : (
-            <ul className={styles.tankaList}>
-              {tankas.map(tanka => (
-                <li key={tanka.id} className={styles.tankaItem}>
-                  <Link to={`/tankas/${tanka.id}`} className={styles.tankaLink}>
-                    <p>{tanka.content}</p>
-                  </Link>
+            <>
+              <ul className={styles.tankaList}>
+                {tankas.map(tanka => (
+                  <li key={tanka.id} className={styles.tankaItem}>
+                    <Link to={`/tankas/${tanka.id}`} className={styles.tankaLink}>
+                      <p>{tanka.content}</p>
+                    </Link>
                     <div className={styles.tankaMetadata}>
-                      <small>by <a href={`/users/${tanka.clerk_id}`}>{tanka.display_name}</a></small>
+                      <small>by <Link to={`/users/${tanka.clerk_id}`}>{tanka.display_name}</Link></small>
                       <small>{new Date(tanka.created_at).toLocaleDateString('ja-JP')}</small>
                     </div>
-                </li>
-              ))}
-            </ul>
+                  </li>
+                ))}
+              </ul>
+              
+              {pagination && (
+                <div className={styles.pagination}>
+                  <button 
+                    onClick={() => setCurrentPage(p => p - 1)}
+                    disabled={currentPage === 1}
+                    className={styles.pageButton}
+                  >
+                    前のページ
+                  </button>
+                  <span className={styles.pageInfo}>
+                    {currentPage} / {pagination.total_pages} ページ
+                  </span>
+                  <button 
+                    onClick={() => setCurrentPage(p => p + 1)}
+                    disabled={currentPage === pagination.total_pages}
+                    className={styles.pageButton}
+                  >
+                    次のページ
+                  </button>
+                </div>
+              )}
+            </>
           )}
         </div>
 

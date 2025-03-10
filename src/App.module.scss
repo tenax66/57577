@@ -60,4 +60,37 @@
   display: flex;
   justify-content: space-between;
   margin-top: 0.5rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.pageButton {
+  padding: 0.5rem 1rem;
+  border: 1px solid #000;
+  background: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  
+  &:disabled {
+    border-color: #ccc;
+    color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  &:not(:disabled):hover {
+    background: #000;
+    color: #fff;
+  }
+}
+
+.pageInfo {
+  color: #666;
 } 

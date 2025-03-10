@@ -7,8 +7,17 @@ const app = new Hono<{ Bindings: Bindings }>()
 
 app.get('/', async (c) => {
   try {
-    const db = c.env.DB as D1Database
-    const { results } = await db.prepare(`
+    const page = parseInt(c.req.query('page') || '1')
+    const per_page = 10
+    const offset = (page - 1) * per_page
+
+    // 総件数を取得
+    const { results: [{ total }] } = await c.env.DB.prepare(`
+      SELECT COUNT(*) as total FROM tankas
+    `).all<{ total: number }>()
+
+    // ページングされた短歌を取得
+    const { results } = await c.env.DB.prepare(`
       SELECT 
         t.*,
         u.display_name,
@@ -16,10 +25,20 @@ app.get('/', async (c) => {
       FROM tankas t
       JOIN users u ON t.user_id = u.id
       ORDER BY t.created_at DESC 
-      LIMIT 20
-    `).all<Tanka & { display_name: string, clerk_id: string }>()
+      LIMIT ? OFFSET ?
+    `)
+    .bind(per_page, offset)
+    .all<Tanka & { display_name: string, clerk_id: string }>()
     
-    return c.json({ tankas: results })
+    return c.json({ 
+      tankas: results,
+      pagination: {
+        current_page: page,
+        total_pages: Math.ceil(total / per_page),
+        total_items: total,
+        per_page
+      }
+    })
   } catch (e) {
     console.error(e)
     return c.json({ error: 'Internal Server Error' }, 500)
