@@ -116,18 +116,39 @@ app.post('/', clerkMiddleware(), async (c) => {
 
 app.get('/:id', async (c) => {
   try {
-    const id = c.req.param('id')
+    const tankaId = c.req.param('id')
+    const auth = getAuth(c)
+    const userId = auth?.userId
+
+    // ユーザーIDの取得（ログインしている場合）
+    let dbUserId: number | null = null
+    if (userId) {
+      const { results } = await c.env.DB.prepare(
+        'SELECT id FROM users WHERE clerk_id = ?'
+      )
+      .bind(userId)
+      .all<{ id: number }>()
+      if (results.length > 0) {
+        dbUserId = results[0].id
+      }
+    }
+
+    // 短歌とライク情報を取得
     const { results } = await c.env.DB.prepare(`
       SELECT 
         t.*,
         u.display_name,
-        u.clerk_id
+        u.clerk_id,
+        COUNT(l.id) as likes_count,
+        ${dbUserId ? 'EXISTS(SELECT 1 FROM likes WHERE user_id = ? AND tanka_id = t.id) as is_liked' : 'FALSE as is_liked'}
       FROM tankas t
       JOIN users u ON t.user_id = u.id
+      LEFT JOIN likes l ON t.id = l.tanka_id
       WHERE t.id = ?
+      GROUP BY t.id
     `)
-    .bind(id)
-    .all<Tanka & { display_name: string, clerk_id: string }>()
+    .bind(...(dbUserId ? [dbUserId, tankaId] : [tankaId]))
+    .all<TankaWithLikes>()
 
     if (results.length === 0) {
       return c.json({ error: 'Tanka not found' }, 404)
