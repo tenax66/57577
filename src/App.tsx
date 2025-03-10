@@ -10,9 +10,7 @@ import { Header } from './components/Header/Header'
 
 type PaginationInfo = {
   current_page: number
-  total_pages: number
-  total_items: number
-  per_page: number
+  has_next: boolean
 }
 
 type APIResponse = {
@@ -129,11 +127,11 @@ const TankaApp = () => {
                     前のページ
                   </button>
                   <span className={styles.pageInfo}>
-                    {currentPage} / {pagination.total_pages} ページ
+                    {currentPage}ページ目
                   </span>
                   <button 
                     onClick={() => setCurrentPage(p => p + 1)}
-                    disabled={currentPage === pagination.total_pages}
+                    disabled={!pagination.has_next}
                     className={styles.pageButton}
                   >
                     次のページ

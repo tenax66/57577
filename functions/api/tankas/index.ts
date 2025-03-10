@@ -11,12 +11,7 @@ app.get('/', async (c) => {
     const per_page = 10
     const offset = (page - 1) * per_page
 
-    // 総件数を取得
-    const { results: [{ total }] } = await c.env.DB.prepare(`
-      SELECT COUNT(*) as total FROM tankas
-    `).all<{ total: number }>()
-
-    // ページングされた短歌を取得
+    // 現在のページの短歌を取得
     const { results } = await c.env.DB.prepare(`
       SELECT 
         t.*,
@@ -27,16 +22,17 @@ app.get('/', async (c) => {
       ORDER BY t.created_at DESC 
       LIMIT ? OFFSET ?
     `)
-    .bind(per_page, offset)
+    .bind(per_page + 1, offset) // 次のページがあるか確認するため1つ多めに取得
     .all<Tanka & { display_name: string, clerk_id: string }>()
     
+    const hasNextPage = results.length > per_page
+    const tankas = results.slice(0, per_page) // 表示は`per_page`件まで
+    
     return c.json({ 
-      tankas: results,
+      tankas,
       pagination: {
         current_page: page,
-        total_pages: Math.ceil(total / per_page),
-        total_items: total,
-        per_page
+        has_next: hasNextPage
       }
     })
   } catch (e) {
