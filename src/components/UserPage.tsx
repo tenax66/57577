@@ -134,6 +134,23 @@ export const UserPage = () => {
     }
   }
 
+  const handleDelete = async (tankaId: number) => {
+    if (!window.confirm('この短歌を削除してもよろしいですか？')) return
+
+    try {
+      const response = await fetch(`/api/tankas/${tankaId}`, {
+        method: 'DELETE'
+      })
+      
+      if (!response.ok) throw new Error('短歌の削除に失敗しました')
+      
+      // 短歌一覧を更新
+      setTankas(tankas.filter(t => t.id !== tankaId))
+    } catch (e) {
+      setError(e instanceof Error ? e.message : '短歌の削除に失敗しました')
+    }
+  }
+
   if (!userId) return (
     <div className={styles.container}>
       <Header />
@@ -237,7 +254,17 @@ export const UserPage = () => {
             {tankas.map(tanka => (
               <li key={tanka.id} className={styles.tankaItem}>
                 <p>{tanka.content}</p>
-                <small>{new Date(tanka.created_at).toLocaleDateString('ja-JP')}</small>
+                <div className={styles.tankaMetadata}>
+                  <small>{new Date(tanka.created_at).toLocaleDateString('ja-JP')}</small>
+                  {isOwnProfile && (
+                    <button 
+                      onClick={() => handleDelete(tanka.id)}
+                      className={styles.deleteButton}
+                    >
+                      削除
+                    </button>
+                  )}
+                </div>
               </li>
             ))}
           </ul>

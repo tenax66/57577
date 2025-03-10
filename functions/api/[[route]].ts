@@ -199,4 +199,40 @@ app.patch('/api/users/:clerk_id', clerkMiddleware(), async (c) => {
   }
 })
 
+// 短歌削除API
+app.delete('/api/tankas/:id', clerkMiddleware(), async (c) => {
+  const auth = getAuth(c)
+  if (!auth?.userId) {
+    return c.json({ error: 'Unauthorized' }, 401)
+  }
+
+  try {
+    const tankaId = c.req.param('id')
+    
+    // 短歌の所有者を確認
+    const { results } = await c.env.DB.prepare(`
+      SELECT t.id 
+      FROM tankas t
+      JOIN users u ON t.user_id = u.id
+      WHERE t.id = ? AND u.clerk_id = ?
+    `)
+    .bind(tankaId, auth.userId)
+    .all()
+
+    if (results.length === 0) {
+      return c.json({ error: 'Unauthorized or tanka not found' }, 404)
+    }
+
+    // 短歌を削除
+    await c.env.DB.prepare('DELETE FROM tankas WHERE id = ?')
+      .bind(tankaId)
+      .run()
+
+    return c.json({ message: 'Tanka deleted successfully' })
+  } catch (e) {
+    console.error(e)
+    return c.json({ error: 'Internal Server Error' }, 500)
+  }
+})
+
 export const onRequest = handle(app)
