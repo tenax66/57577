@@ -43,9 +43,6 @@ export const PostTankaModal = ({ isOpen, onClose, onSubmit }: Props) => {
             required
             maxLength={MAX_TANKA_LENGTH}
           />
-          <div className={styles.charCount}>
-            {content.length} / {MAX_TANKA_LENGTH}
-          </div>
           <div className={styles.buttons}>
             <button 
               type="button" 
