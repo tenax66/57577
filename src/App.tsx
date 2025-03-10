@@ -8,6 +8,7 @@ import { UserPage } from './components/UserPage'
 import { TankaPage } from './components/TankaPage'
 import { Header } from './components/Header/Header'
 import { LikeButton } from './components/LikeButton'
+import { PostTankaModal } from './components/PostTankaModal'
 
 type PaginationInfo = {
   current_page: number
@@ -46,6 +47,7 @@ const TankaApp = () => {
   const [error, setError] = useState<string | null>(null)
   const { user, isLoaded } = useUser()
   const [currentPage, setCurrentPage] = useState(1)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
     const fetchTankas = async () => {
@@ -65,8 +67,7 @@ const TankaApp = () => {
     fetchTankas()
   }, [currentPage])
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const handleSubmit = async (content: string) => {
     if (!user) return
 
     try {
@@ -76,7 +77,7 @@ const TankaApp = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ 
-          content: newTanka,
+          content,
           clerk_id: user.id 
         }),
       })
@@ -84,9 +85,9 @@ const TankaApp = () => {
       if (!response.ok) throw new Error('Failed to post tanka')
       
       // 投稿成功後に短歌一覧を再取得
-      const data = await (await fetch('/api/tankas')).json() as APIResponse
+      const data = await (await fetch(`/api/tankas?page=${currentPage}`)).json() as APIResponse
       setTankas(data.tankas)
-      setNewTanka('')
+      setPagination(data.pagination)
     } catch (e) {
       setError(e instanceof Error ? e.message : '短歌の投稿に失敗しました')
     }
@@ -150,25 +151,22 @@ const TankaApp = () => {
             </>
           )}
         </div>
-
-        <form className={styles.postForm} onSubmit={handleSubmit}>
-          <h2>短歌を投稿</h2>
-          <textarea
-            value={newTanka}
-            onChange={(e) => setNewTanka(e.target.value)}
-            placeholder={user ? "ここに短歌を入力してください" : "投稿するにはログインが必要です"}
-            required
-            disabled={!user}
-          />
-          <button 
-            className={styles.button} 
-            type="submit"
-            disabled={!user}
-          >
-            投稿する
-          </button>
-        </form>
       </main>
+      
+      {user && (
+        <button 
+          onClick={() => setIsModalOpen(true)}
+          className={styles.floatingButton}
+        >
+          投稿
+        </button>
+      )}
+
+      <PostTankaModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSubmit={handleSubmit}
+      />
     </div>
   )
 }
