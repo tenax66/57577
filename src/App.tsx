@@ -96,6 +96,9 @@ const TankaApp = () => {
   return (
     <div className={styles.container}>
       <Header />
+      <div className={styles.alphaNotice}>
+        🚧 アルファテスト中です。ユーザや短歌のデータは予告なく削除されることがあります。
+      </div>
       <main>
         <div className={styles.tankaBox}>
           <h2>最新の短歌</h2>
