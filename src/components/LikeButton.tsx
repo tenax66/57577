@@ -8,6 +8,10 @@ type Props = {
   likesCount: number
 }
 
+type LikeResponse = {
+  liked: boolean
+}
+
 export const LikeButton = ({ tankaId, initialLiked, likesCount: initialLikesCount }: Props) => {
   const { user, isLoaded } = useUser()
   const [isLiked, setIsLiked] = useState(initialLiked)
@@ -25,7 +29,7 @@ export const LikeButton = ({ tankaId, initialLiked, likesCount: initialLikesCoun
       
       if (!response.ok) throw new Error('Failed to toggle like')
       
-      const { liked } = await response.json()
+      const { liked } = await response.json() as LikeResponse
       setIsLiked(liked)
       setLikesCount(prev => liked ? prev + 1 : prev - 1)
     } catch (e) {
