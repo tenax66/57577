@@ -1227,10 +1227,10 @@ globals@^11.1.0:
   resolved "https://registry.yarnpkg.com/globals/-/globals-11.12.0.tgz#ab8795338868a0babd8525758018c2a7eb95c42e"
   integrity sha512-WOBp/EEGUiIsJSp7wcv/y6MO+lV9UoncWqxuFfm8eBwzWNgyfBd6Gz+IeKQ9jCmyhoH99g15M3T+QaVHFjizVA==
 
-hono@^4.7.2:
-  version "4.7.2"
-  resolved "https://registry.yarnpkg.com/hono/-/hono-4.7.2.tgz#8d8285060d318e71d75fd5c886572e021b8fcb54"
-  integrity sha512-8V5XxoOF6SI12jkHkzX/6aLBMU5GEF5g387EjVSQipS0DlxWgWGSMeEayY3CRBjtTUQYwLHx9JYouWqKzy2Vng==
+hono@^4.7.4:
+  version "4.7.4"
+  resolved "https://registry.yarnpkg.com/hono/-/hono-4.7.4.tgz#27294b29792242486ed83de3e9fc25c46768c372"
+  integrity sha512-Pst8FuGqz3L7tFF+u9Pu70eI0xa5S3LPUmrNd5Jm8nTHze9FxLTK9Kaj5g/k4UcwuJSXTP65SyHOPLrffpcAJg==
 
 immutable@^5.0.2:
   version "5.0.3"
