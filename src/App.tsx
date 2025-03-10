@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import styles from '@/App.module.scss'
 import type { Tanka } from './types/tanka'
 import { ClerkProvider, useUser } from '@clerk/clerk-react'
-import { jaLocalization } from './localization/ja'
+import { jaJP } from "@clerk/localizations";
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import { UserPage } from './components/UserPage'
 import { TankaPage } from './components/TankaPage'
@@ -26,7 +26,7 @@ const App = () => {
   return (
     <ClerkProvider 
       publishableKey={CLERK_PUBLISHABLE_KEY}
-      localization={jaLocalization}
+      localization={jaJP}
     >
       <Router>
         <Routes>
