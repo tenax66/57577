@@ -1,0 +1,25 @@
+-- 短歌テーブルも同様に
+CREATE TABLE tankas_new (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  content VARCHAR(150) NOT NULL,
+  user_id INTEGER NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+INSERT INTO tankas_new SELECT * FROM tankas;
+DROP TABLE tankas;
+ALTER TABLE tankas_new RENAME TO tankas;
+
+CREATE TABLE users_new (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  clerk_id TEXT NOT NULL UNIQUE,
+  display_name VARCHAR(30) NOT NULL,
+  avatar_url TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO users_new SELECT * FROM users;
+DROP TABLE users;
+ALTER TABLE users_new RENAME TO users;
