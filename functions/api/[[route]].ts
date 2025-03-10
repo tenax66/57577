@@ -175,6 +175,11 @@ app.patch('/api/users/:clerk_id', clerkMiddleware(), async (c) => {
   try {
     const { display_name } = await c.req.json()
     
+    // 文字数チェックを追加
+    if (!display_name || display_name.length > 30) {
+      return c.json({ error: 'ユーザー名は1文字以上30文字以下で入力してください' }, 400)
+    }
+
     const { success } = await c.env.DB.prepare(`
       UPDATE users 
       SET display_name = ?

@@ -22,6 +22,8 @@ type UserResponse = {
   user: User
 }
 
+const MAX_DISPLAY_NAME_LENGTH = 30
+
 export const UserPage = () => {
   const { userId } = useParams<{ userId: string }>()
   const { user: clerkUser } = useUser()
@@ -180,8 +182,13 @@ export const UserPage = () => {
                 type="text"
                 value={newDisplayName}
                 onChange={(e) => setNewDisplayName(e.target.value)}
-                className={styles.nameInput}
+                maxLength={MAX_DISPLAY_NAME_LENGTH}
+                className={styles.displayNameInput}
+                required
               />
+              <div className={styles.charCount}>
+                {newDisplayName.length} / {MAX_DISPLAY_NAME_LENGTH}
+              </div>
               <div className={styles.editButtons}>
                 <button 
                   onClick={handleUpdateDisplayName}

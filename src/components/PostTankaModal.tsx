@@ -8,6 +8,8 @@ type Props = {
   onSubmit: (content: string) => Promise<void>
 }
 
+const MAX_TANKA_LENGTH = 150
+
 export const PostTankaModal = ({ isOpen, onClose, onSubmit }: Props) => {
   const [content, setContent] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -39,7 +41,11 @@ export const PostTankaModal = ({ isOpen, onClose, onSubmit }: Props) => {
             onChange={(e) => setContent(e.target.value)}
             placeholder="ここに短歌を入力してください"
             required
+            maxLength={MAX_TANKA_LENGTH}
           />
+          <div className={styles.charCount}>
+            {content.length} / {MAX_TANKA_LENGTH}
+          </div>
           <div className={styles.buttons}>
             <button 
               type="button" 

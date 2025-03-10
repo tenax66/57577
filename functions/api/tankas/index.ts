@@ -78,6 +78,11 @@ app.post('/', clerkMiddleware(), async (c) => {
   try {
     const { content } = await c.req.json()
     
+    // 文字数チェックを追加
+    if (!content || content.length > 150) {
+      return c.json({ error: '短歌は1文字以上150文字以下で入力してください' }, 400)
+    }
+
     // clerk_idはリクエストボディからではなく、認証情報から取得
     const clerk_id = auth.userId
     
