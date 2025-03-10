@@ -156,14 +156,14 @@ const TankaApp = () => {
         </div>
       </main>
       
-      {user && (
-        <button 
-          onClick={() => setIsModalOpen(true)}
-          className={styles.floatingButton}
-        >
-          投稿
-        </button>
-      )}
+      <button 
+        onClick={() => setIsModalOpen(true)}
+        className={styles.floatingButton}
+        disabled={!user}
+        title={user ? undefined : 'ログインが必要です'}
+      >
+        投稿
+      </button>
 
       <PostTankaModal 
         isOpen={isModalOpen}
