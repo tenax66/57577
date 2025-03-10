@@ -18,7 +18,7 @@ export const Header = () => {
               <button className={styles.button}>ログイン</button>
             </SignInButton>
             <SignUpButton mode="modal">
-              <button className={styles.button}>新規登録</button>
+              <button className={styles.button}>登録</button>
             </SignUpButton>
           </>
         ) : (

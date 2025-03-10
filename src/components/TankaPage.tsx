@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import type { Tanka } from '../types/tanka'
 import { Header } from './Header/Header'
 import styles from './TankaPage.module.scss'
+import { LikeButton } from './LikeButton'
 
 type APIResponse = {
   tanka: Tanka
@@ -60,12 +61,19 @@ export const TankaPage = () => {
       <div className={styles.tankaCard}>
         <p className={styles.content}>{tanka.content}</p>
         <div className={styles.metadata}>
-          <Link to={`/users/${tanka.clerk_id}`} className={styles.author}>
-            {tanka.display_name}
-          </Link>
-          <time className={styles.date}>
-            {new Date(tanka.created_at).toLocaleDateString('ja-JP')}
-          </time>
+          <div className={styles.authorInfo}>
+            <Link to={`/users/${tanka.clerk_id}`} className={styles.author}>
+              {tanka.display_name}
+            </Link>
+            <time className={styles.date}>
+              {new Date(tanka.created_at).toLocaleDateString('ja-JP')}
+            </time>
+          </div>
+          <LikeButton 
+            tankaId={tanka.id}
+            initialLiked={tanka.is_liked}
+            likesCount={tanka.likes_count}
+          />
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@ export const jaLocalization = {
       title: "ログイン",
       subtitle: "アカウントにログインしてください",
       actionText: "アカウントをお持ちでない場合",
-      actionLink: "新規登録",
+      actionLink: "登録",
     },
     password: {
       title: "パスワードを入力",

@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import { UserPage } from './components/UserPage'
 import { TankaPage } from './components/TankaPage'
 import { Header } from './components/Header/Header'
+import { LikeButton } from './components/LikeButton'
 
 type PaginationInfo = {
   current_page: number
@@ -110,8 +111,16 @@ const TankaApp = () => {
                       <p>{tanka.content}</p>
                     </Link>
                     <div className={styles.tankaMetadata}>
-                      <small>by <Link to={`/users/${tanka.clerk_id}`}>{tanka.display_name}</Link></small>
-                      <small>{new Date(tanka.created_at).toLocaleDateString('ja-JP')}</small>
+                      <div>
+                        <small>by <Link to={`/users/${tanka.clerk_id}`}>{tanka.display_name}</Link></small>
+                        <small> </small>
+                        <small>{new Date(tanka.created_at).toLocaleDateString('ja-JP')}</small>
+                      </div>
+                      <LikeButton 
+                        tankaId={tanka.id} 
+                        initialLiked={tanka.is_liked}
+                        likesCount={tanka.likes_count}
+                      />
                     </div>
                   </li>
                 ))}
