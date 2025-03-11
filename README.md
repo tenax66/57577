@@ -34,9 +34,10 @@ npx wrangler d1 migrations apply 57577
 npx wrangler d1 migrations apply --remote 57577
 ```
 
-#### delete migration history
+#### migration history
 
 ```bash
+npx wrangler d1 execute 57577 --command "SELECT * FROM d1_migrations;"
 npx wrangler d1 execute 57577 --command "DELETE FROM d1_migrations;"
 ```
 
