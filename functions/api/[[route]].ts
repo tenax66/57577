@@ -175,6 +175,11 @@ app.patch('/api/users/:clerk_id', clerkMiddleware(), async (c) => {
   try {
     const { display_name } = await c.req.json()
     
+    // 文字数チェックを追加
+    if (!display_name || display_name.length > 30) {
+      return c.json({ error: 'ユーザー名は1文字以上30文字以下で入力してください' }, 400)
+    }
+
     const { success } = await c.env.DB.prepare(`
       UPDATE users 
       SET display_name = ?
@@ -188,6 +193,42 @@ app.patch('/api/users/:clerk_id', clerkMiddleware(), async (c) => {
     }
 
     return c.json({ message: 'User updated successfully' })
+  } catch (e) {
+    console.error(e)
+    return c.json({ error: 'Internal Server Error' }, 500)
+  }
+})
+
+// 短歌削除API
+app.delete('/api/tankas/:id', clerkMiddleware(), async (c) => {
+  const auth = getAuth(c)
+  if (!auth?.userId) {
+    return c.json({ error: 'Unauthorized' }, 401)
+  }
+
+  try {
+    const tankaId = c.req.param('id')
+    
+    // 短歌の所有者を確認
+    const { results } = await c.env.DB.prepare(`
+      SELECT t.id 
+      FROM tankas t
+      JOIN users u ON t.user_id = u.id
+      WHERE t.id = ? AND u.clerk_id = ?
+    `)
+    .bind(tankaId, auth.userId)
+    .all()
+
+    if (results.length === 0) {
+      return c.json({ error: 'Unauthorized or tanka not found' }, 404)
+    }
+
+    // 短歌を削除
+    await c.env.DB.prepare('DELETE FROM tankas WHERE id = ?')
+      .bind(tankaId)
+      .run()
+
+    return c.json({ message: 'Tanka deleted successfully' })
   } catch (e) {
     console.error(e)
     return c.json({ error: 'Internal Server Error' }, 500)

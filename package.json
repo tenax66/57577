@@ -9,26 +9,31 @@
     "dev": "wrangler pages dev ./pages",
     "build": "vite build",
     "deploy": "yarn build && wrangler pages deploy pages",
-    "db:migrate-local": "npx wrangler d1 migrations apply 57577"
+    "db:migrate-local": "npx wrangler d1 migrations apply 57577",
+    "format": "prettier --write \"src/**/*.{ts,tsx,scss,css,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,scss,css,json}\""
   },
   "license": "MIT",
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250214.0",
+    "@cloudflare/workers-types": "^4.20250311.0",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
+    "eslint-config-prettier": "^10.1.1",
+    "prettier": "^3.5.3",
     "vite": "^6.2.1",
     "wrangler": "^3.114.0"
   },
   "dependencies": {
     "@auth/core": "^0.38.0",
-    "@clerk/backend": "^1.24.3",
+    "@clerk/backend": "^1.25.1",
     "@clerk/clerk-react": "^5.24.1",
+    "@clerk/localizations": "^3.11.1",
     "@hono/clerk-auth": "^2.0.0",
-    "hono": "^4.7.2",
+    "hono": "^4.7.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.2.0",
+    "react-router-dom": "^7.3.0",
     "sass": "^1.85.1",
     "svix": "^1.17.0"
   }
