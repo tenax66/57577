@@ -2,6 +2,7 @@ import { SignInButton, SignUpButton, useUser } from '@clerk/clerk-react';
 import { Link } from 'react-router-dom';
 import { UserMenu } from '../UserMenu';
 import styles from './Header.module.scss';
+import BlockLoader from '../BlockLoader';
 
 export const Header = () => {
   const { user, isLoaded } = useUser();
@@ -13,7 +14,9 @@ export const Header = () => {
       </Link>
       <div className={styles.auth}>
         {!isLoaded ? (
-          <p>Loading...</p>
+          <p>
+            Loading <BlockLoader mode={6} />
+          </p>
         ) : !user ? (
           <>
             <SignInButton mode="modal">

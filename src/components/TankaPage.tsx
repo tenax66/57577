@@ -5,6 +5,7 @@ import { Header } from './Header/Header';
 import styles from './TankaPage.module.scss';
 import { LikeButton } from './LikeButton';
 import { useUser } from '@clerk/clerk-react';
+import BlockLoader from './BlockLoader';
 
 type APIResponse = {
   tanka: Tanka;
@@ -67,7 +68,9 @@ export const TankaPage = () => {
     return (
       <div className={styles.container}>
         <Header />
-        <div>Loading...</div>
+        <p>
+          Loading <BlockLoader mode={6} />
+        </p>
       </div>
     );
 

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import type { Tanka } from '../types/tanka';
 import styles from './UserPage.module.scss';
 import { Header } from './Header/Header';
+import BlockLoader from './BlockLoader';
 
 type User = {
   id: number;
@@ -163,7 +164,9 @@ export const UserPage = () => {
     return (
       <div className={styles.container}>
         <Header />
-        <div>Loading...</div>
+        <p>
+          Loading <BlockLoader mode={6} />
+        </p>
       </div>
     );
 
@@ -241,7 +244,9 @@ export const UserPage = () => {
       <div className={styles.tankaSection}>
         <h2>投稿した短歌</h2>
         {isLoading ? (
-          <p>Loading...</p>
+          <p>
+            Loading <BlockLoader mode={6} />
+          </p>
         ) : error ? (
           <p className={styles.error}>{error}</p>
         ) : tankas.length === 0 ? (

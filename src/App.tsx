@@ -11,6 +11,8 @@ import { LikeButton } from './components/LikeButton';
 import { PostTankaModal } from './components/PostTankaModal';
 import Button from './components/Button';
 import Card from './components/Card';
+import BlockLoader from './components/BlockLoader';
+
 type PaginationInfo = {
   current_page: number;
   has_next: boolean;
@@ -38,7 +40,6 @@ const App = () => {
 };
 
 const TankaApp = () => {
-  const [newTanka, setNewTanka] = useState('');
   const [tankas, setTankas] = useState<Tanka[]>([]);
   const [pagination, setPagination] = useState<PaginationInfo | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -101,7 +102,9 @@ const TankaApp = () => {
         <Card title="最新の短歌">
           <div className={styles.tankaBox}>
             {isLoading ? (
-              <p>Loading...</p>
+              <p>
+                Loading <BlockLoader mode={6} />
+              </p>
             ) : error ? (
               <p className={styles.error}>{error}</p>
             ) : (
