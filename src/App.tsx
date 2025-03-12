@@ -9,6 +9,7 @@ import { TankaPage } from './components/TankaPage'
 import { Header } from './components/Header/Header'
 import { LikeButton } from './components/LikeButton'
 import { PostTankaModal } from './components/PostTankaModal'
+import Button from './components/Button'
 
 type PaginationInfo = {
   current_page: number
@@ -132,23 +133,21 @@ const TankaApp = () => {
               
               {pagination && (
                 <div className={styles.pagination}>
-                  <button 
+                  <Button 
                     onClick={() => setCurrentPage(p => p - 1)}
-                    disabled={currentPage === 1}
-                    className={styles.pageButton}
+                    isDisabled={currentPage === 1}
                   >
                     前のページ
-                  </button>
+                  </Button>
                   <span className={styles.pageInfo}>
-                    {currentPage}ページ目
+                    {currentPage}
                   </span>
-                  <button 
+                  <Button 
                     onClick={() => setCurrentPage(p => p + 1)}
-                    disabled={!pagination.has_next}
-                    className={styles.pageButton}
+                    isDisabled={!pagination.has_next}
                   >
                     次のページ
-                  </button>
+                  </Button>
                 </div>
               )}
             </>
