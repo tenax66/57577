@@ -10,7 +10,7 @@ import { Header } from './components/Header/Header'
 import { LikeButton } from './components/LikeButton'
 import { PostTankaModal } from './components/PostTankaModal'
 import Button from './components/Button'
-
+import Card from './components/Card'
 type PaginationInfo = {
   current_page: number
   has_next: boolean
@@ -101,8 +101,8 @@ const TankaApp = () => {
         🚧 アルファテスト中です。ユーザや短歌のデータは予告なく削除されることがあります。
       </div>
       <main>
-        <div className={styles.tankaBox}>
-          <h2>最新の短歌</h2>
+        <Card title="最新の短歌">
+          <div className={styles.tankaBox}>
           {isLoading ? (
             <p>Loading...</p>
           ) : error ? (
@@ -153,6 +153,7 @@ const TankaApp = () => {
             </>
           )}
         </div>
+        </Card>
       </main>
       
       <button 
