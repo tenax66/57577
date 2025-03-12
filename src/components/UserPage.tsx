@@ -5,7 +5,6 @@ import type { Tanka } from '../types/tanka';
 import styles from './UserPage.module.scss';
 import { Header } from './Header/Header';
 import BlockLoader from './BlockLoader';
-import Avatar from './Avatar';
 
 type User = {
   id: number;
@@ -184,9 +183,11 @@ export const UserPage = () => {
       <Header />
       <div className={styles.userProfile}>
         <div className={styles.avatarContainer}>
-          <Avatar
+        <img
             src={`${user?.avatar_url || ''}${user?.avatar_url?.includes('?') ? '&' : '?'}h=${avatarHash}`}
-          ></Avatar>
+            alt={user?.display_name}
+            className={styles.userAvatar}
+          />
           {isOwnProfile && (
             <button
               onClick={handleAvatarUpdate}
