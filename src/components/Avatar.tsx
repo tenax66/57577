@@ -1,3 +1,5 @@
+// https://github.com/internet-development/www-sacred
+
 import styles from '@/components/Avatar.module.scss';
 
 import * as React from 'react';
