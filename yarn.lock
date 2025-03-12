@@ -174,10 +174,10 @@
     "@babel/helper-string-parser" "^7.25.9"
     "@babel/helper-validator-identifier" "^7.25.9"
 
-"@clerk/backend@^1.24.3":
-  version "1.24.3"
-  resolved "https://registry.yarnpkg.com/@clerk/backend/-/backend-1.24.3.tgz#44425b3b0850131214d909d8af7ac03c692c639a"
-  integrity sha512-kKdIAm4E/gazigdg/9uVrbwRl1Wnv+YYlZwTbb2U8y/XKMSiItjo0IaXAv3pF5j7gRxAVwcsnncQheqBOTNwNg==
+"@clerk/backend@^1.25.1":
+  version "1.25.1"
+  resolved "https://registry.yarnpkg.com/@clerk/backend/-/backend-1.25.1.tgz#7c3d571e9e14409eaace2c98b945c1f620c5f676"
+  integrity sha512-VTOg+LGqxY+ydPHxi+hrC+Uc9EIbieiku/+ZxJMhFSzYNhtkwC/UBws4JnFNoz2aLa28Pazf0WIBxwrqZgg69Q==
   dependencies:
     "@clerk/shared" "^3.0.0"
     "@clerk/types" "^4.47.0"
