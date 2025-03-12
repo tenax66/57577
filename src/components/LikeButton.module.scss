@@ -8,22 +8,22 @@
   cursor: pointer;
   font-size: 0.9rem;
   transition: all 0.2s;
-  
+
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }
-  
+
   &.liked {
     background: #ffebee;
     border-color: #ff4081;
     color: #ff4081;
-    
+
     .icon {
       color: #ff4081;
     }
   }
-  
+
   &:not(:disabled):hover {
     background: #ffebee;
   }
@@ -36,4 +36,4 @@
 .count {
   min-width: 1.5em;
   text-align: left;
-} 
+}

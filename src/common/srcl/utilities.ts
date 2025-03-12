@@ -47,7 +47,7 @@ export function getDomainFromEmailWithoutAnySubdomain(email: string): string {
 export function onHandleThemeChange(className?: string) {
   const body = document.body;
 
-  body.classList.forEach((existingClass) => {
+  body.classList.forEach(existingClass => {
     if (existingClass.startsWith('theme-')) {
       body.classList.remove(existingClass);
     }
@@ -64,7 +64,7 @@ export function onHandleFontChange(className?: string) {
   const body = document.body;
 
   if (className) {
-    body.classList.forEach((existingClass) => {
+    body.classList.forEach(existingClass => {
       if (existingClass.startsWith('font-')) {
         body.classList.remove(existingClass);
       }
@@ -74,7 +74,7 @@ export function onHandleFontChange(className?: string) {
     return;
   }
 
-  body.classList.forEach((existingClass) => {
+  body.classList.forEach(existingClass => {
     if (existingClass.startsWith('font-')) {
       body.classList.remove(existingClass);
     }
@@ -195,7 +195,7 @@ export function createSlug(text: any) {
     .toString()
     .toLowerCase()
     .replace(/\s+/g, '-') // Replace spaces with -
-    .replace(p, (c) => b.charAt(a.indexOf(c))) // Replace special chars
+    .replace(p, c => b.charAt(a.indexOf(c))) // Replace special chars
     .replace(/&/g, '-and-') // Replace & with 'and'
     .replace(/[^\w\-]+/g, '') // Remove all non-word chars
     .replace(/\-\-+/g, '-') // Replace multiple - with single -
@@ -218,7 +218,10 @@ export function isUrl(string: any) {
     return false;
   }
 
-  if (localhostDomainRE.test(everythingAfterProtocol) || nonLocalhostDomainRE.test(everythingAfterProtocol)) {
+  if (
+    localhostDomainRE.test(everythingAfterProtocol) ||
+    nonLocalhostDomainRE.test(everythingAfterProtocol)
+  ) {
     return true;
   }
 
@@ -327,8 +330,8 @@ export async function generateNonce() {
 export function filterUndefined(obj) {
   const res = {};
   Object.keys(obj)
-    .filter((k) => obj[k] !== undefined)
-    .forEach((k) => (res[k] = obj[k]));
+    .filter(k => obj[k] !== undefined)
+    .forEach(k => (res[k] = obj[k]));
   return res;
 }
 
@@ -337,22 +340,46 @@ export const isFocusableElement = (element: EventTarget | null): element is HTML
     return false;
   }
 
-  const focusableSelectors = ['a[href]', 'button', 'input', 'select', 'textarea', '[tabindex]:not([tabindex="-1"])', '[contenteditable="true"]'];
+  const focusableSelectors = [
+    'a[href]',
+    'button',
+    'input',
+    'select',
+    'textarea',
+    '[tabindex]:not([tabindex="-1"])',
+    '[contenteditable="true"]',
+  ];
 
   return element.matches(focusableSelectors.join(', '));
 };
 
-export const findNextFocusable = (element: Element | null, direction: 'next' | 'previous' = 'next'): HTMLElement | null => {
+export const findNextFocusable = (
+  element: Element | null,
+  direction: 'next' | 'previous' = 'next'
+): HTMLElement | null => {
   if (!element) return null;
 
-  const focusableSelectors = ['a[href]', 'button', 'input', 'select', 'textarea', '[tabindex]:not([tabindex="-1"])', '[contenteditable="true"]'];
+  const focusableSelectors = [
+    'a[href]',
+    'button',
+    'input',
+    'select',
+    'textarea',
+    '[tabindex]:not([tabindex="-1"])',
+    '[contenteditable="true"]',
+  ];
 
-  const focusableElements = Array.from(document.querySelectorAll<HTMLElement>(focusableSelectors.join(', ')));
+  const focusableElements = Array.from(
+    document.querySelectorAll<HTMLElement>(focusableSelectors.join(', '))
+  );
 
   const currentIndex = focusableElements.indexOf(element as HTMLElement);
 
   if (currentIndex !== -1) {
-    const nextIndex = direction === 'next' ? (currentIndex + 1) % focusableElements.length : (currentIndex - 1 + focusableElements.length) % focusableElements.length;
+    const nextIndex =
+      direction === 'next'
+        ? (currentIndex + 1) % focusableElements.length
+        : (currentIndex - 1 + focusableElements.length) % focusableElements.length;
 
     return focusableElements[nextIndex];
   }
@@ -360,10 +387,18 @@ export const findNextFocusable = (element: Element | null, direction: 'next' | '
   return null;
 };
 
-export const findFocusableDescendant = (container: Element | null, currentFocused: Element | null = null, direction: 'next' | 'previous' = 'next'): HTMLElement | null => {
+export const findFocusableDescendant = (
+  container: Element | null,
+  currentFocused: Element | null = null,
+  direction: 'next' | 'previous' = 'next'
+): HTMLElement | null => {
   if (!container) return null;
 
-  const focusableElements = Array.from(container.querySelectorAll<HTMLElement>('a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"]), [contenteditable="true"]'));
+  const focusableElements = Array.from(
+    container.querySelectorAll<HTMLElement>(
+      'a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"]), [contenteditable="true"]'
+    )
+  );
 
   if (focusableElements.length === 0) return null;
 

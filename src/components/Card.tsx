@@ -1,13 +1,13 @@
 // https://github.com/internet-development/www-sacred
 
-import styles from '@/components/Card.module.scss'
+import styles from '@/components/Card.module.scss';
 
-import * as React from 'react'
+import * as React from 'react';
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  children?: React.ReactNode
-  title?: string | any
-  mode?: string | any
+  children?: React.ReactNode;
+  title?: string | any;
+  mode?: string | any;
 }
 
 const Card: React.FC<CardProps> = ({ children, mode, title, style, ...rest }) => {
@@ -17,7 +17,7 @@ const Card: React.FC<CardProps> = ({ children, mode, title, style, ...rest }) =>
       {title ? <h2 className={styles.title}>{title}</h2> : null}
       <div className={styles.right} aria-hidden="true"></div>
     </header>
-  )
+  );
 
   if (mode === 'left') {
     titleElement = (
@@ -26,7 +26,7 @@ const Card: React.FC<CardProps> = ({ children, mode, title, style, ...rest }) =>
         <h2 className={styles.title}>{title}</h2>
         <div className={styles.right} aria-hidden="true"></div>
       </header>
-    )
+    );
   }
 
   if (mode === 'right') {
@@ -36,7 +36,7 @@ const Card: React.FC<CardProps> = ({ children, mode, title, style, ...rest }) =>
         <h2 className={styles.title}>{title}</h2>
         <div className={styles.rightCorner} aria-hidden="true"></div>
       </header>
-    )
+    );
   }
 
   return (
@@ -44,7 +44,7 @@ const Card: React.FC<CardProps> = ({ children, mode, title, style, ...rest }) =>
       {titleElement}
       <section className={styles.children}>{children}</section>
     </article>
-  )
-}
+  );
+};
 
-export default Card
+export default Card;
