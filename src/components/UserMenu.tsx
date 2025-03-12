@@ -1,6 +1,7 @@
 import { useUser } from '@clerk/clerk-react';
 import { useClerk } from '@clerk/clerk-react';
 import { useState, useEffect } from 'react';
+import Avatar from './Avatar';
 import styles from './UserMenu.module.scss';
 
 type User = {
@@ -43,7 +44,7 @@ export const UserMenu = () => {
   return (
     <div className={styles.userMenu}>
       <a href={`/users/${clerkUser.id}`} className={styles.userProfile}>
-        <img src={user.avatar_url || ''} alt={user.display_name} className={styles.userAvatar} />
+        <Avatar src={user.avatar_url || ''}></Avatar>
         <span className={styles.userName}>{user.display_name}</span>
       </a>
       <button onClick={() => signOut()} className={`${styles.button} ${styles.logoutButton}`}>
