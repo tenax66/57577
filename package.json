@@ -9,7 +9,9 @@
     "dev": "wrangler pages dev ./pages",
     "build": "vite build",
     "deploy": "yarn build && wrangler pages deploy pages",
-    "db:migrate-local": "npx wrangler d1 migrations apply 57577"
+    "db:migrate-local": "npx wrangler d1 migrations apply 57577",
+    "format": "prettier --write \"src/**/*.{ts,tsx,scss,css,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,scss,css,json}\""
   },
   "license": "MIT",
   "devDependencies": {
@@ -17,6 +19,8 @@
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
+    "eslint-config-prettier": "^10.1.1",
+    "prettier": "^3.5.3",
     "vite": "^6.2.1",
     "wrangler": "^3.114.0"
   },
