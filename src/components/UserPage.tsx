@@ -183,7 +183,7 @@ export const UserPage = () => {
       <Header />
       <div className={styles.userProfile}>
         <div className={styles.avatarContainer}>
-        <img
+          <img
             src={`${user?.avatar_url || ''}${user?.avatar_url?.includes('?') ? '&' : '?'}h=${avatarHash}`}
             alt={user?.display_name}
             className={styles.userAvatar}
