@@ -3,6 +3,7 @@ import { useClerk } from '@clerk/clerk-react';
 import { useState, useEffect } from 'react';
 import Avatar from './Avatar';
 import styles from './UserMenu.module.scss';
+import ActionButton from './ActionButton';
 
 type User = {
   id: number;
@@ -45,11 +46,8 @@ export const UserMenu = () => {
     <div className={styles.userMenu}>
       <a href={`/users/${clerkUser.id}`} className={styles.userProfile}>
         <Avatar src={user.avatar_url || ''}></Avatar>
-        <span className={styles.userName}>{user.display_name}</span>
       </a>
-      <button onClick={() => signOut()} className={`${styles.button} ${styles.logoutButton}`}>
-        ログアウト
-      </button>
+      <ActionButton onClick={() => signOut()}>ログアウト</ActionButton>
     </div>
   );
 };
