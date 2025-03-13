@@ -118,7 +118,7 @@ const TankaApp = () => {
                       <div className={styles.tankaMetadata}>
                         <div>
                           <small>
-                            by <Link to={`/users/${tanka.clerk_id}`}>{tanka.display_name}</Link>
+                            <Link to={`/users/${tanka.clerk_id}`}>{tanka.display_name}</Link>
                           </small>
                           <small> </small>
                           <small>{new Date(tanka.created_at).toLocaleDateString('ja-JP')}</small>
