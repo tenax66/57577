@@ -21,12 +21,24 @@ export const Header = () => {
           </p>
         ) : !user ? (
           <>
-            <SignInButton mode="modal">
-              <ActionButton>ログイン</ActionButton>
-            </SignInButton>
-            <SignUpButton mode="modal">
-              <ActionButton>登録</ActionButton>
-            </SignUpButton>
+            <ButtonGroup
+              items={[
+                {
+                  body: (
+                    <SignInButton mode="modal">
+                      <button className={styles.button}>ログイン</button>
+                    </SignInButton>
+                  ),
+                },
+                {
+                  body: (
+                    <SignUpButton mode="modal">
+                      <button className={styles.button}>登録</button>
+                    </SignUpButton>
+                  ),
+                },
+              ]}
+            />
           </>
         ) : (
           <UserMenu />
