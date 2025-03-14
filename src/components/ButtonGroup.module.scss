@@ -1,0 +1,11 @@
+// https://github.com/internet-development/www-sacred
+
+.full {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+  white-space: nowrap;
+}
+
+.full > * > * {
+  width: 100%;
+}

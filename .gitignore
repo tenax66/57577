@@ -6,3 +6,6 @@ pages
 # Cloudflare
 .wrangler
 .dev.vars
+
+# Mac
+.DS_Store

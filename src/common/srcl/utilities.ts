@@ -1,4 +1,5 @@
 // https://github.com/internet-development/www-sacred
+
 const hasOwn = {}.hasOwnProperty;
 const localhostDomainRE = /^localhost[\:?\d]*(?:[^\:?\d]\S*)?$/;
 const nonLocalhostDomainRE = /^[^\s\.]+\.\S{2,}$/;

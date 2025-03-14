@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { UserMenu } from '../UserMenu';
 import styles from './Header.module.scss';
 import BlockLoader from '../BlockLoader';
+import ButtonGroup from '../ButtonGroup';
+import ActionButton from '../ActionButton';
 
 export const Header = () => {
   const { user, isLoaded } = useUser();
@@ -20,10 +22,10 @@ export const Header = () => {
         ) : !user ? (
           <>
             <SignInButton mode="modal">
-              <button className={styles.button}>ログイン</button>
+              <ActionButton>ログイン</ActionButton>
             </SignInButton>
             <SignUpButton mode="modal">
-              <button className={styles.button}>登録</button>
+              <ActionButton>登録</ActionButton>
             </SignUpButton>
           </>
         ) : (
