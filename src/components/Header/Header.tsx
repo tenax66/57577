@@ -4,7 +4,6 @@ import { UserMenu } from '../UserMenu';
 import styles from './Header.module.scss';
 import BlockLoader from '../BlockLoader';
 import ButtonGroup from '../ButtonGroup';
-import ActionButton from '../ActionButton';
 
 export const Header = () => {
   const { user, isLoaded } = useUser();
@@ -26,14 +25,14 @@ export const Header = () => {
                 {
                   body: (
                     <SignInButton mode="modal">
-                      <button className={styles.button}>ログイン</button>
+                      <button className={styles.button}>LOGIN</button>
                     </SignInButton>
                   ),
                 },
                 {
                   body: (
                     <SignUpButton mode="modal">
-                      <button className={styles.button}>登録</button>
+                      <button className={styles.button}>SIGNUP</button>
                     </SignUpButton>
                   ),
                 },
