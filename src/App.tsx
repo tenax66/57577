@@ -12,7 +12,7 @@ import { PostTankaModal } from './components/PostTankaModal';
 import Button from './components/Button';
 import Card from './components/Card';
 import BlockLoader from './components/BlockLoader';
-
+import Divider from './components/Divider';
 type PaginationInfo = {
   current_page: number;
   has_next: boolean;
@@ -129,6 +129,7 @@ const TankaApp = () => {
                           likesCount={tanka.likes_count}
                         />
                       </div>
+                      <Divider />
                     </li>
                   ))}
                 </ul>

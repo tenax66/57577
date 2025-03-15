@@ -1,4 +1,5 @@
 .likeButton {
+  border: none;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -14,10 +15,6 @@
   }
 
   &.liked {
-    background: #ffebee;
-    border-color: #ff4081;
-    color: #ff4081;
-
     .icon {
       color: #ff4081;
     }
