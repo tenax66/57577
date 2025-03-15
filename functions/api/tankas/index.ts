@@ -216,4 +216,61 @@ app.post('/:id/likes', clerkMiddleware(), async (c) => {
   }
 })
 
+// いいねの状態を取得するエンドポイント
+app.get('/:id/likes/status', clerkMiddleware(), async (c) => {
+  const auth = getAuth(c)
+  if (!auth?.userId) {
+    return c.json({ error: 'Unauthorized' }, 401)
+  }
+
+  try {
+    const tankaId = c.req.param('id')
+    
+    // ユーザーIDの取得
+    const { results: userResults } = await c.env.DB.prepare(
+      'SELECT id FROM users WHERE clerk_id = ?'
+    )
+    .bind(auth.userId)
+    .all<{ id: number }>()
+
+    if (userResults.length === 0) {
+      return c.json({ error: 'User not found' }, 404)
+    }
+
+    const userId = userResults[0].id
+
+    // いいねの存在確認
+    const { results: likeResults } = await c.env.DB.prepare(
+      'SELECT id FROM likes WHERE user_id = ? AND tanka_id = ?'
+    )
+    .bind(userId, tankaId)
+    .all()
+
+    return c.json({ liked: likeResults.length > 0 })
+  } catch (e) {
+    console.error(e)
+    return c.json({ error: 'Internal Server Error' }, 500)
+  }
+})
+
+// いいね数を取得するエンドポイント
+app.get('/:id/likes/count', async (c) => {
+  try {
+    const tankaId = c.req.param('id')
+    
+    const { results } = await c.env.DB.prepare(`
+      SELECT COUNT(*) as count
+      FROM likes
+      WHERE tanka_id = ?
+    `)
+    .bind(tankaId)
+    .all<{ count: number }>()
+
+    return c.json({ count: results[0].count })
+  } catch (e) {
+    console.error(e)
+    return c.json({ error: 'Internal Server Error' }, 500)
+  }
+})
+
 export default app 

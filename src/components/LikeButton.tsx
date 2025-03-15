@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useUser } from '@clerk/clerk-react';
 import styles from './LikeButton.module.scss';
 
@@ -12,11 +12,44 @@ type LikeResponse = {
   liked: boolean;
 };
 
+type LikeStatusResponse = {
+  liked: boolean;
+};
+
+type LikeCountResponse = {
+  count: number;
+};
+
 export const LikeButton = ({ tankaId, initialLiked, likesCount: initialLikesCount }: Props) => {
   const { user, isLoaded } = useUser();
   const [isLiked, setIsLiked] = useState(initialLiked);
   const [likesCount, setLikesCount] = useState(initialLikesCount);
   const [isProcessing, setIsProcessing] = useState(false);
+
+  // いいねの状態といいね数を取得
+  useEffect(() => {
+    const fetchLikeData = async () => {
+      try {
+        // いいね数を取得
+        const countResponse = await fetch(`/api/tankas/${tankaId}/likes/count`);
+        if (!countResponse.ok) throw new Error('Failed to fetch like count');
+        const { count } = await countResponse.json() as LikeCountResponse;
+        setLikesCount(count);
+
+        // ログイン中のみいいね状態を取得
+        if (user) {
+          const statusResponse = await fetch(`/api/tankas/${tankaId}/likes/status`);
+          if (!statusResponse.ok) throw new Error('Failed to fetch like status');
+          const { liked } = await statusResponse.json() as LikeStatusResponse;
+          setIsLiked(liked);
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    fetchLikeData();
+  }, [tankaId, user]);
 
   const handleLike = async () => {
     if (!user || isProcessing) return;
@@ -29,9 +62,14 @@ export const LikeButton = ({ tankaId, initialLiked, likesCount: initialLikesCoun
 
       if (!response.ok) throw new Error('Failed to toggle like');
 
-      const { liked } = (await response.json()) as LikeResponse;
+      // いいねの状態といいね数を再取得
+      const [{ liked }, { count }] = await Promise.all([
+        response.json() as Promise<LikeResponse>,
+        (await fetch(`/api/tankas/${tankaId}/likes/count`)).json() as Promise<LikeCountResponse>,
+      ]);
+
       setIsLiked(liked);
-      setLikesCount(prev => (liked ? prev + 1 : prev - 1));
+      setLikesCount(count);
     } catch (e) {
       console.error(e);
     } finally {
