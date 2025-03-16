@@ -263,7 +263,7 @@ export const UserPage = () => {
         ) : (
           <div className={styles.tankaList}>
             {tankas.map(tanka => (
-              <Card key={tanka.id} className={styles.tankaCard}>
+              <div key={tanka.id} className={styles.tankaCard}>
                 <Link to={`/tankas/${tanka.id}`} className={styles.tankaLink}>
                   <p>{tanka.content}</p>
                 </Link>
@@ -276,7 +276,7 @@ export const UserPage = () => {
                     <DeleteButton onClick={() => handleDelete(tanka.id)}>削除</DeleteButton>
                   )}
                 </div>
-              </Card>
+              </div>
             ))}
           </div>
         )}
