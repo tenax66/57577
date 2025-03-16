@@ -1,5 +1,4 @@
 import { Hono } from 'hono';
-import type { D1Database } from '@cloudflare/workers-types';
 import type { Bindings, Tanka } from '../../types';
 import { clerkMiddleware, getAuth } from '@hono/clerk-auth';
 
