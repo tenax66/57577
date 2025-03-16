@@ -13,13 +13,14 @@
   }
 
   &.liked {
+    background: var(--theme-focused-foreground-subdued);
     .icon {
-      color: #ff4081;
+      color: var(--theme-liked-foreground);
     }
   }
 
   &:not(:disabled):hover {
-    background: #ffebee;
+    background: var(--theme-focused-foreground-subdued);
   }
 }
 
