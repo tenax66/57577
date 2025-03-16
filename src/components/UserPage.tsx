@@ -6,6 +6,7 @@ import styles from './UserPage.module.scss';
 import { Header } from './Header/Header';
 import BlockLoader from './BlockLoader';
 import ActionButton from './ActionButton';
+import Card from './Card';
 
 type User = {
   id: number;
@@ -182,7 +183,7 @@ export const UserPage = () => {
   return (
     <div className={styles.container}>
       <Header />
-      <div className={styles.userProfile}>
+      <div>
         <table className={styles.profileTable}>
           <tbody>
             <tr>
@@ -259,9 +260,9 @@ export const UserPage = () => {
         ) : tankas.length === 0 ? (
           <p>まだ短歌を投稿していません</p>
         ) : (
-          <ul className={styles.tankaList}>
+          <div className={styles.tankaList}>
             {tankas.map(tanka => (
-              <li key={tanka.id} className={styles.tankaItem}>
+              <Card key={tanka.id} className={styles.tankaCard}>
                 <p>{tanka.content}</p>
                 <div className={styles.tankaMetadata}>
                   <small>{new Date(tanka.created_at).toLocaleDateString('ja-JP')}</small>
@@ -271,9 +272,9 @@ export const UserPage = () => {
                     </button>
                   )}
                 </div>
-              </li>
+              </Card>
             ))}
-          </ul>
+          </div>
         )}
       </div>
     </div>
