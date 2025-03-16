@@ -70,21 +70,24 @@
   right: 2rem;
   padding: 1rem 2rem;
   border: none;
-  border-radius: 9999px;
-  background: #000;
-  color: #fff;
+  background: var(--theme-button);
+  color: var(--theme-button-text);
   font-size: 1rem;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   transition: all 0.2s;
 
   &:hover:not(:disabled) {
+    background: var(--theme-focused-foreground);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  &:focus:not(:disabled) {
+    background: var(--theme-focused-foreground);
   }
 
   &:disabled {
-    background: #ccc;
+    background: var(--theme-button-background);
+    color: var(--theme-button-foreground);
     cursor: not-allowed;
   }
 }

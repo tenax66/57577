@@ -166,14 +166,14 @@ const TankaApp = () => {
         </Card>
       </main>
 
-      <button
+      <Button
         onClick={() => setIsModalOpen(true)}
         className={styles.floatingButton}
         disabled={!user}
         title={user ? undefined : 'ログインが必要です'}
       >
         投稿
-      </button>
+      </Button>
 
       <PostTankaModal
         isOpen={isModalOpen}
