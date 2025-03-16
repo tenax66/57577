@@ -270,9 +270,17 @@ export const UserPage = () => {
                 <div className={styles.tankaMetadata}>
                   <small>{new Date(tanka.created_at).toLocaleDateString('ja-JP')}</small>
                   {isOwnProfile && (
-                    <button onClick={() => handleDelete(tanka.id)} className={styles.deleteButton}>
-                      削除
-                    </button>
+                    <ActionButton
+                      onClick={() => handleDelete(tanka.id)}
+                      style={{
+                        color: '#e00',
+                        '&:hover': {
+                          background: '#e00',
+                        },
+                      }}
+                    >
+                      <small>削除</small>
+                    </ActionButton>
                   )}
                 </div>
               </Card>
