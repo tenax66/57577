@@ -128,7 +128,7 @@ const TankaApp = () => {
                           <Table>
                             <TableRow>
                               <TableColumn>
-                                <div style={{ padding: '1px 6px 3px 6px' }}>
+                                <div style={{ padding: '1px 6px 1px 6px' }}>
                                   <Link to={`/users/${tanka.clerk_id}`}>{tanka.display_name}</Link>
                                 </div>
                               </TableColumn>
