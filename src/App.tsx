@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import styles from '@/App.module.scss';
 import type { Tanka } from './types/tanka';
 import { ClerkProvider, useUser } from '@clerk/clerk-react';
@@ -13,6 +13,10 @@ import Button from './components/Button';
 import Card from './components/Card';
 import BlockLoader from './components/BlockLoader';
 import Divider from './components/Divider';
+import Table from './components/Table';
+import TableRow from './components/TableRow';
+import TableColumn from './components/TableColumn';
+
 type PaginationInfo = {
   current_page: number;
   has_next: boolean;
@@ -109,30 +113,43 @@ const TankaApp = () => {
               <p className={styles.error}>{error}</p>
             ) : (
               <>
-                <ul className={styles.tankaList}>
                   {tankas.map(tanka => (
-                    <li key={tanka.id} className={styles.tankaItem}>
-                      <Link to={`/tankas/${tanka.id}`} className={styles.tankaLink}>
-                        <p>{tanka.content}</p>
-                      </Link>
-                      <div className={styles.tankaMetadata}>
-                        <div>
-                          <small>
-                            <Link to={`/users/${tanka.clerk_id}`}>{tanka.display_name}</Link>
-                          </small>
-                          <small> </small>
-                          <small>{new Date(tanka.created_at).toLocaleDateString('ja-JP')}</small>
-                        </div>
-                        <LikeButton
-                          tankaId={tanka.id}
-                          initialLiked={tanka.is_liked}
-                          likesCount={tanka.likes_count}
-                        />
-                      </div>
-                      <Divider />
-                    </li>
+                    <Fragment key={tanka.id}>
+                    <Table>
+                    <TableRow key={tanka.id}>
+                      <TableColumn>
+                        <Link to={`/tankas/${tanka.id}`} className={styles.tankaLink}>
+                          <p>{tanka.content}</p>
+                        </Link>
+                      </TableColumn>
+                      <TableColumn className={styles.metadataColumn}>
+                        <Table>
+                          <TableRow>
+                            <TableColumn>
+                              <Link to={`/users/${tanka.clerk_id}`}>{tanka.display_name}</Link>
+                            </TableColumn>
+                          </TableRow>
+                          <TableRow>
+                            <TableColumn>
+                              {new Date(tanka.created_at).toISOString().split('T')[0]}
+                            </TableColumn>
+                          </TableRow>
+                          <TableRow>
+                            <TableColumn>
+                              <LikeButton
+                                tankaId={tanka.id}
+                                initialLiked={tanka.is_liked}
+                                likesCount={tanka.likes_count}
+                              />
+                            </TableColumn>
+                          </TableRow>
+                        </Table>
+                      </TableColumn>
+                    </TableRow>
+                    </Table>
+                    <Divider />
+                    </Fragment>
                   ))}
-                </ul>
 
                 {pagination && (
                   <div className={styles.pagination}>
