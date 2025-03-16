@@ -1,41 +1,40 @@
-import { Hono } from 'hono'
-import type { D1Database } from '@cloudflare/workers-types'
-import type { Bindings, Tanka } from '../../types'
-import { clerkMiddleware, getAuth } from '@hono/clerk-auth'
+import { Hono } from 'hono';
+import type { D1Database } from '@cloudflare/workers-types';
+import type { Bindings, Tanka } from '../../types';
+import { clerkMiddleware, getAuth } from '@hono/clerk-auth';
 
-const app = new Hono<{ Bindings: Bindings }>()
+const app = new Hono<{ Bindings: Bindings }>();
 
 // 既存のコードの中で、tankaの型を更新
 type TankaWithLikes = Tanka & {
-  display_name: string
-  clerk_id: string
-  likes_count: number
-  is_liked: boolean
-}
+  display_name: string;
+  clerk_id: string;
+  likes_count: number;
+  is_liked: boolean;
+};
 
-app.get('/', async (c) => {
+app.get('/', async c => {
   try {
-    const page = parseInt(c.req.query('page') || '1')
-    const per_page = 10
-    const offset = (page - 1) * per_page
-    const auth = getAuth(c)
-    const userId = auth?.userId
+    const page = parseInt(c.req.query('page') || '1');
+    const per_page = 10;
+    const offset = (page - 1) * per_page;
+    const auth = getAuth(c);
+    const userId = auth?.userId;
 
     // ユーザーIDの取得（ログインしている場合）
-    let dbUserId: number | null = null
+    let dbUserId: number | null = null;
     if (userId) {
-      const { results } = await c.env.DB.prepare(
-        'SELECT id FROM users WHERE clerk_id = ?'
-      )
-      .bind(userId)
-      .all<{ id: number }>()
+      const { results } = await c.env.DB.prepare('SELECT id FROM users WHERE clerk_id = ?')
+        .bind(userId)
+        .all<{ id: number }>();
       if (results.length > 0) {
-        dbUserId = results[0].id
+        dbUserId = results[0].id;
       }
     }
 
     // 短歌とライク情報を取得
-    const { results } = await c.env.DB.prepare(`
+    const { results } = await c.env.DB.prepare(
+      `
       SELECT 
         t.*,
         u.display_name,
@@ -48,93 +47,91 @@ app.get('/', async (c) => {
       GROUP BY t.id
       ORDER BY t.created_at DESC 
       LIMIT ? OFFSET ?
-    `)
-    .bind(...(dbUserId ? [dbUserId, per_page + 1, offset] : [per_page + 1, offset]))
-    .all<TankaWithLikes>()
-    
-    const hasNextPage = results.length > per_page
-    const tankas = results.slice(0, per_page)
-    
-    return c.json({ 
+    `
+    )
+      .bind(...(dbUserId ? [dbUserId, per_page + 1, offset] : [per_page + 1, offset]))
+      .all<TankaWithLikes>();
+
+    const hasNextPage = results.length > per_page;
+    const tankas = results.slice(0, per_page);
+
+    return c.json({
       tankas,
       pagination: {
         current_page: page,
-        has_next: hasNextPage
-      }
-    })
+        has_next: hasNextPage,
+      },
+    });
   } catch (e) {
-    console.error(e)
-    return c.json({ error: 'Internal Server Error' }, 500)
+    console.error(e);
+    return c.json({ error: 'Internal Server Error' }, 500);
   }
-})
+});
 
 // 短歌投稿 - 認証必須
-app.post('/', clerkMiddleware(), async (c) => {
-  const auth = getAuth(c)
+app.post('/', clerkMiddleware(), async c => {
+  const auth = getAuth(c);
   if (!auth?.userId) {
-    return c.json({ error: 'Unauthorized' }, 401)
+    return c.json({ error: 'Unauthorized' }, 401);
   }
 
   try {
-    const { content } = await c.req.json()
-    
+    const { content } = await c.req.json();
+
     // 文字数チェックを追加
     if (!content || content.length > 150) {
-      return c.json({ error: '短歌は1文字以上150文字以下で入力してください' }, 400)
+      return c.json({ error: '短歌は1文字以上150文字以下で入力してください' }, 400);
     }
 
     // clerk_idはリクエストボディからではなく、認証情報から取得
-    const clerk_id = auth.userId
-    
+    const clerk_id = auth.userId;
+
     // ユーザーIDの取得
-    const { results } = await c.env.DB.prepare(
-      'SELECT id FROM users WHERE clerk_id = ?'
-    )
-    .bind(clerk_id)
-    .all<{ id: number }>()
+    const { results } = await c.env.DB.prepare('SELECT id FROM users WHERE clerk_id = ?')
+      .bind(clerk_id)
+      .all<{ id: number }>();
 
     if (results.length === 0) {
-      return c.json({ error: 'User not found' }, 404)
+      return c.json({ error: 'User not found' }, 404);
     }
 
-    const user_id = results[0].id
-    
+    const user_id = results[0].id;
+
     const { success } = await c.env.DB.prepare(
       'INSERT INTO tankas (content, user_id) VALUES (?, ?)'
     )
-    .bind(content, user_id)
-    .run()
+      .bind(content, user_id)
+      .run();
 
-    if (!success) throw new Error('Failed to insert tanka')
-    
-    return c.json({ message: 'Created' }, 201)
+    if (!success) throw new Error('Failed to insert tanka');
+
+    return c.json({ message: 'Created' }, 201);
   } catch (e) {
-    console.error(e)
-    return c.json({ error: 'Internal Server Error' }, 500)
+    console.error(e);
+    return c.json({ error: 'Internal Server Error' }, 500);
   }
-})
+});
 
-app.get('/:id', async (c) => {
+app.get('/:id', async c => {
   try {
-    const tankaId = c.req.param('id')
-    const auth = getAuth(c)
-    const userId = auth?.userId
+    const tankaId = c.req.param('id');
+    const auth = getAuth(c);
+    const userId = auth?.userId;
 
     // ユーザーIDの取得（ログインしている場合）
-    let dbUserId: number | null = null
+    let dbUserId: number | null = null;
     if (userId) {
-      const { results } = await c.env.DB.prepare(
-        'SELECT id FROM users WHERE clerk_id = ?'
-      )
-      .bind(userId)
-      .all<{ id: number }>()
+      const { results } = await c.env.DB.prepare('SELECT id FROM users WHERE clerk_id = ?')
+        .bind(userId)
+        .all<{ id: number }>();
       if (results.length > 0) {
-        dbUserId = results[0].id
+        dbUserId = results[0].id;
       }
     }
 
     // 短歌とライク情報を取得
-    const { results } = await c.env.DB.prepare(`
+    const { results } = await c.env.DB.prepare(
+      `
       SELECT 
         t.*,
         u.display_name,
@@ -146,167 +143,166 @@ app.get('/:id', async (c) => {
       LEFT JOIN likes l ON t.id = l.tanka_id
       WHERE t.id = ?
       GROUP BY t.id
-    `)
-    .bind(...(dbUserId ? [dbUserId, tankaId] : [tankaId]))
-    .all<TankaWithLikes>()
+    `
+    )
+      .bind(...(dbUserId ? [dbUserId, tankaId] : [tankaId]))
+      .all<TankaWithLikes>();
 
     if (results.length === 0) {
-      return c.json({ error: 'Tanka not found' }, 404)
+      return c.json({ error: 'Tanka not found' }, 404);
     }
 
-    return c.json({ tanka: results[0] })
+    return c.json({ tanka: results[0] });
   } catch (e) {
-    console.error(e)
-    return c.json({ error: 'Internal Server Error' }, 500)
+    console.error(e);
+    return c.json({ error: 'Internal Server Error' }, 500);
   }
-})
+});
 
 // いいねを追加/削除するエンドポイント
-app.post('/:id/likes', clerkMiddleware(), async (c) => {
-  const auth = getAuth(c)
+app.post('/:id/likes', clerkMiddleware(), async c => {
+  const auth = getAuth(c);
   if (!auth?.userId) {
-    return c.json({ error: 'Unauthorized' }, 401)
+    return c.json({ error: 'Unauthorized' }, 401);
   }
 
   try {
-    const tankaId = c.req.param('id')
-    
+    const tankaId = c.req.param('id');
+
     // ユーザーIDの取得
     const { results: userResults } = await c.env.DB.prepare(
       'SELECT id FROM users WHERE clerk_id = ?'
     )
-    .bind(auth.userId)
-    .all<{ id: number }>()
+      .bind(auth.userId)
+      .all<{ id: number }>();
 
     if (userResults.length === 0) {
-      return c.json({ error: 'User not found' }, 404)
+      return c.json({ error: 'User not found' }, 404);
     }
 
-    const userId = userResults[0].id
+    const userId = userResults[0].id;
 
     // いいねの存在確認
     const { results: likeResults } = await c.env.DB.prepare(
       'SELECT id FROM likes WHERE user_id = ? AND tanka_id = ?'
     )
-    .bind(userId, tankaId)
-    .all()
+      .bind(userId, tankaId)
+      .all();
 
     if (likeResults.length > 0) {
       // いいねが存在する場合は削除
-      await c.env.DB.prepare(
-        'DELETE FROM likes WHERE user_id = ? AND tanka_id = ?'
-      )
-      .bind(userId, tankaId)
-      .run()
-      
-      return c.json({ liked: false })
+      await c.env.DB.prepare('DELETE FROM likes WHERE user_id = ? AND tanka_id = ?')
+        .bind(userId, tankaId)
+        .run();
+
+      return c.json({ liked: false });
     } else {
       // いいねが存在しない場合は追加
-      await c.env.DB.prepare(
-        'INSERT INTO likes (user_id, tanka_id) VALUES (?, ?)'
-      )
-      .bind(userId, tankaId)
-      .run()
-      
-      return c.json({ liked: true })
+      await c.env.DB.prepare('INSERT INTO likes (user_id, tanka_id) VALUES (?, ?)')
+        .bind(userId, tankaId)
+        .run();
+
+      return c.json({ liked: true });
     }
   } catch (e) {
-    console.error(e)
-    return c.json({ error: 'Internal Server Error' }, 500)
+    console.error(e);
+    return c.json({ error: 'Internal Server Error' }, 500);
   }
-})
+});
 
 // いいねの状態を取得するエンドポイント
-app.get('/:id/likes/status', clerkMiddleware(), async (c) => {
-  const auth = getAuth(c)
+app.get('/:id/likes/status', clerkMiddleware(), async c => {
+  const auth = getAuth(c);
   if (!auth?.userId) {
-    return c.json({ error: 'Unauthorized' }, 401)
+    return c.json({ error: 'Unauthorized' }, 401);
   }
 
   try {
-    const tankaId = c.req.param('id')
-    
+    const tankaId = c.req.param('id');
+
     // ユーザーIDの取得
     const { results: userResults } = await c.env.DB.prepare(
       'SELECT id FROM users WHERE clerk_id = ?'
     )
-    .bind(auth.userId)
-    .all<{ id: number }>()
+      .bind(auth.userId)
+      .all<{ id: number }>();
 
     if (userResults.length === 0) {
-      return c.json({ error: 'User not found' }, 404)
+      return c.json({ error: 'User not found' }, 404);
     }
 
-    const userId = userResults[0].id
+    const userId = userResults[0].id;
 
     // いいねの存在確認
     const { results: likeResults } = await c.env.DB.prepare(
       'SELECT id FROM likes WHERE user_id = ? AND tanka_id = ?'
     )
-    .bind(userId, tankaId)
-    .all()
+      .bind(userId, tankaId)
+      .all();
 
-    return c.json({ liked: likeResults.length > 0 })
+    return c.json({ liked: likeResults.length > 0 });
   } catch (e) {
-    console.error(e)
-    return c.json({ error: 'Internal Server Error' }, 500)
+    console.error(e);
+    return c.json({ error: 'Internal Server Error' }, 500);
   }
-})
+});
 
 // いいね数を取得するエンドポイント
-app.get('/:id/likes/count', async (c) => {
+app.get('/:id/likes/count', async c => {
   try {
-    const tankaId = c.req.param('id')
-    
-    const { results } = await c.env.DB.prepare(`
+    const tankaId = c.req.param('id');
+
+    const { results } = await c.env.DB.prepare(
+      `
       SELECT COUNT(*) as count
       FROM likes
       WHERE tanka_id = ?
-    `)
-    .bind(tankaId)
-    .all<{ count: number }>()
+    `
+    )
+      .bind(tankaId)
+      .all<{ count: number }>();
 
-    return c.json({ count: results[0].count })
+    return c.json({ count: results[0].count });
   } catch (e) {
-    console.error(e)
-    return c.json({ error: 'Internal Server Error' }, 500)
+    console.error(e);
+    return c.json({ error: 'Internal Server Error' }, 500);
   }
-})
+});
 
 // 短歌削除API
-app.delete('/:id', clerkMiddleware(), async (c) => {
-    const auth = getAuth(c)
-    if (!auth?.userId) {
-      return c.json({ error: 'Unauthorized' }, 401)
-    }
-  
-    try {
-      const tankaId = c.req.param('id')
-      
-      // 短歌の所有者を確認
-      const { results } = await c.env.DB.prepare(`
+app.delete('/:id', clerkMiddleware(), async c => {
+  const auth = getAuth(c);
+  if (!auth?.userId) {
+    return c.json({ error: 'Unauthorized' }, 401);
+  }
+
+  try {
+    const tankaId = c.req.param('id');
+
+    // 短歌の所有者を確認
+    const { results } = await c.env.DB.prepare(
+      `
         SELECT t.id 
         FROM tankas t
         JOIN users u ON t.user_id = u.id
         WHERE t.id = ? AND u.clerk_id = ?
-      `)
+      `
+    )
       .bind(tankaId, auth.userId)
-      .all()
-  
-      if (results.length === 0) {
-        return c.json({ error: 'Unauthorized or tanka not found' }, 404)
-      }
-  
-      // 短歌を削除
-      await c.env.DB.prepare('DELETE FROM tankas WHERE id = ?')
-        .bind(tankaId)
-        .run()
-  
-      return c.json({ message: 'Tanka deleted successfully' })
-    } catch (e) {
-      console.error(e)
-      return c.json({ error: 'Internal Server Error' }, 500)
-    }
-  })
+      .all();
 
-export default app 
+    if (results.length === 0) {
+      return c.json({ error: 'Unauthorized or tanka not found' }, 404);
+    }
+
+    // 短歌を削除
+    await c.env.DB.prepare('DELETE FROM tankas WHERE id = ?').bind(tankaId).run();
+
+    return c.json({ message: 'Tanka deleted successfully' });
+  } catch (e) {
+    console.error(e);
+    return c.json({ error: 'Internal Server Error' }, 500);
+  }
+});
+
+export default app;
