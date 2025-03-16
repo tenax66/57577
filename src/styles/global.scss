@@ -198,6 +198,8 @@ body.theme-light {
   --theme-liked-foreground: var(--color-neon-green-90);
   --theme-post-button: var(--color-teal-70);
   --theme-post-button-shadow: var(--color-teal-90);
+  --theme-delete-button-text: var(--color-red-70);
+  --theme-delete-button-background: var(--color-red-30);
 }
 
 body.theme-dark {
@@ -429,7 +431,7 @@ body {
   --theme-text: var(--color-black-100);
   --theme-line-height-base: 1.25;
   // フォントサイズを可変にする
-  --font-size: clamp(11px, 1.8vw, 20px);
+  --font-size: clamp(12px, 1.8vw, 20px);
 
   --z-index-page: 1;
   --z-index-page-select: 3;
