@@ -103,7 +103,7 @@ const TankaApp = () => {
         🚧 アルファテスト中です。ユーザや短歌のデータは予告なく削除されることがあります。
       </div>
       <main>
-        <Card title="最新の短歌">
+        <Card title="最新の短歌" style={{ padding: '0.5rem' }}>
           <div className={styles.tankaBox}>
             {isLoading ? (
               <p>
@@ -124,32 +124,18 @@ const TankaApp = () => {
                             </Link>
                           </div>
                         </TableColumn>
+                      </TableRow>
+                      <TableRow>
                         <TableColumn className={styles.metadataColumn}>
-                          <Table>
-                            <TableRow>
-                              <TableColumn>
-                                <div style={{ padding: '1px 6px 1px 6px' }}>
-                                  <Link to={`/users/${tanka.clerk_id}`}>{tanka.display_name}</Link>
-                                </div>
-                              </TableColumn>
-                            </TableRow>
-                            <TableRow>
-                              <TableColumn>
-                                <div style={{ padding: '1px 6px 1px 6px' }}>
-                                  {new Date(tanka.created_at).toISOString().split('T')[0]}
-                                </div>
-                              </TableColumn>
-                            </TableRow>
-                            <TableRow>
-                              <TableColumn>
-                                <LikeButton
-                                  tankaId={tanka.id}
-                                  initialLiked={tanka.is_liked}
-                                  likesCount={tanka.likes_count}
-                                />
-                              </TableColumn>
-                            </TableRow>
-                          </Table>
+                          <div className={styles.metadataRow}>
+                            <Link to={`/users/${tanka.clerk_id}`}>{tanka.display_name}</Link>
+                            <span>{new Date(tanka.created_at).toISOString().split('T')[0]}</span>
+                            <LikeButton
+                              tankaId={tanka.id}
+                              initialLiked={tanka.is_liked}
+                              likesCount={tanka.likes_count}
+                            />
+                          </div>
                         </TableColumn>
                       </TableRow>
                     </Table>

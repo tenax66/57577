@@ -1,7 +1,7 @@
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 0.5rem;
 }
 
 .tankaBox {
@@ -97,4 +97,16 @@
   border-radius: 4px;
   margin-bottom: 2rem;
   color: #e65100;
+}
+
+.metadataRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  justify-content: flex-start;
+
+  :nth-child(2) {
+    margin-right: auto;
+  }
 }
