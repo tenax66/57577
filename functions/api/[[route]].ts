@@ -136,6 +136,8 @@ app.get('/api/users/:clerk_id', async (c) => {
 app.get('/api/users/:clerk_id/tankas', async (c) => {
   try {
     const clerk_id = c.req.param('clerk_id')
+    const page = parseInt(c.req.query('page') || '1')
+    const per_page = 10 // 1ページあたりの短歌数
     
     // まずユーザーIDを取得
     const { results: users } = await c.env.DB.prepare(
@@ -148,14 +150,33 @@ app.get('/api/users/:clerk_id/tankas', async (c) => {
       return c.json({ error: 'User not found' }, 404)
     }
 
-    // ユーザーの短歌を取得
-    const { results: tankas } = await c.env.DB.prepare(
-      'SELECT * FROM tankas WHERE user_id = ? ORDER BY created_at DESC'
+    // 短歌の総数を取得
+    const { results: countResult } = await c.env.DB.prepare(
+      'SELECT COUNT(*) as count FROM tankas WHERE user_id = ?'
     )
     .bind(users[0].id)
+    .all<{ count: number }>()
+
+    const total = countResult[0].count
+    const offset = (page - 1) * per_page
+
+    // ユーザーの短歌を取得（ページネーション付き）
+    const { results: tankas } = await c.env.DB.prepare(`
+      SELECT * FROM tankas 
+      WHERE user_id = ? 
+      ORDER BY created_at DESC
+      LIMIT ? OFFSET ?
+    `)
+    .bind(users[0].id, per_page, offset)
     .all<Tanka>()
 
-    return c.json({ tankas })
+    return c.json({
+      tankas,
+      pagination: {
+        current_page: page,
+        has_next: offset + tankas.length < total
+      }
+    })
   } catch (e) {
     console.error(e)
     return c.json({ error: 'Internal Server Error' }, 500)

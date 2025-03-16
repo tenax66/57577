@@ -9,6 +9,7 @@ import ActionButton from './ActionButton';
 import Card from './Card';
 import Button from './Button';
 import DeleteButton from './DeleteButton';
+import type { TankasResponse } from '../types/api';
 
 type User = {
   id: number;
@@ -40,6 +41,8 @@ export const UserPage = () => {
   const [newDisplayName, setNewDisplayName] = useState('');
   const [isUpdatingAvatar, setIsUpdatingAvatar] = useState(false);
   const [avatarHash, setAvatarHash] = useState<string>(Date.now().toString());
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pagination, setPagination] = useState<TankasResponse['pagination'] | null>(null);
 
   // 自分のページかどうかを判定
   const isOwnProfile = clerkUser?.id === userId;
@@ -54,13 +57,14 @@ export const UserPage = () => {
         if (!userResponse.ok) throw new Error('ユーザー情報の取得に失敗しました');
         const userData = (await userResponse.json()) as UserResponse;
         setUser(userData.user);
-        setNewDisplayName(userData.user.display_name); // 初期値をセット
+        setNewDisplayName(userData.user.display_name);
 
-        // 短歌を取得
-        const tankasResponse = await fetch(`/api/users/${userId}/tankas`);
+        // 短歌を取得（ページネーション付き）
+        const tankasResponse = await fetch(`/api/users/${userId}/tankas?page=${currentPage}`);
         if (!tankasResponse.ok) throw new Error('短歌の取得に失敗しました');
-        const tankasData = (await tankasResponse.json()) as APIResponse;
+        const tankasData = (await tankasResponse.json()) as TankasResponse;
         setTankas(tankasData.tankas);
+        setPagination(tankasData.pagination);
       } catch (e) {
         setError(e instanceof Error ? e.message : '短歌の取得に失敗しました');
       } finally {
@@ -69,7 +73,7 @@ export const UserPage = () => {
     };
 
     fetchUserData();
-  }, [userId]);
+  }, [userId, currentPage]);
 
   const handleUpdateDisplayName = async () => {
     if (!user || !isOwnProfile) return;
@@ -270,11 +274,26 @@ export const UserPage = () => {
                 </Link>
 
                 <div className={styles.tankaMetadata}>
-                  <small>{new Date(tanka.created_at).toLocaleDateString('ja-JP')}</small>
-                  {isOwnProfile && <DeleteButton onClick={() => handleDelete(tanka.id)}>削除</DeleteButton>}
+                  <small>
+                    <span>{new Date(tanka.created_at).toISOString().split('T')[0]}</span>
+                  </small>
+                  {isOwnProfile && (
+                    <DeleteButton onClick={() => handleDelete(tanka.id)}>削除</DeleteButton>
+                  )}
                 </div>
               </Card>
             ))}
+          </div>
+        )}
+        {pagination && (
+          <div className={styles.pagination}>
+            <Button onClick={() => setCurrentPage(p => p - 1)} isDisabled={currentPage === 1}>
+              前のページ
+            </Button>
+            <span className={styles.pageInfo}>{currentPage}</span>
+            <Button onClick={() => setCurrentPage(p => p + 1)} isDisabled={!pagination.has_next}>
+              次のページ
+            </Button>
           </div>
         )}
       </div>
