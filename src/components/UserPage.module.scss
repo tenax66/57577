@@ -118,21 +118,6 @@
   margin-top: 0.5rem;
 }
 
-.deleteButton {
-  padding: 0.5rem 1rem;
-  border: 1px solid #e00;
-  background: none;
-  color: #e00;
-  cursor: pointer;
-  font-size: 0.9rem;
-  border-radius: 4px;
-
-  &:hover {
-    background: #e00;
-    color: #fff;
-  }
-}
-
 .profileTable {
   width: 100%;
   border-collapse: collapse;
