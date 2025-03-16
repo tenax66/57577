@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "wrangler pages dev ./pages",
     "build": "vite build",
+    "dev:build": "vite build && wrangler pages dev ./pages",
     "deploy": "yarn build && wrangler pages deploy pages",
     "db:migrate-local": "wrangler d1 migrations apply --local 57577",
     "format": "prettier --write \"src/**/*.{ts,tsx,scss,css,json}\"",
