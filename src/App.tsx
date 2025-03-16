@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment } from 'react';
 import styles from '@/App.module.scss';
-import type { Tanka } from './types/tanka';
+import type { Tanka, PaginationInfo } from './types/types';
 import { ClerkProvider, useUser } from '@clerk/clerk-react';
 import { jaJP } from '@clerk/localizations';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
@@ -16,11 +16,6 @@ import Divider from './components/Divider';
 import Table from './components/Table';
 import TableRow from './components/TableRow';
 import TableColumn from './components/TableColumn';
-
-type PaginationInfo = {
-  current_page: number;
-  has_next: boolean;
-};
 
 type APIResponse = {
   tankas: Tanka[];

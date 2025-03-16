@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import type { Tanka } from '../types/tanka';
+import type { Tanka } from '../types/types';
 import { Header } from './Header/Header';
 import styles from './TankaPage.module.scss';
 import { LikeButton } from './LikeButton';

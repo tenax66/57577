@@ -1,7 +1,7 @@
 import { useUser } from '@clerk/clerk-react';
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import type { Tanka } from '../types/tanka';
+import type { Tanka, TankasResponse } from '../types/types';
 import styles from './UserPage.module.scss';
 import { Header } from './Header/Header';
 import BlockLoader from './BlockLoader';
@@ -9,7 +9,6 @@ import ActionButton from './ActionButton';
 import Card from './Card';
 import Button from './Button';
 import DeleteButton from './DeleteButton';
-import type { TankasResponse } from '../types/api';
 
 type User = {
   id: number;
@@ -18,10 +17,6 @@ type User = {
   avatar_url: string | null;
   created_at: string;
   updated_at: string;
-};
-
-type APIResponse = {
-  tankas: Tanka[];
 };
 
 type UserResponse = {
