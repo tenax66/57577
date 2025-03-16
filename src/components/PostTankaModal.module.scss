@@ -18,6 +18,21 @@
   width: 90%;
   max-width: 600px;
   animation: fadeIn 0.3s ease-out;
+
+  form {
+    width: 100%;
+  }
+
+  textarea {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 120px;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 2px solid #000;
+    font-family: inherit;
+    resize: vertical;
+  }
 }
 
 .buttons {
