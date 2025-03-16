@@ -33,14 +33,14 @@ export const LikeButton = ({ tankaId, initialLiked, likesCount: initialLikesCoun
         // いいね数を取得
         const countResponse = await fetch(`/api/tankas/${tankaId}/likes/count`);
         if (!countResponse.ok) throw new Error('Failed to fetch like count');
-        const { count } = await countResponse.json() as LikeCountResponse;
+        const { count } = (await countResponse.json()) as LikeCountResponse;
         setLikesCount(count);
 
         // ログイン中のみいいね状態を取得
         if (user) {
           const statusResponse = await fetch(`/api/tankas/${tankaId}/likes/status`);
           if (!statusResponse.ok) throw new Error('Failed to fetch like status');
-          const { liked } = await statusResponse.json() as LikeStatusResponse;
+          const { liked } = (await statusResponse.json()) as LikeStatusResponse;
           setIsLiked(liked);
         }
       } catch (e) {

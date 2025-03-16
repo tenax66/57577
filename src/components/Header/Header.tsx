@@ -4,6 +4,7 @@ import { UserMenu } from '../UserMenu';
 import styles from './Header.module.scss';
 import BlockLoader from '../BlockLoader';
 import ButtonGroup from '../ButtonGroup';
+import ActionButton from '../ActionButton';
 
 export const Header = () => {
   const { user, isLoaded } = useUser();
@@ -20,24 +21,12 @@ export const Header = () => {
           </p>
         ) : !user ? (
           <>
-            <ButtonGroup
-              items={[
-                {
-                  body: (
-                    <SignInButton mode="modal">
-                      <button className={styles.button}>LOGIN</button>
-                    </SignInButton>
-                  ),
-                },
-                {
-                  body: (
-                    <SignUpButton mode="modal">
-                      <button className={styles.button}>SIGNUP</button>
-                    </SignUpButton>
-                  ),
-                },
-              ]}
-            />
+            <SignInButton mode="modal">
+              <ActionButton>LOGIN</ActionButton>
+            </SignInButton>
+            <SignUpButton mode="modal">
+              <ActionButton>SIGNUP</ActionButton>
+            </SignUpButton>
           </>
         ) : (
           <UserMenu />
