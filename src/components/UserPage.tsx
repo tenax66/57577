@@ -5,6 +5,7 @@ import type { Tanka } from '../types/tanka';
 import styles from './UserPage.module.scss';
 import { Header } from './Header/Header';
 import BlockLoader from './BlockLoader';
+import ActionButton from './ActionButton';
 
 type User = {
   id: number;
@@ -182,63 +183,69 @@ export const UserPage = () => {
     <div className={styles.container}>
       <Header />
       <div className={styles.userProfile}>
-        <div className={styles.avatarContainer}>
-          <img
-            src={`${user?.avatar_url || ''}${user?.avatar_url?.includes('?') ? '&' : '?'}h=${avatarHash}`}
-            alt={user?.display_name}
-            className={styles.userAvatar}
-          />
-          {isOwnProfile && (
-            <button
-              onClick={handleAvatarUpdate}
-              className={styles.updateAvatarButton}
-              disabled={isUpdatingAvatar}
-            >
-              {isUpdatingAvatar ? '更新中...' : '画像を変更'}
-            </button>
-          )}
-        </div>
-        <div className={styles.userInfo}>
-          {isEditing ? (
-            <div className={styles.editNameForm}>
-              <input
-                type="text"
-                value={newDisplayName}
-                onChange={e => setNewDisplayName(e.target.value)}
-                maxLength={MAX_DISPLAY_NAME_LENGTH}
-                className={styles.displayNameInput}
-                required
-              />
-              <div className={styles.charCount}>
-                {newDisplayName.length} / {MAX_DISPLAY_NAME_LENGTH}
-              </div>
-              <div className={styles.editButtons}>
-                <button onClick={handleUpdateDisplayName} className={styles.saveButton}>
-                  保存
-                </button>
-                <button
-                  onClick={() => {
-                    setIsEditing(false);
-                    setNewDisplayName(user.display_name);
-                  }}
-                  className={styles.cancelButton}
-                >
-                  キャンセル
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className={styles.nameContainer}>
-              <h1 className={styles.userName}>{user.display_name}</h1>
-              {isOwnProfile && (
-                <button onClick={() => setIsEditing(true)} className={styles.editButton}>
-                  編集
-                </button>
-              )}
-            </div>
-          )}
-          <p className={styles.userStats}>投稿数: {tankas.length}</p>
-        </div>
+        <table className={styles.profileTable}>
+          <tbody>
+            <tr>
+              <td rowSpan={2} className={styles.avatarCell}>
+                <div className={styles.avatarContainer}>
+                  <img
+                    src={`${user?.avatar_url || ''}${user?.avatar_url?.includes('?') ? '&' : '?'}h=${avatarHash}`}
+                    alt={user?.display_name}
+                    className={styles.userAvatar}
+                  />
+                  {isOwnProfile && (
+                    <ActionButton onClick={handleAvatarUpdate} disabled={isUpdatingAvatar}>
+                      {isUpdatingAvatar ? '更新中...' : '画像を変更'}
+                    </ActionButton>
+                  )}
+                </div>
+              </td>
+              <td className={styles.infoCell}>
+                {isEditing ? (
+                  <div className={styles.editNameForm}>
+                    <input
+                      type="text"
+                      value={newDisplayName}
+                      onChange={e => setNewDisplayName(e.target.value)}
+                      maxLength={MAX_DISPLAY_NAME_LENGTH}
+                      className={styles.displayNameInput}
+                      required
+                    />
+                    <div className={styles.charCount}>
+                      {newDisplayName.length}/{MAX_DISPLAY_NAME_LENGTH}
+                    </div>
+                    <div className={styles.editButtons}>
+                      <button onClick={handleUpdateDisplayName} className={styles.saveButton}>
+                        保存
+                      </button>
+                      <button
+                        onClick={() => {
+                          setIsEditing(false);
+                          setNewDisplayName(user.display_name);
+                        }}
+                        className={styles.cancelButton}
+                      >
+                        キャンセル
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className={styles.nameContainer}>
+                    <h1 className={styles.userName}>{user.display_name}</h1>
+                    {isOwnProfile && (
+                      <ActionButton onClick={() => setIsEditing(true)}>編集</ActionButton>
+                    )}
+                  </div>
+                )}
+              </td>
+            </tr>
+            <tr>
+              <td className={styles.infoCell}>
+                <p className={styles.userStats}>投稿数: {tankas.length}</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <div className={styles.tankaSection}>

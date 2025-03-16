@@ -6,13 +6,15 @@ import styles from '@/components/TableColumn.module.scss';
 
 import * as React from 'react';
 
-type TableColumnProps = React.HTMLAttributes<HTMLTableCellElement> & {
-  children?: React.ReactNode;
+type Props = {
+  children: React.ReactNode;
+  className?: string;
+  rowSpan?: number;
 };
 
-const TableColumn: React.FC<TableColumnProps> = ({ children, ...rest }) => {
+const TableColumn = ({ children, className, rowSpan }: Props) => {
   return (
-    <td className={styles.root} {...rest}>
+    <td className={className} rowSpan={rowSpan}>
       {children}
     </td>
   );
