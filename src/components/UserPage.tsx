@@ -7,6 +7,7 @@ import { Header } from './Header/Header';
 import BlockLoader from './BlockLoader';
 import ActionButton from './ActionButton';
 import Card from './Card';
+import Button from './Button';
 
 type User = {
   id: number;
@@ -215,26 +216,26 @@ export const UserPage = () => {
                     <div className={styles.charCount}>
                       {newDisplayName.length}/{MAX_DISPLAY_NAME_LENGTH}
                     </div>
-                    <div className={styles.editButtons}>
-                      <button onClick={handleUpdateDisplayName} className={styles.saveButton}>
-                        保存
-                      </button>
-                      <button
+                    <div className={styles.buttons}>
+                      <Button onClick={handleUpdateDisplayName}>保存</Button>
+                      <Button
+                        theme="SECONDARY"
                         onClick={() => {
                           setIsEditing(false);
                           setNewDisplayName(user.display_name);
                         }}
-                        className={styles.cancelButton}
                       >
                         キャンセル
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 ) : (
                   <div className={styles.nameContainer}>
-                    <h1 className={styles.userName}>{user.display_name}</h1>
+                    <h2 className={styles.userName}>{user.display_name}</h2>
                     {isOwnProfile && (
-                      <ActionButton onClick={() => setIsEditing(true)}>編集</ActionButton>
+                      <div className={styles.editButtonWrapper}>
+                        <ActionButton onClick={() => setIsEditing(true)}>編集</ActionButton>
+                      </div>
                     )}
                   </div>
                 )}
