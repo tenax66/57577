@@ -1,6 +1,6 @@
 import { useUser } from '@clerk/clerk-react';
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import type { Tanka } from '../types/tanka';
 import styles from './UserPage.module.scss';
 import { Header } from './Header/Header';
@@ -263,7 +263,10 @@ export const UserPage = () => {
           <div className={styles.tankaList}>
             {tankas.map(tanka => (
               <Card key={tanka.id} className={styles.tankaCard}>
-                <p>{tanka.content}</p>
+                <Link to={`/tankas/${tanka.id}`} className={styles.tankaLink}>
+                  <p>{tanka.content}</p>
+                </Link>
+
                 <div className={styles.tankaMetadata}>
                   <small>{new Date(tanka.created_at).toLocaleDateString('ja-JP')}</small>
                   {isOwnProfile && (
