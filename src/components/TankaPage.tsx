@@ -6,7 +6,7 @@ import styles from './TankaPage.module.scss';
 import { LikeButton } from './LikeButton';
 import { useUser } from '@clerk/clerk-react';
 import BlockLoader from './BlockLoader';
-import ActionButton from './ActionButton';
+import DeleteButton from './DeleteButton';
 
 type APIResponse = {
   tanka: Tanka;
@@ -105,17 +105,7 @@ export const TankaPage = () => {
               likesCount={tanka.likes_count}
             />
             {user?.id === tanka.clerk_id && (
-              <ActionButton
-                onClick={handleDelete}
-                style={{
-                  color: '#e00',
-                  '&:hover': {
-                    background: '#e00',
-                  },
-                }}
-              >
-                <small>削除</small>
-              </ActionButton>
+              <DeleteButton onClick={handleDelete}>削除</DeleteButton>
             )}
           </div>
         </div>

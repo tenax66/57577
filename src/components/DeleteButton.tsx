@@ -1,0 +1,40 @@
+// https://github.com/internet-development/www-sacred
+
+import styles from '@/components/DeleteButton.module.scss';
+
+import * as React from 'react';
+import * as Utilities from '../common/srcl/utilities';
+
+interface ActionButtonProps {
+  onClick?: () => void;
+  hotkey?: any;
+  children?: React.ReactNode;
+  style?: any;
+  rootStyle?: any;
+  isSelected?: boolean;
+  disabled?: boolean;
+}
+
+const ActionButton = React.forwardRef<HTMLDivElement, ActionButtonProps>(
+  ({ onClick, hotkey, children, style, rootStyle, isSelected, disabled }, ref) => {
+    return (
+      <div
+        className={Utilities.classNames(styles.root, isSelected ? styles.selected : null)}
+        style={rootStyle}
+        onClick={disabled ? undefined : onClick}
+        tabIndex={0}
+        ref={ref}
+        role="button"
+      >
+        {Utilities.isEmpty(hotkey) ? null : <span className={styles.hotkey}>{hotkey}</span>}
+        <span className={styles.content} style={style}>
+          {children}
+        </span>
+      </div>
+    );
+  }
+);
+
+ActionButton.displayName = 'ActionButton';
+
+export default ActionButton;

@@ -8,6 +8,7 @@ import BlockLoader from './BlockLoader';
 import ActionButton from './ActionButton';
 import Card from './Card';
 import Button from './Button';
+import DeleteButton from './DeleteButton';
 
 type User = {
   id: number;
@@ -270,19 +271,7 @@ export const UserPage = () => {
 
                 <div className={styles.tankaMetadata}>
                   <small>{new Date(tanka.created_at).toLocaleDateString('ja-JP')}</small>
-                  {isOwnProfile && (
-                    <ActionButton
-                      onClick={() => handleDelete(tanka.id)}
-                      style={{
-                        color: '#e00',
-                        '&:hover': {
-                          background: '#e00',
-                        },
-                      }}
-                    >
-                      <small>削除</small>
-                    </ActionButton>
-                  )}
+                  {isOwnProfile && <DeleteButton onClick={() => handleDelete(tanka.id)}>削除</DeleteButton>}
                 </div>
               </Card>
             ))}

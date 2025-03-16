@@ -1,0 +1,54 @@
+// https://github.com/internet-development/www-sacred
+
+.hotkey {
+  background: var(--theme-button-foreground);
+  color: var(--theme-delete-button-text);
+  cursor: pointer;
+  flex-shrink: 0;
+  font-weight: 400;
+  padding: 0 1ch 0 1ch;
+  text-indent: 0ch;
+  user-select: none;
+}
+
+.content {
+  background: var(--theme-button-background);
+  box-shadow: inset 0 0 0 2px var(--theme-button-foreground);
+  color: var(--theme-delete-button-text);
+  cursor: pointer;
+  flex-shrink: 0;
+  font-weight: 400;
+  padding: 0 1ch 0 1ch;
+  text-indent: 0ch;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.root {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  outline: 0;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: var(--font-size);
+  flex-shrink: 0;
+
+  &:hover .hotkey {
+    background: var(--theme-delete-button-background);
+  }
+
+  &:hover .content {
+    background: var(--theme-delete-button-background);
+  }
+}
+
+.selected {
+  .content {
+    background: var(--theme-delete-button-background);
+  }
+}
