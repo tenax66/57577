@@ -8,7 +8,7 @@
   margin: 0;
   outline: 0;
   border: 0;
-  font-family: Consolas, monaco, monospace;
+  font-family: var(--font-family-mono);
   width: 100%;
   font-size: var(--font-size);
   line-height: calc(var(--theme-line-height-base) * 2em);

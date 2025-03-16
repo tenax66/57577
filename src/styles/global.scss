@@ -1,4 +1,13 @@
 // https://github.com/internet-development/www-sacred
+
+@font-face {
+  font-family: 'PlemolJPHS-Text';
+  src: url('/src/styles/fonts/PlemolJPHS-Text.ttf');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 a,
 abbr,
 acronym,
@@ -274,42 +283,6 @@ body.theme-black-green {
   --theme-focused-foreground-subdued: var(--color-gray-40);
 }
 
-body.font-use-berkeley-mono {
-  --font-family-mono: 'TX02Mono-Regular', sans-serif;
-}
-
-body.font-use-commit-mono {
-  --font-family-mono: 'CommitMono-Regular', sans-serif;
-}
-
-body.font-use-departure-mono {
-  --font-family-mono: 'DepartureMono-Regular', sans-serif;
-}
-
-body.font-use-fira-code {
-  --font-family-mono: 'FiraCode-Regular', sans-serif;
-}
-
-body.font-use-fragment-mono {
-  --font-family-mono: 'FragmentMono-Regular', sans-serif;
-}
-
-body.font-use-iosevka-term {
-  --font-family-mono: 'IosevkaTerm-Regular', sans-serif;
-}
-
-body.font-use-jet-brains-mono {
-  --font-family-mono: 'JetBrainsMono-Regular', sans-serif;
-}
-
-body.font-use-server-mono {
-  --font-family-mono: 'ServerMono-Regular', sans-serif;
-}
-
-body.font-use-sfmono-square {
-  --font-family-mono: 'SFMonoSquare-Regular', sans-serif;
-}
-
 #__next {
 }
 
@@ -448,7 +421,7 @@ body {
   --color-white-4: rgba(255, 255, 255, 0.4);
 
   --font-family: -apple-system, BlinkMacSystemFont, helvetica neue, helvetica, sans-serif;
-  --font-family-mono: 'GeistMono-Regular', Consolas, monaco, monospace;
+  --font-family-mono: 'PlemolJPHS-Text', Consolas, monaco, monospace;
   --font-family-serif: Georgia, Times New Roman, serif;
 
   --theme-text: var(--color-black-100);

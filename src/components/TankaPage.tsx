@@ -92,8 +92,9 @@ export const TankaPage = () => {
             <Link to={`/users/${tanka.clerk_id}`} className={styles.author}>
               {tanka.display_name}
             </Link>
+            <span> </span>
             <time className={styles.date}>
-              {new Date(tanka.created_at).toLocaleDateString('ja-JP')}
+              {new Date(tanka.created_at).toISOString().split('T')[0]}
             </time>
           </div>
           <div className={styles.actions}>
