@@ -116,22 +116,28 @@ const TankaApp = () => {
                 {tankas.map(tanka => (
                   <Fragment key={tanka.id}>
                     <Table>
-                      <TableRow key={tanka.id}>
+                      <TableRow>
                         <TableColumn>
-                          <Link to={`/tankas/${tanka.id}`} className={styles.tankaLink}>
-                            <p>{tanka.content}</p>
-                          </Link>
+                          <div className={styles.columnContent}>
+                            <Link to={`/tankas/${tanka.id}`} className={styles.tankaLink}>
+                              <p>{tanka.content}</p>
+                            </Link>
+                          </div>
                         </TableColumn>
                         <TableColumn className={styles.metadataColumn}>
                           <Table>
                             <TableRow>
                               <TableColumn>
-                                <Link to={`/users/${tanka.clerk_id}`}>{tanka.display_name}</Link>
+                                <div style={{ padding: '1px 6px 3px 6px' }}>
+                                  <Link to={`/users/${tanka.clerk_id}`}>{tanka.display_name}</Link>
+                                </div>
                               </TableColumn>
                             </TableRow>
                             <TableRow>
                               <TableColumn>
-                                {new Date(tanka.created_at).toISOString().split('T')[0]}
+                                <div style={{ padding: '1px 6px 1px 6px' }}>
+                                  {new Date(tanka.created_at).toISOString().split('T')[0]}
+                                </div>
                               </TableColumn>
                             </TableRow>
                             <TableRow>
