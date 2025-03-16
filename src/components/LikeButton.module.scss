@@ -6,6 +6,9 @@
   cursor: pointer;
   font-size: 0.9rem;
   transition: all 0.2s;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  color: inherit;
 
   &:disabled {
     opacity: 0.5;
