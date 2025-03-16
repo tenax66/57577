@@ -12,15 +12,16 @@ interface ActionButtonProps {
   style?: any;
   rootStyle?: any;
   isSelected?: boolean;
+  disabled?: boolean;
 }
 
 const ActionButton = React.forwardRef<HTMLDivElement, ActionButtonProps>(
-  ({ onClick, hotkey, children, style, rootStyle, isSelected }, ref) => {
+  ({ onClick, hotkey, children, style, rootStyle, isSelected, disabled }, ref) => {
     return (
       <div
         className={Utilities.classNames(styles.root, isSelected ? styles.selected : null)}
         style={rootStyle}
-        onClick={onClick}
+        onClick={disabled ? undefined : onClick}
         tabIndex={0}
         ref={ref}
         role="button"
