@@ -115,30 +115,32 @@ const TankaApp = () => {
               <>
                 {tankas.map(tanka => (
                   <Fragment key={tanka.id}>
-                    <Table>
-                      <TableRow>
-                        <TableColumn>
-                          <div className={styles.columnContent}>
-                            <Link to={`/tankas/${tanka.id}`} className={styles.tankaLink}>
-                              <p>{tanka.content}</p>
-                            </Link>
-                          </div>
-                        </TableColumn>
-                      </TableRow>
-                      <TableRow>
-                        <TableColumn className={styles.metadataColumn}>
-                          <div className={styles.metadataRow}>
-                            <Link to={`/users/${tanka.clerk_id}`}>{tanka.display_name}</Link>
-                            <span>{new Date(tanka.created_at).toISOString().split('T')[0]}</span>
-                            <LikeButton
-                              tankaId={tanka.id}
-                              initialLiked={tanka.is_liked}
-                              likesCount={tanka.likes_count}
-                            />
-                          </div>
-                        </TableColumn>
-                      </TableRow>
-                    </Table>
+                    <div className={styles.tankaBlock}>
+                      <Table>
+                        <TableRow>
+                          <TableColumn>
+                            <div className={styles.columnContent}>
+                              <Link to={`/tankas/${tanka.id}`} className={styles.tankaLink}>
+                                <p>{tanka.content}</p>
+                              </Link>
+                            </div>
+                          </TableColumn>
+                        </TableRow>
+                        <TableRow>
+                          <TableColumn className={styles.metadataColumn}>
+                            <div className={styles.metadataRow}>
+                              <Link to={`/users/${tanka.clerk_id}`}>{tanka.display_name}</Link>
+                              <span>{new Date(tanka.created_at).toISOString().split('T')[0]}</span>
+                              <LikeButton
+                                tankaId={tanka.id}
+                                initialLiked={tanka.is_liked}
+                                likesCount={tanka.likes_count}
+                              />
+                            </div>
+                          </TableColumn>
+                        </TableRow>
+                      </Table>
+                    </div>
                     <Divider />
                   </Fragment>
                 ))}

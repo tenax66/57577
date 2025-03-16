@@ -1,5 +1,5 @@
 .container {
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 0.5rem;
 }
@@ -113,4 +113,8 @@
   :nth-child(2) {
     margin-right: auto;
   }
+}
+
+.tankaBlock {
+  padding: 0 0 0 0.75rem;
 }
