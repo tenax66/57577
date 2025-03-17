@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useUser } from '@clerk/clerk-react';
 import styles from './PostTankaModal.module.scss';
 import Button from './Button';
-import Badge from './Badge';
+import CardDouble from './CardDouble';
 
 type Props = {
   isOpen: boolean;
@@ -36,24 +36,25 @@ export const PostTankaModal = ({ isOpen, onClose, onSubmit }: Props) => {
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={e => e.stopPropagation()}>
-        <form onSubmit={handleSubmit}>
-          <Badge style={{ marginBottom: '1rem' }}>短歌を投稿</Badge>
-          <textarea
-            value={content}
-            onChange={e => setContent(e.target.value)}
-            placeholder="ここに短歌を入力してください"
-            required
-            maxLength={MAX_TANKA_LENGTH}
-          />
-          <div className={styles.buttons}>
-            <Button type="button" onClick={onClose} theme="SECONDARY">
-              キャンセル
-            </Button>
-            <Button type="submit" isDisabled={isSubmitting} theme="PRIMARY">
-              投稿
-            </Button>
-          </div>
-        </form>
+        <CardDouble title="短歌を投稿">
+          <form onSubmit={handleSubmit}>
+            <textarea
+              value={content}
+              onChange={e => setContent(e.target.value)}
+              placeholder="ここに短歌を入力してください"
+              required
+              maxLength={MAX_TANKA_LENGTH}
+            />
+            <div className={styles.buttons}>
+              <Button type="button" onClick={onClose} theme="SECONDARY">
+                キャンセル
+              </Button>
+              <Button type="submit" isDisabled={isSubmitting} theme="PRIMARY">
+                投稿
+              </Button>
+            </div>
+          </form>
+        </CardDouble>
       </div>
     </div>
   );
