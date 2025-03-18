@@ -2,10 +2,17 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: calc(var(--font-size) * 0.75);
-  margin-left: 1rem;
+  padding: calc(var(--font-size) * 0.25);
+  margin-left: calc(var(--font-size) * 0.25);
+  margin-right: calc(var(--font-size) * 0.25);
   border-radius: 4px;
   transition: background-color 0.2s;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     background-color: var(--theme-focused-foreground-subdued);
@@ -15,9 +22,10 @@
 .bentoGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: calc(var(--font-size) * 0.25);
-  width: calc(var(--font-size) * 1.5);
-  height: calc(var(--font-size) * 1.5);
+  gap: calc(var(--font-size) * 0.15);
+  width: 28px;
+  height: 28px;
+  place-items: center;
 }
 
 .bentoDot {

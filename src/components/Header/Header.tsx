@@ -21,12 +21,14 @@ export const Header = () => {
           </p>
         ) : !user ? (
           <>
-            <SignInButton mode="modal">
-              <ActionButton>ログイン</ActionButton>
-            </SignInButton>
-            <SignUpButton mode="modal">
-              <ActionButton>登録</ActionButton>
-            </SignUpButton>
+            <div style={{ marginRight: '0.75rem' }}>
+              <SignInButton mode="modal">
+                <ActionButton>ログイン</ActionButton>
+              </SignInButton>
+              <SignUpButton mode="modal">
+                <ActionButton>登録</ActionButton>
+              </SignUpButton>
+            </div>
             <BentoMenu />
           </>
         ) : (
