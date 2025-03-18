@@ -47,7 +47,7 @@ export const UserMenu = () => {
       <a href={`/users/${clerkUser.id}`} className={styles.userProfile}>
         <Avatar src={user.avatar_url || ''}></Avatar>
       </a>
-      <ActionButton onClick={() => signOut()}>LOGOUT</ActionButton>
+      <ActionButton onClick={() => signOut()}>ログアウト</ActionButton>
     </div>
   );
 };

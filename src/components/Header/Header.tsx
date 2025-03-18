@@ -21,10 +21,10 @@ export const Header = () => {
         ) : !user ? (
           <>
             <SignInButton mode="modal">
-              <ActionButton>LOGIN</ActionButton>
+              <ActionButton>ログイン</ActionButton>
             </SignInButton>
             <SignUpButton mode="modal">
-              <ActionButton>SIGNUP</ActionButton>
+              <ActionButton>登録</ActionButton>
             </SignUpButton>
           </>
         ) : (
