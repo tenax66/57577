@@ -47,25 +47,12 @@
 }
 
 .menu {
-  background: var(--theme-background);
-  border: 2px solid var(--theme-text);
+  background: var(--theme-background-modal);
+  padding: 2rem;
   width: 90%;
   max-width: 480px;
   overflow: hidden;
   animation: slideUp 0.3s ease-out;
-}
-
-.menuHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  border-bottom: 1px solid var(--theme-border);
-
-  h2 {
-    margin: 0;
-    font-size: calc(var(--font-size) * 1.2);
-  }
 }
 
 .closeButton {
