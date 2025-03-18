@@ -1,6 +1,7 @@
 import { SignInButton, SignUpButton, useUser } from '@clerk/clerk-react';
 import { Link } from 'react-router-dom';
 import { UserMenu } from '../UserMenu';
+import { BentoMenu } from '../BentoMenu/BentoMenu';
 import styles from './Header.module.scss';
 import BlockLoader from '../BlockLoader';
 import ActionButton from '../ActionButton';
@@ -26,9 +27,13 @@ export const Header = () => {
             <SignUpButton mode="modal">
               <ActionButton>登録</ActionButton>
             </SignUpButton>
+            <BentoMenu />
           </>
         ) : (
-          <UserMenu />
+          <>
+            <UserMenu />
+            <BentoMenu />
+          </>
         )}
       </div>
     </header>
