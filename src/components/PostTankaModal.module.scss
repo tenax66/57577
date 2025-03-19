@@ -9,6 +9,11 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+
+  &.closing {
+    animation: fadeOut 0.3s ease-out;
+  }
 }
 
 .modal {
@@ -16,7 +21,11 @@
   padding: 2rem;
   width: 90%;
   max-width: 600px;
-  animation: fadeIn 0.3s ease-out;
+  animation: slideUp 0.3s ease-out;
+
+  &.closing {
+    animation: slideDown 0.3s ease-out;
+  }
 
   form {
     width: 100%;
@@ -44,10 +53,39 @@
 @keyframes fadeIn {
   from {
     opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
     transform: translateY(88px);
   }
   to {
     opacity: 1;
-    transform: translateY(0px);
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(88px);
   }
 }

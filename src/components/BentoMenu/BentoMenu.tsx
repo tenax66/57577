@@ -6,6 +6,15 @@ import ActionListItem from '../ActionListItem';
 
 export const BentoMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsClosing(false);
+      setIsOpen(false);
+    }, 300);
+  };
 
   return (
     <>
@@ -18,8 +27,14 @@ export const BentoMenu = () => {
       </button>
 
       {isOpen && (
-        <div className={styles.overlay} onClick={() => setIsOpen(false)}>
-          <div className={styles.menu} onClick={e => e.stopPropagation()}>
+        <div
+          className={`${styles.overlay} ${isClosing ? styles.closing : ''}`}
+          onClick={handleClose}
+        >
+          <div
+            className={`${styles.menu} ${isClosing ? styles.closing : ''}`}
+            onClick={e => e.stopPropagation()}
+          >
             <CardDouble title="メニュー">
               <div className={styles.menuContent}>
                 <ActionListItem icon={`⭢`} href="/">
