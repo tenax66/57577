@@ -11,6 +11,10 @@
   padding: 1rem;
   background: var(--theme-background);
   border-bottom: 1px solid var(--theme-divider);
+
+  & + * {
+    margin-top: 64px;
+  }
 }
 
 .logo {

@@ -60,3 +60,7 @@ ngrok http 8788
 [fts5](https://runebook.dev/ja/docs/sqlite/fts5)
 
 [sqlite-fts-contains-and-suffix-matches](https://blog.kapeli.com/sqlite-fts-contains-and-suffix-matches)
+
+## 利用規約
+
+[汎用的な利用規約のひな型](https://kiyaku.jp/hinagata/gp.html)

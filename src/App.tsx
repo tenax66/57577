@@ -17,6 +17,7 @@ import Table from './components/Table';
 import TableRow from './components/TableRow';
 import TableColumn from './components/TableColumn';
 import SearchPage from './components/SearchPage';
+import TermsOfService from './components/TermsOfService';
 
 type APIResponse = {
   tankas: Tanka[];
@@ -34,6 +35,7 @@ const App = () => {
           <Route path="/search" element={<SearchPage />} />
           <Route path="/users/:userId" element={<UserPage />} />
           <Route path="/tankas/:tankaId" element={<TankaPage />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
         </Routes>
       </Router>
     </ClerkProvider>
