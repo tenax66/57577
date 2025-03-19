@@ -6,7 +6,6 @@ const app = new Hono<{ Bindings: Bindings }>();
 
 // 既存のコードの中で、tankaの型を更新
 
-
 // トークン分割用のセグメンター
 const segmenter = new Intl.Segmenter('ja', { granularity: 'word' });
 
@@ -305,6 +304,9 @@ app.delete('/:id', clerkMiddleware(), async c => {
 
     // 短歌を削除
     await c.env.DB.prepare('DELETE FROM tankas WHERE id = ?').bind(tankaId).run();
+
+    // 全文検索用のテーブルからもデータを削除する
+    await c.env.DB.prepare('DELETE FROM fts WHERE rowid = ?').bind(tankaId).run();
 
     return c.json({ message: 'Tanka deleted successfully' });
   } catch (e) {
