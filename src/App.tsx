@@ -16,6 +16,7 @@ import Divider from './components/Divider';
 import Table from './components/Table';
 import TableRow from './components/TableRow';
 import TableColumn from './components/TableColumn';
+import SearchPage from './components/SearchPage';
 
 type APIResponse = {
   tankas: Tanka[];
@@ -30,6 +31,7 @@ const App = () => {
       <Router>
         <Routes>
           <Route path="/" element={<TankaApp />} />
+          <Route path="/search" element={<SearchPage />} />
           <Route path="/users/:userId" element={<UserPage />} />
           <Route path="/tankas/:tankaId" element={<TankaPage />} />
         </Routes>

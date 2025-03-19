@@ -44,10 +44,10 @@ export const UserMenu = () => {
 
   return (
     <div className={styles.userMenu}>
+      <ActionButton onClick={() => signOut()}>ログアウト</ActionButton>
       <a href={`/users/${clerkUser.id}`} className={styles.userProfile}>
         <Avatar src={user.avatar_url || ''}></Avatar>
       </a>
-      <ActionButton onClick={() => signOut()}>LOGOUT</ActionButton>
     </div>
   );
 };

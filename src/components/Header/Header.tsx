@@ -1,6 +1,7 @@
 import { SignInButton, SignUpButton, useUser } from '@clerk/clerk-react';
 import { Link } from 'react-router-dom';
 import { UserMenu } from '../UserMenu';
+import { BentoMenu } from '../BentoMenu/BentoMenu';
 import styles from './Header.module.scss';
 import BlockLoader from '../BlockLoader';
 import ActionButton from '../ActionButton';
@@ -20,15 +21,21 @@ export const Header = () => {
           </p>
         ) : !user ? (
           <>
-            <SignInButton mode="modal">
-              <ActionButton>LOGIN</ActionButton>
-            </SignInButton>
-            <SignUpButton mode="modal">
-              <ActionButton>SIGNUP</ActionButton>
-            </SignUpButton>
+            <div style={{ marginRight: '0.75rem' }}>
+              <SignInButton mode="modal">
+                <ActionButton>ログイン</ActionButton>
+              </SignInButton>
+              <SignUpButton mode="modal">
+                <ActionButton>登録</ActionButton>
+              </SignUpButton>
+            </div>
+            <BentoMenu />
           </>
         ) : (
-          <UserMenu />
+          <>
+            <UserMenu />
+            <BentoMenu />
+          </>
         )}
       </div>
     </header>

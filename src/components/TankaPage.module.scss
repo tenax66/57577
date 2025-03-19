@@ -1,7 +1,8 @@
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0.5rem;
+  margin-top: 64px; // ヘッダーの高さ分のマージン
 }
 
 .tankaCard {

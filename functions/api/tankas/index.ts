@@ -1,16 +1,11 @@
 import { Hono } from 'hono';
-import type { Bindings, Tanka } from '../../types';
+import type { Bindings, TankaWithLikes } from '../../types';
 import { clerkMiddleware, getAuth } from '@hono/clerk-auth';
-
+import { D1Database } from '@cloudflare/workers-types';
 const app = new Hono<{ Bindings: Bindings }>();
 
-// 既存のコードの中で、tankaの型を更新
-type TankaWithLikes = Tanka & {
-  display_name: string;
-  clerk_id: string;
-  likes_count: number;
-  is_liked: boolean;
-};
+// トークン分割用のセグメンター
+const segmenter = new Intl.Segmenter('ja', { granularity: 'word' });
 
 app.get('/', async c => {
   try {
@@ -96,13 +91,14 @@ app.post('/', clerkMiddleware(), async c => {
 
     const user_id = results[0].id;
 
-    const { success } = await c.env.DB.prepare(
-      'INSERT INTO tankas (content, user_id) VALUES (?, ?)'
-    )
+    const response = await c.env.DB.prepare('INSERT INTO tankas (content, user_id) VALUES (?, ?)')
       .bind(content, user_id)
       .run();
 
-    if (!success) throw new Error('Failed to insert tanka');
+    if (!response.success) throw new Error('Failed to insert tanka');
+
+    // 全文検索用の処理を呼び出し
+    await indexContentForSearch(c.env.DB, response.meta.last_row_id, content);
 
     return c.json({ message: 'Created' }, 201);
   } catch (e) {
@@ -110,6 +106,27 @@ app.post('/', clerkMiddleware(), async c => {
     return c.json({ error: 'Internal Server Error' }, 500);
   }
 });
+
+// 全文検索用のトークン化と保存を行う関数
+async function indexContentForSearch(db: D1Database, rowId: number, content: string) {
+  // 文字列から全てのサフィックスを生成する関数
+  function generateSuffixes(str: string): string[] {
+    const suffixes: string[] = [];
+    for (let i = 0; i < str.length; i++) {
+      suffixes.push(str.slice(i));
+    }
+    return suffixes;
+  }
+
+  // 各単語からサフィックスを生成し、全てを結合
+  const allTokens = generateSuffixes(content);
+
+  // 作成したトークンをスペース区切りで結合し、fts テーブルに追加する
+  await db
+    .prepare('INSERT INTO fts (rowid, segments) VALUES (?1, ?2)')
+    .bind(rowId, allTokens.join(' '))
+    .run();
+}
 
 app.get('/:id', async c => {
   try {
@@ -296,6 +313,9 @@ app.delete('/:id', clerkMiddleware(), async c => {
 
     // 短歌を削除
     await c.env.DB.prepare('DELETE FROM tankas WHERE id = ?').bind(tankaId).run();
+
+    // 全文検索用のテーブルからもデータを削除する
+    await c.env.DB.prepare('DELETE FROM fts WHERE rowid = ?').bind(tankaId).run();
 
     return c.json({ message: 'Tanka deleted successfully' });
   } catch (e) {
