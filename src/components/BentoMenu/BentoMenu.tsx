@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styles from './BentoMenu.module.scss';
 import CardDouble from '../CardDouble';
 import { Link } from 'react-router-dom';
+import ActionListItem from '../ActionListItem';
 
 export const BentoMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,31 +22,12 @@ export const BentoMenu = () => {
           <div className={styles.menu} onClick={e => e.stopPropagation()}>
             <CardDouble title="メニュー">
               <div className={styles.menuContent}>
-                <ul>
-                  <li>
-                    <Link to="/" onClick={() => setIsOpen(false)}>
-                      ホーム
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/search" onClick={() => setIsOpen(false)}>
-                      短歌を検索
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/?sort=latest" onClick={() => setIsOpen(false)}>
-                      最新の短歌
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/?sort=popular" onClick={() => setIsOpen(false)}>
-                      人気の短歌
-                    </Link>
-                  </li>
-                  <li>設定</li>
-                  <li>ヘルプ</li>
-                  <li>お問い合わせ</li>
-                </ul>
+                <ActionListItem icon={`⭢`} href="/">
+                  トップページ
+                </ActionListItem>
+                <ActionListItem icon={`⭢`} href="/search">
+                  検索
+                </ActionListItem>
               </div>
             </CardDouble>
           </div>
