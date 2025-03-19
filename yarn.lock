@@ -183,12 +183,12 @@
     "@clerk/types" "^4.48.0"
     tslib "2.4.1"
 
-"@clerk/localizations@^3.11.1":
-  version "3.11.1"
-  resolved "https://registry.yarnpkg.com/@clerk/localizations/-/localizations-3.11.1.tgz#1d4a4f263a1cb2ebe3aaa612a674671da8a2f201"
-  integrity sha512-obS6fiQEeQbz3a2xHhxeLJDWfhwGVTt9BiwOSNMPzUE2AF8I8UdzCunYTOx9/pzqPYTfcwKl990N8PAjDkhBLA==
+"@clerk/localizations@^3.12.0":
+  version "3.12.0"
+  resolved "https://registry.yarnpkg.com/@clerk/localizations/-/localizations-3.12.0.tgz#b03630beda34f2e81b4482862843ec4095142157"
+  integrity sha512-8+h0DpJX14+u+claoYLmpyXX+jcM5uNgRhU4FT2pcBbeTQNV93ht42ykc4W+bNU2AXwSDeaN29ZyT5Mmh0O1lw==
   dependencies:
-    "@clerk/types" "^4.47.0"
+    "@clerk/types" "^4.48.0"
 
 "@clerk/shared@^3.0.0", "@clerk/shared@^3.0.1":
   version "3.0.1"
