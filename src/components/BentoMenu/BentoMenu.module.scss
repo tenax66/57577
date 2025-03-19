@@ -1,0 +1,102 @@
+.bentoButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: calc(var(--font-size) * 0.25);
+  margin-left: calc(var(--font-size) * 0.25);
+  margin-right: calc(var(--font-size) * 0.25);
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: var(--theme-focused-foreground-subdued);
+  }
+}
+
+.bentoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: calc(var(--font-size) * 0.15);
+  width: 28px;
+  height: 28px;
+  place-items: center;
+}
+
+.bentoDot {
+  width: calc(var(--font-size) * 0.35);
+  height: calc(var(--font-size) * 0.35);
+  background-color: var(--theme-text);
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--theme-overlay);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: var(--z-index-page-modals);
+}
+
+.menu {
+  background: var(--theme-background-modal);
+  padding: 2rem;
+  width: 90%;
+  max-width: 480px;
+  overflow: hidden;
+  animation: slideUp 0.3s ease-out;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--theme-text);
+  font-size: calc(var(--font-size) * 1.2);
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: var(--theme-focused-foreground-subdued);
+  }
+}
+
+.menuContent {
+  padding: 1rem;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      padding: 1rem;
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--theme-focused-foreground-subdued);
+      }
+    }
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(88px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

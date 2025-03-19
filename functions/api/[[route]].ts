@@ -4,7 +4,8 @@ import { Webhook } from 'svix';
 import { WebhookEvent } from '@clerk/backend';
 import tankaRoutes from './tankas';
 import userRoutes from './users';
-import type { Bindings, User, Tanka } from '../types';
+import type { Bindings } from '../types';
+import searchRoutes from './search';
 
 const app = new Hono<{ Bindings: Bindings }>();
 
@@ -17,6 +18,7 @@ app.get('/health-check', c => {
 // 短歌関連のルートをマウント
 app.route('/api/tankas', tankaRoutes);
 app.route('/api/users', userRoutes);
+app.route('/api/search', searchRoutes);
 
 // Webhookエンドポイント
 app.post('/api/webhooks/clerk', async c => {
