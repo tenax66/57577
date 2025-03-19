@@ -13,6 +13,13 @@ export type Tanka = {
   created_at: string;
 };
 
+export type TankaWithLikes = Tanka & {
+  display_name: string;
+  clerk_id: string;
+  likes_count: number;
+  is_liked: boolean;
+};
+
 export type User = {
   id: number;
   clerk_id: string;

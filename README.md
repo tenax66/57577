@@ -24,8 +24,8 @@ yarn dev
 #### local
 
 ```bash
-npx wrangler d1 migrations list 57577
-npx wrangler d1 migrations apply 57577
+npx wrangler d1 migrations list --local 57577
+npx wrangler d1 migrations apply --local 57577
 ```
 
 #### remote
@@ -37,8 +37,14 @@ npx wrangler d1 migrations apply --remote 57577
 #### migration history
 
 ```bash
-npx wrangler d1 execute 57577 --command "SELECT * FROM d1_migrations;"
-npx wrangler d1 execute 57577 --command "DELETE FROM d1_migrations;"
+npx wrangler d1 execute 57577 --local --command "SELECT * FROM d1_migrations;"
+npx wrangler d1 execute 57577 --local --command "DELETE FROM d1_migrations WHERE id = ?;"
+```
+
+#### tables list
+
+```bash
+npx wrangler d1 execute 57577 --local --command "select name from sqlite_master where type='table';"
 ```
 
 ## ngrok

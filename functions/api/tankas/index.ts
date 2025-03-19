@@ -1,16 +1,14 @@
 import { Hono } from 'hono';
-import type { Bindings, Tanka } from '../../types';
+import type { Bindings, TankaWithLikes } from '../../types';
 import { clerkMiddleware, getAuth } from '@hono/clerk-auth';
-
+import { D1Result } from '@cloudflare/workers-types';
 const app = new Hono<{ Bindings: Bindings }>();
 
 // 既存のコードの中で、tankaの型を更新
-type TankaWithLikes = Tanka & {
-  display_name: string;
-  clerk_id: string;
-  likes_count: number;
-  is_liked: boolean;
-};
+
+
+// トークン分割用のセグメンター
+const segmenter = new Intl.Segmenter('ja', { granularity: 'word' });
 
 app.get('/', async c => {
   try {
@@ -96,13 +94,24 @@ app.post('/', clerkMiddleware(), async c => {
 
     const user_id = results[0].id;
 
-    const { success } = await c.env.DB.prepare(
-      'INSERT INTO tankas (content, user_id) VALUES (?, ?)'
-    )
+    const response = await c.env.DB.prepare('INSERT INTO tankas (content, user_id) VALUES (?, ?)')
       .bind(content, user_id)
       .run();
 
-    if (!success) throw new Error('Failed to insert tanka');
+    if (!response.success) throw new Error('Failed to insert tanka');
+
+    // 全文検索用の処理
+    const rowId = response.meta.last_row_id;
+
+    // Intl.Segmenter を利用して、受け取ったデータからトークンを抽出する
+    const segments = Array.from(segmenter.segment(`${content}`))
+      .filter(s => s.isWordLike)
+      .map(s => s.segment);
+
+    // 作成したトークンをスペース区切りで結合し、fts テーブルに追加する
+    await c.env.DB.prepare('INSERT INTO fts (rowid, segments) VALUES (?1, ?2)')
+      .bind(rowId, segments.join(' '))
+      .run();
 
     return c.json({ message: 'Created' }, 201);
   } catch (e) {
