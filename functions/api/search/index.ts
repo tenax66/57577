@@ -28,7 +28,7 @@ app.get('/', async c => {
       ORDER BY t.created_at DESC
     `
     )
-      .bind(query)
+      .bind(`${query}*`)
       .all<TankaWithLikes>();
 
     return c.json({

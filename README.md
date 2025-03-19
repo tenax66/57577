@@ -54,3 +54,9 @@ We will need to use ngrok to test webhooks in our local environment.
 ```bash
 ngrok http 8788
 ```
+
+## indexing
+
+[fts5](https://runebook.dev/ja/docs/sqlite/fts5)
+
+[sqlite-fts-contains-and-suffix-matches](https://blog.kapeli.com/sqlite-fts-contains-and-suffix-matches)

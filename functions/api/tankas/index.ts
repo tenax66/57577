@@ -97,7 +97,7 @@ app.post('/', clerkMiddleware(), async c => {
 
     if (!response.success) throw new Error('Failed to insert tanka');
 
-    // 全文検索用の処理を関数呼び出しに変更
+    // 全文検索用の処理を呼び出し
     await indexContentForSearch(c.env.DB, response.meta.last_row_id, content);
 
     return c.json({ message: 'Created' }, 201);
@@ -109,15 +109,22 @@ app.post('/', clerkMiddleware(), async c => {
 
 // 全文検索用のトークン化と保存を行う関数
 async function indexContentForSearch(db: D1Database, rowId: number, content: string) {
-  // Intl.Segmenter を利用して、受け取ったデータからトークンを抽出する
-  const segments = Array.from(segmenter.segment(`${content}`))
-    .filter(s => s.isWordLike)
-    .map(s => s.segment);
+  // 文字列から全てのサフィックスを生成する関数
+  function generateSuffixes(str: string): string[] {
+    const suffixes: string[] = [];
+    for (let i = 0; i < str.length; i++) {
+      suffixes.push(str.slice(i));
+    }
+    return suffixes;
+  }
+
+  // 各単語からサフィックスを生成し、全てを結合
+  const allTokens = generateSuffixes(content);
 
   // 作成したトークンをスペース区切りで結合し、fts テーブルに追加する
   await db
     .prepare('INSERT INTO fts (rowid, segments) VALUES (?1, ?2)')
-    .bind(rowId, segments.join(' '))
+    .bind(rowId, allTokens.join(' '))
     .run();
 }
 
