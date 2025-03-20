@@ -6,6 +6,8 @@ import { SearchResult } from '../types/search';
 import TableRow from './TableRow';
 import TableColumn from './TableColumn';
 import { LikeButton } from './LikeButton';
+import Card from './Card';
+import Button from './Button';
 
 type SearchResponse = {
   tankas: SearchResult[];
@@ -45,60 +47,60 @@ export const SearchPage = () => {
   return (
     <div className={styles.container}>
       <Header />
-      <h1 className={styles.title}>短歌検索</h1>
+      <Card title="検索">
+        <form onSubmit={handleSearch} className={styles.searchForm}>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+            placeholder="短歌の一部を入力"
+            className={styles.searchInput}
+          />
+          <Button type="submit" disabled={isLoading} style={{ width: 'auto', minWidth: '80px' }}>
+            検索
+          </Button>
+        </form>
 
-      <form onSubmit={handleSearch} className={styles.searchForm}>
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={e => setSearchQuery(e.target.value)}
-          placeholder="検索キーワードを入力"
-          className={styles.searchInput}
-        />
-        <button type="submit" className={styles.searchButton} disabled={isLoading}>
-          検索
-        </button>
-      </form>
+        {isLoading && <div className={styles.loading}>検索中...</div>}
 
-      {isLoading && <div className={styles.loading}>検索中...</div>}
+        {error && <div className={styles.error}>{error}</div>}
 
-      {error && <div className={styles.error}>{error}</div>}
-
-      {results.length > 0 ? (
-        <div className={styles.results}>
-          <table className={styles.table}>
-            <tbody>
-              {results.map(result => (
-                <TableRow key={result.id}>
-                  <TableColumn>
-                    <div className={styles.tankaContent}>
-                      <Link to={`/tankas/${result.id}`} className={styles.tankaLink}>
-                        {result.content}
-                      </Link>
-                      <div className={styles.tankaMetadata}>
-                        <Link to={`/users/${result.clerk_id}`} className={styles.authorLink}>
-                          {result.display_name}
+        {results.length > 0 ? (
+          <div className={styles.results}>
+            <table className={styles.table}>
+              <tbody>
+                {results.map(result => (
+                  <TableRow key={result.id}>
+                    <TableColumn>
+                      <div className={styles.tankaContent}>
+                        <Link to={`/tankas/${result.id}`} className={styles.tankaLink}>
+                          {result.content}
                         </Link>
-                        <span className={styles.date}>
-                          {new Date(result.created_at).toISOString().split('T')[0]}
-                        </span>
-                        <LikeButton
-                          tankaId={result.id}
-                          initialLiked={false}
-                          likesCount={result.likes_count}
-                        />
+                        <div className={styles.tankaMetadata}>
+                          <Link to={`/users/${result.clerk_id}`} className={styles.authorLink}>
+                            {result.display_name}
+                          </Link>
+                          <span className={styles.date}>
+                            {new Date(result.created_at).toISOString().split('T')[0]}
+                          </span>
+                          <LikeButton
+                            tankaId={result.id}
+                            initialLiked={false}
+                            likesCount={result.likes_count}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  </TableColumn>
-                </TableRow>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        !isLoading &&
-        searchQuery && <div className={styles.noResults}>検索結果が見つかりませんでした</div>
-      )}
+                    </TableColumn>
+                  </TableRow>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          !isLoading &&
+          searchQuery && <div className={styles.noResults}>検索結果が見つかりませんでした</div>
+        )}
+      </Card>
     </div>
   );
 };
