@@ -11,7 +11,7 @@ export default defineConfig({
       output: {
         manualChunks: id => {
           if (id.includes('node_modules')) {
-            if (id.includes('react-markdown') || id.includes('micromark-core-commonmark')) {
+            if (id.includes('react-markdown') || id.includes('micromark')) {
               return 'markdown';
             } else {
               return 'vendor'; // all other package goes here
