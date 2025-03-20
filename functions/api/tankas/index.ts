@@ -4,9 +4,6 @@ import { clerkMiddleware, getAuth } from '@hono/clerk-auth';
 import { D1Database } from '@cloudflare/workers-types';
 const app = new Hono<{ Bindings: Bindings }>();
 
-// トークン分割用のセグメンター
-const segmenter = new Intl.Segmenter('ja', { granularity: 'word' });
-
 app.get('/', async c => {
   try {
     const page = parseInt(c.req.query('page') || '1');
