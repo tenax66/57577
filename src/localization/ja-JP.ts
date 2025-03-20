@@ -534,8 +534,8 @@ export const jaJP: LocalizationResource = {
           '{{ termsOfServiceLink || link("利用規約") }} と {{ privacyPolicyLink || link("プライバシーポリシー") }}に同意します',
       },
       continue: {
-        subtitle: undefined,
-        title: undefined,
+        subtitle: '続行するには以下の項目に同意してください',
+        title: '同意',
       },
     },
     phoneCode: {
