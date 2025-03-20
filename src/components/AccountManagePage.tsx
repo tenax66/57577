@@ -15,14 +15,6 @@ export const AccountManagePage = () => {
   const [deleteConfirmation, setDeleteConfirmation] = useState('');
   const [error, setError] = useState<string | null>(null);
 
-  // 自分のページかどうかを判定
-  const isOwnProfile = clerkUser?.id === userId;
-
-  // ログインしていない、または他人のページにアクセスしようとした場合はリダイレクト
-  if (isLoaded && (!clerkUser || !isOwnProfile)) {
-    return <Navigate to="/" />;
-  }
-
   const handleDeleteAccount = async () => {
     if (deleteConfirmation !== clerkUser?.primaryEmailAddress?.emailAddress) {
       setError('メールアドレスが一致しません');

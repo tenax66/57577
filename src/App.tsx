@@ -22,6 +22,7 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import { CookieConsentBanner } from './components/CookieConsent/CookieConsent';
 import CookiePolicy from './components/CookiePolicy';
 import { AccountManagePage } from './components/AccountManagePage';
+import { ProtectedRoute } from './components/ProtectedRoute';
 
 type APIResponse = {
   tankas: Tanka[];
@@ -38,7 +39,9 @@ const App = () => {
           <Route path="/" element={<TankaApp />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/users/:userId" element={<UserPage />} />
-          <Route path="/users/:userId/manage" element={<AccountManagePage />} />
+          <Route element={<ProtectedRoute requireAuth={true} requireOwnership={true} />}>
+            <Route path="/users/:userId/manage" element={<AccountManagePage />} />
+          </Route>
           <Route path="/tankas/:tankaId" element={<TankaPage />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
