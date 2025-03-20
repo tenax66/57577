@@ -10,6 +10,7 @@ import ActionListItem from './ActionListItem';
 import Button from './Button';
 import DeleteButton from './DeleteButton';
 import { useClerk } from '@clerk/clerk-react';
+import TankaList from './TankaList';
 
 type User = {
   id: number;
@@ -258,48 +259,16 @@ export const UserPage = () => {
         </div>
       )}
 
-      <div className={styles.tankaSection}>
-        <h2>投稿した短歌</h2>
-        <p className={styles.userStats}>投稿数: {tankas.length}</p>
-        {isLoading ? (
-          <p>
-            Loading <BlockLoader mode={6} />
-          </p>
-        ) : error ? (
-          <p className={styles.error}>{error}</p>
-        ) : tankas.length === 0 ? (
-          <p>まだ短歌を投稿していません</p>
-        ) : (
-          <div className={styles.tankaList}>
-            {tankas.map(tanka => (
-              <div key={tanka.id} className={styles.tankaCard}>
-                <Link to={`/tankas/${tanka.id}`} className={styles.tankaLink}>
-                  <p>{tanka.content}</p>
-                </Link>
-                <div className={styles.tankaMetadata}>
-                  <small>
-                    <span>{new Date(tanka.created_at).toISOString().split('T')[0]}</span>
-                  </small>
-                  {isOwnProfile && (
-                    <DeleteButton onClick={() => handleDelete(tanka.id)}>削除</DeleteButton>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-        {pagination && (
-          <div className={styles.pagination}>
-            <Button onClick={() => setCurrentPage(p => p - 1)} isDisabled={currentPage === 1}>
-              前のページ
-            </Button>
-            <span className={styles.pageInfo}>{currentPage}</span>
-            <Button onClick={() => setCurrentPage(p => p + 1)} isDisabled={!pagination.has_next}>
-              次のページ
-            </Button>
-          </div>
-        )}
-      </div>
+      <TankaList
+        tankas={tankas}
+        isLoading={isLoading}
+        error={error}
+        isOwnProfile={isOwnProfile}
+        onDelete={handleDelete}
+        pagination={pagination}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   );
 };
