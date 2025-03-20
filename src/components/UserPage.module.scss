@@ -71,8 +71,11 @@
 
 .nameContainer {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.25rem;
+  line-height: 1.5;
 }
 
 .editButton {
@@ -144,7 +147,7 @@
 }
 
 .editButtonWrapper {
-  margin-top: 0.25rem;
+  margin-top: 0;
 }
 
 .pagination {
@@ -158,4 +161,8 @@
 
 .pageInfo {
   color: #666;
+}
+
+.actionListItem {
+  margin: 2rem 0; // ActionListItemの前後に2remの余白を追加
 }

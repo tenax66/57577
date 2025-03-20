@@ -6,9 +6,10 @@ import styles from './UserPage.module.scss';
 import { Header } from './Header/Header';
 import BlockLoader from './BlockLoader';
 import ActionButton from './ActionButton';
-import Card from './Card';
+import ActionListItem from './ActionListItem';
 import Button from './Button';
 import DeleteButton from './DeleteButton';
+import { useClerk } from '@clerk/clerk-react';
 
 type User = {
   id: number;
@@ -28,6 +29,7 @@ const MAX_DISPLAY_NAME_LENGTH = 30;
 export const UserPage = () => {
   const { userId } = useParams<{ userId: string }>();
   const { user: clerkUser } = useUser();
+  const { signOut } = useClerk();
   const [user, setUser] = useState<User | null>(null);
   const [tankas, setTankas] = useState<Tanka[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -231,7 +233,7 @@ export const UserPage = () => {
                   </div>
                 ) : (
                   <div className={styles.nameContainer}>
-                    <h2 className={styles.userName}>{user.display_name}</h2>
+                    {user.display_name}
                     {isOwnProfile && (
                       <div className={styles.editButtonWrapper}>
                         <ActionButton onClick={() => setIsEditing(true)}>編集</ActionButton>
@@ -241,12 +243,17 @@ export const UserPage = () => {
                 )}
               </td>
             </tr>
-            <tr>
-              <td className={styles.infoCell}></td>
-            </tr>
           </tbody>
         </table>
       </div>
+
+      {isOwnProfile && (
+        <div style={{ margin: '2rem 0' }}>
+          <ActionListItem icon={`⭢`} onClick={() => signOut()}>
+            ログアウト
+          </ActionListItem>
+        </div>
+      )}
 
       <div className={styles.tankaSection}>
         <h2>投稿した短歌</h2>

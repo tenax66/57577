@@ -1,9 +1,7 @@
-import { useUser } from '@clerk/clerk-react';
-import { useClerk } from '@clerk/clerk-react';
+import { useUser } from '@clerk/clerk-react';;
 import { useState, useEffect } from 'react';
 import Avatar from './Avatar';
 import styles from './UserMenu.module.scss';
-import ActionButton from './ActionButton';
 
 type User = {
   id: number;
@@ -20,7 +18,6 @@ type UserResponse = {
 
 export const UserMenu = () => {
   const { user: clerkUser } = useUser();
-  const { signOut } = useClerk();
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -44,7 +41,6 @@ export const UserMenu = () => {
 
   return (
     <div className={styles.userMenu}>
-      <ActionButton onClick={() => signOut()}>ログアウト</ActionButton>
       <a href={`/users/${clerkUser.id}`} className={styles.userProfile}>
         <Avatar src={user.avatar_url || ''}></Avatar>
       </a>
