@@ -11,13 +11,16 @@ type TextAreaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
   autoPlay?: string;
   autoPlaySpeedMS?: number;
   isBlink?: boolean;
+  disabled?: boolean;
 };
+
 function TextArea({
   autoPlay,
   autoPlaySpeedMS = 40,
   isBlink,
   placeholder,
   onChange,
+  disabled = false,
   ...rest
 }: TextAreaProps) {
   const textAreaRef = React.useRef<HTMLTextAreaElement | null>(null);
@@ -35,6 +38,8 @@ function TextArea({
 
   const [currentLineIndex, setCurrentLineIndex] = React.useState<number>(0);
   const [totalLines, setTotalLines] = React.useState<number>(0);
+
+  const [isTyping, setIsTyping] = React.useState(false);
 
   React.useEffect(() => {
     if (textAreaRef.current && isFocused) {
@@ -55,7 +60,7 @@ function TextArea({
   }, [rest.value]);
 
   React.useEffect(() => {
-    if (autoPlay && !rest.value && !rest.defaultValue) {
+    if (autoPlay && !rest.value && !rest.defaultValue && !isTyping) {
       setIsAutoPlaying(true);
       autoPlayIndexRef.current = 0;
       setText('');
@@ -78,7 +83,7 @@ function TextArea({
     return () => {
       if (autoPlayIntervalRef.current) clearInterval(autoPlayIntervalRef.current);
     };
-  }, [autoPlay, rest.value, rest.defaultValue]);
+  }, [autoPlay, rest.value, rest.defaultValue, isTyping]);
 
   const resizeTextArea = React.useCallback(() => {
     if (!textAreaRef.current) return;
@@ -201,6 +206,7 @@ function TextArea({
         onChange={onHandleChange}
         onSelect={onHandleSelect}
         onClick={onHandleClick}
+        disabled={disabled || isTyping}
         {...rest}
       />
     </div>

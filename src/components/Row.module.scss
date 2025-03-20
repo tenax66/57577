@@ -1,0 +1,12 @@
+// https://github.com/internet-development/www-sacred
+
+.row {
+  display: block;
+  outline: 0;
+  border: 0;
+  transition: 200ms ease background;
+
+  &:focus {
+    background: var(--theme-focused-foreground);
+  }
+}

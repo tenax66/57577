@@ -13,11 +13,14 @@ import Button from './components/Button';
 import Card from './components/Card';
 import BlockLoader from './components/BlockLoader';
 import Divider from './components/Divider';
+import Grid from './components/Grid';
+import Row from './components/Row';
+import SearchPage from './components/SearchPage';
 import Table from './components/Table';
 import TableRow from './components/TableRow';
 import TableColumn from './components/TableColumn';
-import SearchPage from './components/SearchPage';
 import TermsOfService from './components/TermsOfService';
+import TextArea from './components/TextArea';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import { CookieConsentBanner } from './components/CookieConsent/CookieConsent';
 import CookiePolicy from './components/CookiePolicy';
@@ -109,6 +112,16 @@ const TankaApp = () => {
   return (
     <div className={styles.container}>
       <Header />
+      <Grid>
+        <Row>
+          <TextArea
+            autoPlay="57577.netは短歌投稿サイトです。"
+            autoPlaySpeedMS={50}
+            disabled={true}
+            isBlink={true}
+          />
+        </Row>
+      </Grid>
       <div className={styles.alphaNotice}>
         🚧 アルファテスト中です。ユーザや短歌のデータは予告なく削除されることがあります。
       </div>

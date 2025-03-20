@@ -1,0 +1,7 @@
+// https://github.com/internet-development/www-sacred
+
+.grid {
+  display: block;
+  padding: calc(var(--font-size) * var(--theme-line-height-base)) 2ch
+    calc(var(--font-size) * var(--theme-line-height-base)) 2ch;
+}
