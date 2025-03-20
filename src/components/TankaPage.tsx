@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import type { Tanka } from '../types/types';
+import type { TankaWithLikes } from '../types/types';
 import { Header } from './Header/Header';
 import styles from './TankaPage.module.scss';
 import { LikeButton } from './LikeButton';
@@ -9,12 +9,12 @@ import BlockLoader from './BlockLoader';
 import DeleteButton from './DeleteButton';
 
 type APIResponse = {
-  tanka: Tanka;
+  tanka: TankaWithLikes;
 };
 
 export const TankaPage = () => {
   const { tankaId } = useParams<{ tankaId: string }>();
-  const [tanka, setTanka] = useState<Tanka | null>(null);
+  const [tanka, setTanka] = useState<TankaWithLikes | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();

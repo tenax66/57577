@@ -1,7 +1,7 @@
 import { useUser } from '@clerk/clerk-react';
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import type { Tanka, TankasResponse } from '../types/types';
+import type { TankaWithLikes, TankasResponse } from '../types/types';
 import styles from './UserPage.module.scss';
 import { Header } from './Header/Header';
 import BlockLoader from './BlockLoader';
@@ -32,7 +32,7 @@ export const UserPage = () => {
   const { user: clerkUser } = useUser();
   const { signOut } = useClerk();
   const [user, setUser] = useState<User | null>(null);
-  const [tankas, setTankas] = useState<Tanka[]>([]);
+  const [tankas, setTankas] = useState<TankaWithLikes[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);

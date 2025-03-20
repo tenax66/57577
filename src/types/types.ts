@@ -4,11 +4,11 @@ export type PaginationInfo = {
 };
 
 export type TankasResponse = {
-  tankas: Tanka[];
+  tankas: TankaWithLikes[];
   pagination: PaginationInfo;
 };
 
-export type Tanka = {
+export type TankaWithLikes = {
   id: number;
   content: string;
   user_id: number;

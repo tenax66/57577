@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
 import styles from './SearchPage.module.scss';
 import { Header } from './Header/Header';
-import { SearchResult } from '../types/search';
 import Card from './Card';
 import Button from './Button';
 import TankaList from './TankaList';
-import type { Tanka } from '../types/types';
+import type { TankaWithLikes } from '../types/types';
 
 type SearchResponse = {
-  tankas: SearchResult[];
+  tankas: TankaWithLikes[];
   total: number;
   page: number;
   per_page: number;
@@ -16,7 +15,7 @@ type SearchResponse = {
 
 export const SearchPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [results, setResults] = useState<SearchResult[]>([]);
+  const [results, setResults] = useState<TankaWithLikes[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -60,14 +59,15 @@ export const SearchPage = () => {
   };
 
   // SearchResultをTanka型に変換
-  const tankaResults: Tanka[] = results.map(result => ({
+  const tankaResults: TankaWithLikes[] = results.map(result => ({
     id: result.id,
     content: result.content,
     clerk_id: result.clerk_id,
     display_name: result.display_name,
     created_at: result.created_at,
     likes_count: result.likes_count,
-    is_liked: false, // 検索結果ではis_likedが提供されていないため、デフォルトでfalseを設定
+    is_liked: result.is_liked,
+    user_id: result.user_id,
   }));
 
   // 削除機能は検索結果では使用しないためダミー関数を用意

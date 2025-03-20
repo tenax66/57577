@@ -6,18 +6,15 @@ export type Bindings = {
   CLERK_WEBHOOK_SECRET: string;
 };
 
-export type Tanka = {
+export type TankaWithLikes = {
   id: number;
   content: string;
-  user_id: string;
+  user_id: number;
   created_at: string;
-};
-
-export type TankaWithLikes = Tanka & {
   display_name: string;
   clerk_id: string;
-  likes_count: number;
   is_liked: boolean;
+  likes_count: number;
 };
 
 export type User = {

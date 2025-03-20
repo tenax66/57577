@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment } from 'react';
 import styles from '@/App.module.scss';
-import type { Tanka, PaginationInfo } from './types/types';
+import type { TankaWithLikes, PaginationInfo } from './types/types';
 import { ClerkProvider, useUser } from '@clerk/clerk-react';
 import { jaJP } from './localization/ja-JP';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
@@ -25,7 +25,7 @@ import { AccountManagePage } from './components/AccountManagePage';
 import { ProtectedRoute } from './components/ProtectedRoute';
 
 type APIResponse = {
-  tankas: Tanka[];
+  tankas: TankaWithLikes[];
   pagination: PaginationInfo;
 };
 
@@ -54,7 +54,7 @@ const App = () => {
 };
 
 const TankaApp = () => {
-  const [tankas, setTankas] = useState<Tanka[]>([]);
+  const [tankas, setTankas] = useState<TankaWithLikes[]>([]);
   const [pagination, setPagination] = useState<PaginationInfo | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

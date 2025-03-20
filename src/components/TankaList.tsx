@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import type { Tanka } from '../types/types';
+import type { TankaWithLikes } from '../types/types';
 import styles from './TankaList.module.scss';
 import DeleteButton from './DeleteButton';
 import BlockLoader from './BlockLoader';
@@ -7,7 +7,7 @@ import Button from './Button';
 import { LikeButton } from './LikeButton';
 
 type TankaListProps = {
-  tankas: Tanka[];
+  tankas: TankaWithLikes[];
   isLoading: boolean;
   error: string | null;
   isOwnProfile: boolean;
