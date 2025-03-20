@@ -37,16 +37,17 @@ app.get('/', async c => {
         u.clerk_id,
         ${dbUserId ? 'EXISTS(SELECT 1 FROM likes WHERE user_id = ? AND tanka_id = t.id) as is_liked' : 'FALSE as is_liked'},
         COUNT(l.id) as likes_count
-      FROM tankas t
+      FROM fts
+      JOIN tankas t ON fts.rowid = t.id
       JOIN users u ON t.user_id = u.id
       LEFT JOIN likes l ON t.id = l.tanka_id
-      WHERE t.content LIKE ?
+      WHERE fts.segments MATCH ?
       GROUP BY t.id
       ORDER BY t.created_at DESC
       LIMIT ? OFFSET ?
     `
     )
-      .bind(`${query}%`, 10, 0)
+      .bind(`${query}*`, 10, 0)
       .all<TankaWithLikes>();
 
     return c.json({
