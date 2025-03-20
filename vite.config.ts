@@ -1,23 +1,38 @@
-import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react';
+import { visualizer } from 'rollup-plugin-visualizer';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   build: {
     minify: true,
     outDir: './pages',
+    rollupOptions: {
+      plugins: [visualizer()],
+      output: {
+        manualChunks: id => {
+          if (id.includes('node_modules')) {
+            if (id.includes('react-markdown') || id.includes('micromark-core-commonmark')) {
+              return 'markdown';
+            } else {
+              return 'vendor'; // all other package goes here
+            }
+          }
+        },
+      },
+    },
   },
   css: {
     preprocessorOptions: {
-       sass: {
-       api: "modern-compiler",
-       },
+      sass: {
+        api: 'modern-compiler',
+      },
     },
   },
   resolve: {
     alias: {
-      "@": "./src",
+      '@': './src',
     },
   },
   plugins: [react()],
   assetsInclude: ['**/*.md'],
-})
+});

@@ -9,3 +9,6 @@ pages
 
 # Mac
 .DS_Store
+
+# Visualizer
+stats.html
