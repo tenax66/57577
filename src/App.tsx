@@ -2,7 +2,7 @@ import { useState, useEffect, Fragment } from 'react';
 import styles from '@/App.module.scss';
 import type { Tanka, PaginationInfo } from './types/types';
 import { ClerkProvider, useUser } from '@clerk/clerk-react';
-import { jaJP } from '@clerk/localizations';
+import { jaJP } from './localization/ja-JP';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { UserPage } from './components/UserPage';
 import { TankaPage } from './components/TankaPage';
