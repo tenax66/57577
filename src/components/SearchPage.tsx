@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './SearchPage.module.scss';
 import { Header } from './Header/Header';
@@ -22,8 +22,20 @@ export const SearchPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // 検索クエリが変更されたときに自動的に検索を実行
+  useEffect(() => {
+    const delayDebounce = setTimeout(() => {
+      if (searchQuery.trim()) {
+        performSearch();
+      } else {
+        setResults([]);
+      }
+    }, 500); // 500ミリ秒のディレイを設定
+
+    return () => clearTimeout(delayDebounce);
+  }, [searchQuery]);
+
+  const performSearch = async () => {
     if (!searchQuery.trim()) return;
 
     setIsLoading(true);
@@ -35,13 +47,18 @@ export const SearchPage = () => {
         throw new Error('検索に失敗しました');
       }
       const data = (await response.json()) as SearchResponse;
-      setResults(data.tankas); // APIのレスポンス構造に合わせて修正
+      setResults(data.tankas);
     } catch (err) {
       setError(err instanceof Error ? err.message : '検索中にエラーが発生しました');
       setResults([]);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    performSearch();
   };
 
   return (
