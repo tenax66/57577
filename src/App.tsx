@@ -26,6 +26,7 @@ import { CookieConsentBanner } from './components/CookieConsent/CookieConsent';
 import CookiePolicy from './components/CookiePolicy';
 import { AccountManagePage } from './components/AccountManagePage';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import AlertBanner from './components/AlertBanner';
 
 type APIResponse = {
   tankas: TankaWithLikes[];
@@ -122,11 +123,12 @@ const TankaApp = () => {
           />
         </Row>
       </Grid>
-      <div className={styles.alphaNotice}>
-        🚧 アルファテスト中です。ユーザや短歌のデータは予告なく削除されることがあります。
-      </div>
+      <AlertBanner>
+        🚧 ベータテスト中です。ユーザや短歌のデータは予告なく削除されることがあります。
+      </AlertBanner>
+
       <main>
-        <Card title="最新の短歌" style={{ padding: '0.5rem' }}>
+        <Card title="最新の短歌" style={{ padding: '0.5rem', marginTop: '1.5rem' }}>
           <div className={styles.tankaBox}>
             {isLoading ? (
               <p>
