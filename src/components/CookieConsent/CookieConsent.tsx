@@ -42,7 +42,7 @@ export const CookieConsentBanner: React.FC = () => {
     >
       このウェブサイトでは、Cookieを使用しています。
       <Link to="/cookie-policy" className={styles.link}>
-        Cookieポリシー
+        Cookie ポリシー
       </Link>
       および
       <Link to="/privacy-policy" className={styles.link}>
