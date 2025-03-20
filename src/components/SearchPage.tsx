@@ -58,18 +58,6 @@ export const SearchPage = () => {
     performSearch();
   };
 
-  // SearchResultをTanka型に変換
-  const tankaResults: TankaWithLikes[] = results.map(result => ({
-    id: result.id,
-    content: result.content,
-    clerk_id: result.clerk_id,
-    display_name: result.display_name,
-    created_at: result.created_at,
-    likes_count: result.likes_count,
-    is_liked: result.is_liked,
-    user_id: result.user_id,
-  }));
-
   // 削除機能は検索結果では使用しないためダミー関数を用意
   const handleDelete = () => {};
 
@@ -97,7 +85,7 @@ export const SearchPage = () => {
         {results.length > 0 ? (
           <div className={styles.searchResults}>
             <TankaList
-              tankas={tankaResults}
+              tankas={results}
               isLoading={false}
               error={null}
               isOwnProfile={false}
