@@ -242,9 +242,7 @@ export const UserPage = () => {
               </td>
             </tr>
             <tr>
-              <td className={styles.infoCell}>
-                <p className={styles.userStats}>投稿数: {tankas.length}</p>
-              </td>
+              <td className={styles.infoCell}></td>
             </tr>
           </tbody>
         </table>
@@ -252,6 +250,7 @@ export const UserPage = () => {
 
       <div className={styles.tankaSection}>
         <h2>投稿した短歌</h2>
+        <p className={styles.userStats}>投稿数: {tankas.length}</p>
         {isLoading ? (
           <p>
             Loading <BlockLoader mode={6} />
@@ -267,7 +266,6 @@ export const UserPage = () => {
                 <Link to={`/tankas/${tanka.id}`} className={styles.tankaLink}>
                   <p>{tanka.content}</p>
                 </Link>
-
                 <div className={styles.tankaMetadata}>
                   <small>
                     <span>{new Date(tanka.created_at).toISOString().split('T')[0]}</span>
