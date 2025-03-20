@@ -259,6 +259,8 @@ export const UserPage = () => {
         </div>
       )}
 
+      <h2>投稿した短歌</h2>
+
       <TankaList
         tankas={tankas}
         isLoading={isLoading}

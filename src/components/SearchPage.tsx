@@ -93,8 +93,6 @@ export const SearchPage = () => {
               pagination={null}
               currentPage={1}
               setCurrentPage={() => {}}
-              hideTitle={true}
-              hideStats={true}
             />
           </div>
         ) : (
