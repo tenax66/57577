@@ -25,9 +25,6 @@ export const Header = () => {
               <SignInButton mode="modal">
                 <ActionButton>ログイン</ActionButton>
               </SignInButton>
-              <SignUpButton mode="modal">
-                <ActionButton>登録</ActionButton>
-              </SignUpButton>
             </div>
             <BentoMenu />
           </>
