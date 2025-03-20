@@ -35,7 +35,8 @@
   background: var(--theme-button-foreground);
   display: inline-flex;
   flex-shrink: 0;
-  height: calc(var(--font-size) * var(--theme-line-height-base));
+  // ちょっと大きめ
+  height: calc(var(--font-size) * (var(--theme-line-height-base) * 1.5));
   justify-content: center;
   width: 3ch;
   user-select: none;
