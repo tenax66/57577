@@ -1,0 +1,70 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0.5rem;
+  margin-top: 64px; // ヘッダーの高さ分のマージン
+}
+
+.main {
+  max-width: 600px;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.title {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.actionButton {
+  margin-top: 1rem;
+}
+
+.dangerCard {
+  border-color: #ff3b30;
+}
+
+.warning {
+  color: #ff3b30;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.deleteConfirmation {
+  margin-top: 1rem;
+}
+
+.emailDisplay {
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+
+.confirmationInput {
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.5rem 0 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.error {
+  color: #ff3b30;
+  margin-bottom: 1rem;
+}
+
+.deleteButton {
+  background-color: #ff3b30;
+  color: white;
+  
+  &:hover {
+    background-color: #d9302c;
+  }
+  
+  &:disabled {
+    background-color: #ffcccb;
+    cursor: not-allowed;
+  }
+} 

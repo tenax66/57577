@@ -48,7 +48,7 @@ npx wrangler d1 execute 57577 --remote --command "DELETE FROM d1_migrations WHER
 #### tables list
 
 ```bash
-npx wrangler d1 execute 57577 --command "select name from sqlite_master where type='table';"
+npx wrangler d1 execute 57577 --local --command "select name from sqlite_master where type='table';"
 ```
 
 ### ngrok

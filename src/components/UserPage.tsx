@@ -252,6 +252,9 @@ export const UserPage = () => {
           <ActionListItem icon={`⭢`} onClick={() => signOut()}>
             ログアウト
           </ActionListItem>
+          <ActionListItem icon={`⭢`} href={`/users/${userId}/manage`}>
+            アカウント管理
+          </ActionListItem>
         </div>
       )}
 
