@@ -26,8 +26,11 @@ app.get('/', async c => {
     // 短歌とライク情報を取得
     const { results } = await c.env.DB.prepare(
       `
-      SELECT 
-        t.*,
+      SELECT
+        t.id,
+        t.content,
+        t.user_id,
+        t.created_at,
         u.display_name,
         u.clerk_id,
         COUNT(l.id) as likes_count,
@@ -145,8 +148,11 @@ app.get('/:id', async c => {
     // 短歌とライク情報を取得
     const { results } = await c.env.DB.prepare(
       `
-      SELECT 
-        t.*,
+      SELECT
+        t.id,
+        t.content,
+        t.user_id,
+        t.created_at,
         u.display_name,
         u.clerk_id,
         COUNT(l.id) as likes_count,

@@ -1,5 +1,5 @@
 import { Hono } from 'hono';
-import type { Bindings, User, Tanka } from '../../types';
+import type { Bindings, User, TankaWithLikes } from '../../types';
 import { clerkMiddleware, getAuth } from '@hono/clerk-auth';
 
 const app = new Hono<{ Bindings: Bindings }>();
@@ -52,14 +52,19 @@ app.get('/:clerk_id/tankas', async c => {
     // ユーザーの短歌を取得（ページネーション付き）
     const { results: tankas } = await c.env.DB.prepare(
       `
-        SELECT * FROM tankas 
+        SELECT
+          tankas.id,
+          tankas.content,
+          tankas.user_id,
+          tankas.created_at
+        FROM tankas
         WHERE user_id = ? 
         ORDER BY created_at DESC
         LIMIT ? OFFSET ?
       `
     )
       .bind(users[0].id, per_page, offset)
-      .all<Tanka>();
+      .all<TankaWithLikes>();
 
     return c.json({
       tankas,
