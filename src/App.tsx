@@ -19,6 +19,7 @@ import TableColumn from './components/TableColumn';
 import SearchPage from './components/SearchPage';
 import TermsOfService from './components/TermsOfService';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import { CookieConsentBanner } from './components/CookieConsent/CookieConsent';
 
 type APIResponse = {
   tankas: Tanka[];
@@ -39,6 +40,7 @@ const App = () => {
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         </Routes>
+        <CookieConsentBanner />
       </Router>
     </ClerkProvider>
   );
