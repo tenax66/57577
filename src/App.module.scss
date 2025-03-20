@@ -33,9 +33,9 @@
 }
 
 .error {
-  color: #e00;
+  color: var(--theme-warning-text);
   padding: 1rem;
-  border: 1px solid #e00;
+  border: 1px solid var(--theme-warning-text);
 }
 
 .tankaLink {

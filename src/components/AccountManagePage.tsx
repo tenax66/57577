@@ -57,7 +57,12 @@ export const AccountManagePage = () => {
               isDisabled={
                 isDeleting || deleteConfirmation !== clerkUser?.primaryEmailAddress?.emailAddress
               }
-              className={styles.deleteButton}
+              style={{
+                backgroundColor:
+                  isDeleting || deleteConfirmation !== clerkUser?.primaryEmailAddress?.emailAddress
+                    ? undefined
+                    : 'var(--theme-warning-text)',
+              }}
             >
               {isDeleting ? <BlockLoader mode={6} /> : 'アカウントを削除する'}
             </Button>

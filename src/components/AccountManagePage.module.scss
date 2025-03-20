@@ -24,11 +24,11 @@
 }
 
 .dangerCard {
-  border-color: #ff3b30;
+  border-color: var(--theme-warning-text);
 }
 
 .warning {
-  color: #ff3b30;
+  color: var(--theme-warning-text);
   font-weight: bold;
   margin-bottom: 1rem;
 }
@@ -51,20 +51,6 @@
 }
 
 .error {
-  color: #ff3b30;
+  color: var(--theme-warning-text);
   margin-bottom: 1rem;
 }
-
-.deleteButton {
-  background-color: #ff3b30;
-  color: white;
-  
-  &:hover {
-    background-color: #d9302c;
-  }
-  
-  &:disabled {
-    background-color: #ffcccb;
-    cursor: not-allowed;
-  }
-} 

@@ -52,7 +52,7 @@
 }
 
 .error {
-  color: #dc3545;
+  color: var(--theme-warning-text);
   text-align: center;
   margin: 2rem 0;
 }
