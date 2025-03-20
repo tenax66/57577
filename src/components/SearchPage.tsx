@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import styles from './SearchPage.module.scss';
 import { Header } from './Header/Header';
 import { SearchResult } from '../types/search';
-import TableRow from './TableRow';
-import TableColumn from './TableColumn';
-import { LikeButton } from './LikeButton';
 import Card from './Card';
 import Button from './Button';
+import TankaList from './TankaList';
+import type { Tanka } from '../types/types';
 
 type SearchResponse = {
   tankas: SearchResult[];
@@ -61,6 +59,20 @@ export const SearchPage = () => {
     performSearch();
   };
 
+  // SearchResultをTanka型に変換
+  const tankaResults: Tanka[] = results.map(result => ({
+    id: result.id,
+    content: result.content,
+    clerk_id: result.clerk_id,
+    display_name: result.display_name,
+    created_at: result.created_at,
+    likes_count: result.likes_count,
+    is_liked: false, // 検索結果ではis_likedが提供されていないため、デフォルトでfalseを設定
+  }));
+
+  // 削除機能は検索結果では使用しないためダミー関数を用意
+  const handleDelete = () => {};
+
   return (
     <div className={styles.container}>
       <Header />
@@ -83,35 +95,19 @@ export const SearchPage = () => {
         {error && <div className={styles.error}>{error}</div>}
 
         {results.length > 0 ? (
-          <div className={styles.results}>
-            <table className={styles.table}>
-              <tbody>
-                {results.map(result => (
-                  <TableRow key={result.id}>
-                    <TableColumn>
-                      <div className={styles.tankaContent}>
-                        <Link to={`/tankas/${result.id}`} className={styles.tankaLink}>
-                          {result.content}
-                        </Link>
-                        <div className={styles.tankaMetadata}>
-                          <Link to={`/users/${result.clerk_id}`} className={styles.authorLink}>
-                            {result.display_name}
-                          </Link>
-                          <span className={styles.date}>
-                            {new Date(result.created_at).toISOString().split('T')[0]}
-                          </span>
-                          <LikeButton
-                            tankaId={result.id}
-                            initialLiked={false}
-                            likesCount={result.likes_count}
-                          />
-                        </div>
-                      </div>
-                    </TableColumn>
-                  </TableRow>
-                ))}
-              </tbody>
-            </table>
+          <div className={styles.searchResults}>
+            <TankaList
+              tankas={tankaResults}
+              isLoading={false}
+              error={null}
+              isOwnProfile={false}
+              onDelete={handleDelete}
+              pagination={null}
+              currentPage={1}
+              setCurrentPage={() => {}}
+              hideTitle={true}
+              hideStats={true}
+            />
           </div>
         ) : (
           !isLoading &&

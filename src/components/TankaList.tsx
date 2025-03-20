@@ -17,6 +17,8 @@ type TankaListProps = {
   } | null;
   currentPage: number;
   setCurrentPage: (page: number | ((prev: number) => number)) => void;
+  hideTitle?: boolean;
+  hideStats?: boolean;
 };
 
 const TankaList = ({
@@ -28,11 +30,13 @@ const TankaList = ({
   pagination,
   currentPage,
   setCurrentPage,
+  hideTitle = false,
+  hideStats = false,
 }: TankaListProps) => {
   return (
     <div className={styles.tankaSection}>
-      <h2>投稿した短歌</h2>
-      <p className={styles.userStats}>投稿数: {tankas.length}</p>
+      {!hideTitle && <h2>投稿した短歌</h2>}
+      {!hideStats && <p className={styles.userStats}>投稿数: {tankas.length}</p>}
       {isLoading ? (
         <p>
           Loading <BlockLoader mode={6} />
