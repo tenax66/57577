@@ -49,7 +49,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ### Licensing
 
 - Source fonts are licensed under SIL OPEN FONT LICENSE Version 1.1.
-  For more information, see "LICENSE\_<FontName>" file contained in the "source" directory.
+  For more information, see "LICENSE\_\<FontName>" file contained in the "source" directory.
 - "PlemolJP" are licensed under SIL OPEN FONT LICENSE Version 1.1.
 - Other source code, such as generating scripts, will use the MIT license.
 
