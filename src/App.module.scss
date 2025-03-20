@@ -105,14 +105,15 @@
 
 .metadataRow {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.rightAlignedItems {
+  display: flex;
   align-items: center;
   gap: 1rem;
-  justify-content: flex-start;
-  padding: 0.25rem 0 0.25rem 0;
-
-  :nth-child(2) {
-    margin-right: auto;
-  }
 }
 
 .tankaBlock {

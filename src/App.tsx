@@ -140,12 +140,16 @@ const TankaApp = () => {
                           <TableColumn className={styles.metadataColumn}>
                             <div className={styles.metadataRow}>
                               <Link to={`/users/${tanka.clerk_id}`}>{tanka.display_name}</Link>
-                              <span>{new Date(tanka.created_at).toISOString().split('T')[0]}</span>
-                              <LikeButton
-                                tankaId={tanka.id}
-                                initialLiked={tanka.is_liked}
-                                likesCount={tanka.likes_count}
-                              />
+                              <div className={styles.rightAlignedItems}>
+                                <span>
+                                  {new Date(tanka.created_at).toISOString().split('T')[0]}
+                                </span>
+                                <LikeButton
+                                  tankaId={tanka.id}
+                                  initialLiked={tanka.is_liked}
+                                  likesCount={tanka.likes_count}
+                                />
+                              </div>
                             </div>
                           </TableColumn>
                         </TableRow>
