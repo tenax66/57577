@@ -5,6 +5,7 @@ import DeleteButton from './DeleteButton';
 import BlockLoader from './BlockLoader';
 import Button from './Button';
 import { LikeButton } from './LikeButton';
+import UserAvatar from './UserAvatar';
 
 type TankaListProps = {
   tankas: TankaWithLikes[];
@@ -47,7 +48,10 @@ const TankaList = ({
                 <p>{tanka.content}</p>
               </Link>
               <div className={styles.tankaMetadata}>
-                <Link to={`/users/${tanka.clerk_id}`}>{tanka.display_name}</Link>
+                <Link to={`/users/${tanka.clerk_id}`}>
+                  {tanka.display_name}
+                  <UserAvatar clerkId={tanka.clerk_id} />
+                </Link>
                 <div className={styles.rightAlignedItems}>
                   <span>{new Date(tanka.created_at).toISOString().split('T')[0]}</span>
                   <LikeButton

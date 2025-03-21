@@ -29,6 +29,7 @@ import { ProtectedRoute } from './components/ProtectedRoute';
 import AlertBanner from './components/AlertBanner';
 import Select from './components/Select';
 import ActionButton from './components/ActionButton';
+import UserAvatar from './components/UserAvatar';
 
 type APIResponse = {
   tankas: TankaWithLikes[];
@@ -195,7 +196,12 @@ const TankaApp = () => {
                         <TableRow>
                           <TableColumn className={styles.metadataColumn}>
                             <div className={styles.metadataRow}>
-                              <Link to={`/users/${tanka.clerk_id}`}>{tanka.display_name}</Link>
+                              <div className={styles.userInfo}>
+                                <Link to={`/users/${tanka.clerk_id}`}>
+                                  {tanka.display_name}
+                                  <UserAvatar clerkId={tanka.clerk_id} />
+                                </Link>
+                              </div>
                               <div className={styles.rightAlignedItems}>
                                 <span>
                                   {new Date(tanka.created_at).toISOString().split('T')[0]}
