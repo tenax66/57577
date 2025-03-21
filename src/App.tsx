@@ -200,10 +200,10 @@ const TankaApp = () => {
                           <TableColumn className={styles.metadataColumn}>
                             <div className={styles.metadataRow}>
                               <div className={styles.userInfo}>
-                                <Link to={`/users/${tanka.clerk_id}`}>
-                                  {tanka.display_name}
+                                <Link to={`/users/${tanka.clerk_id}`}>{tanka.display_name}</Link>
+                                <a href={`/users/${tanka.clerk_id}`} style={{ background: 'none' }}>
                                   <UserAvatar clerkId={tanka.clerk_id} />
-                                </Link>
+                                </a>
                               </div>
                               <div className={styles.rightAlignedItems}>
                                 <span>
