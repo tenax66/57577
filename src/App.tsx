@@ -193,7 +193,10 @@ const TankaApp = () => {
                             </div>
                           </TableColumn>
                         </TableRow>
-                        <TableRow>
+                        <TableRow
+                          style={{ outline: 'none' }}
+                          onFocus={e => (e.currentTarget.style.background = 'inherit')}
+                        >
                           <TableColumn className={styles.metadataColumn}>
                             <div className={styles.metadataRow}>
                               <div className={styles.userInfo}>
