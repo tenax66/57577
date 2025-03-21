@@ -115,8 +115,9 @@
   justify-content: flex-end;
   margin-bottom: 1rem;
 
-  /* Selectコンポーネントの幅を制限 */
+  /* Selectコンポーネントの幅を内容に合わせて調整 */
   > section {
-    width: 150px;
+    width: auto;
+    max-width: 200px;
   }
 }

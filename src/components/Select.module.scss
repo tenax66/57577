@@ -35,8 +35,9 @@
   min-width: 10%;
   outline: 0;
   padding: 0;
-  padding-left: 3ch;
-  text-align: left;
+  padding-left: 1ch;
+  padding-right: 1ch;
+  text-align: center;
   user-select: none;
   width: 100%;
 
@@ -53,10 +54,10 @@
 
 .menu {
   background-color: var(--theme-border-subdued);
-  left: 3ch;
+  left: 1ch;
   list-style-type: none;
   padding: 0;
-  right: 0;
+  right: 1ch;
   z-index: var(--z-index-page-select);
 }
 
@@ -64,7 +65,8 @@
   border: 0;
   cursor: pointer;
   outline: 0;
-  padding-left: 6ch;
+  padding-left: 3ch;
+  padding-right: 3ch;
   user-select: none;
 
   &:hover {
