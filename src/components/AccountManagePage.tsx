@@ -42,7 +42,7 @@ export const AccountManagePage = () => {
             アカウントを削除すると、今まで投稿した短歌を含むすべてのデータが完全に削除され、元に戻すことはできません。
           </p>
           <div className={styles.deleteConfirmation}>
-            <p>削除を確認するには、あなたのメールアドレスを入力してください：</p>
+            <p>削除を確認するには、あなたのメールアドレスを入力してください: </p>
             <p className={styles.emailDisplay}>{clerkUser?.primaryEmailAddress?.emailAddress}</p>
             <input
               type="text"
