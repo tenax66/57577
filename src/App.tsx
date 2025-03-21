@@ -124,7 +124,15 @@ const TankaApp = () => {
         </Row>
       </Grid>
       <AlertBanner>
-        🚧 ベータテスト中です。ユーザや短歌のデータは予告なく削除されることがあります。
+        <p>🚧 ベータテスト中です。ユーザや短歌のデータは予告なく削除されることがあります。</p>
+        <p>
+          {!user && (
+            <span>
+              🚧 短歌の投稿には<a href="https://accounts.57577.net/sign-up">ユーザ登録</a>
+              が必要です。
+            </span>
+          )}
+        </p>
       </AlertBanner>
 
       <main>
