@@ -23,7 +23,7 @@ export const Header = () => {
           <>
             <div style={{ marginRight: '0.75rem' }}>
               <SignInButton mode="modal">
-                <ActionButton>ログイン</ActionButton>
+                <ActionButton>ログイン／登録</ActionButton>
               </SignInButton>
             </div>
             <BentoMenu />
