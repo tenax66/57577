@@ -11,6 +11,8 @@ app.get('/', async c => {
     const offset = (page - 1) * per_page;
     const auth = getAuth(c);
     const userId = auth?.userId;
+    // ソート順のクエリパラメータを取得（デフォルトは時系列順）
+    const sortBy = c.req.query('sort_by') || 'created_at';
 
     // ユーザーIDの取得（ログインしている場合）
     let dbUserId: number | null = null;
@@ -22,6 +24,10 @@ app.get('/', async c => {
         dbUserId = results[0].id;
       }
     }
+
+    // ソート順に応じたORDER BY句を設定
+    const orderByClause =
+      sortBy === 'likes' ? 'COUNT(l.id) DESC, t.created_at DESC' : 't.created_at DESC';
 
     // 短歌とライク情報を取得
     const { results } = await c.env.DB.prepare(
@@ -39,7 +45,7 @@ app.get('/', async c => {
       JOIN users u ON t.user_id = u.id
       LEFT JOIN likes l ON t.id = l.tanka_id
       GROUP BY t.id
-      ORDER BY t.created_at DESC 
+      ORDER BY ${orderByClause}
       LIMIT ? OFFSET ?
     `
     )

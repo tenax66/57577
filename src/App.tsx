@@ -65,11 +65,12 @@ const TankaApp = () => {
   const { user, isLoaded } = useUser();
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [sortBy, setSortBy] = useState<string>('created_at');
 
   useEffect(() => {
     const fetchTankas = async () => {
       try {
-        const response = await fetch(`/api/tankas?page=${currentPage}`);
+        const response = await fetch(`/api/tankas?page=${currentPage}&sort_by=${sortBy}`);
         if (!response.ok) throw new Error('Failed to fetch tankas');
         const data = (await response.json()) as APIResponse;
         setTankas(data.tankas);
@@ -82,7 +83,7 @@ const TankaApp = () => {
     };
 
     fetchTankas();
-  }, [currentPage]);
+  }, [currentPage, sortBy]);
 
   const handleSubmit = async (content: string) => {
     if (!user) return;
@@ -101,13 +102,20 @@ const TankaApp = () => {
 
       if (!response.ok) throw new Error('Failed to post tanka');
 
-      // 投稿成功後に短歌一覧を再取得
-      const data = (await (await fetch(`/api/tankas?page=${currentPage}`)).json()) as APIResponse;
+      // 投稿成功後に短歌一覧を再取得（sort_byパラメータを追加）
+      const data = (await (
+        await fetch(`/api/tankas?page=${currentPage}&sort_by=${sortBy}`)
+      ).json()) as APIResponse;
       setTankas(data.tankas);
       setPagination(data.pagination);
     } catch (e) {
       setError(e instanceof Error ? e.message : '短歌の投稿に失敗しました');
     }
+  };
+
+  // ソート順変更のハンドラー
+  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortBy(event.target.value);
   };
 
   return (
@@ -129,6 +137,13 @@ const TankaApp = () => {
 
       <main>
         <Card title="最新の短歌" style={{ padding: '0.5rem', marginTop: '1.5rem' }}>
+          <div className={styles.sortSelector}>
+            <label htmlFor="sort-select">並び順: </label>
+            <select id="sort-select" value={sortBy} onChange={handleSortChange}>
+              <option value="created_at">新着順</option>
+              <option value="likes_count">人気順</option>
+            </select>
+          </div>
           <div className={styles.tankaBox}>
             {isLoading ? (
               <p>
