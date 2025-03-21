@@ -27,6 +27,7 @@ import CookiePolicy from './components/CookiePolicy';
 import { AccountManagePage } from './components/AccountManagePage';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import AlertBanner from './components/AlertBanner';
+import Select from './components/Select';
 
 type APIResponse = {
   tankas: TankaWithLikes[];
@@ -114,10 +115,16 @@ const TankaApp = () => {
   };
 
   // ソート順変更のハンドラー
-  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortBy(event.target.value);
+  const handleSortChange = (selectedValue: string) => {
+    setSortBy(selectedValue);
     setCurrentPage(1); // ソート順変更時にページを1に戻す
   };
+
+  // オプションの表示名マッピング
+  const sortOptions = [
+    { value: 'created_at', label: '新着順' },
+    { value: 'likes', label: '人気順' },
+  ];
 
   return (
     <div className={styles.container}>
@@ -139,11 +146,17 @@ const TankaApp = () => {
       <main>
         <Card title="最新の短歌" style={{ padding: '0.5rem', marginTop: '1.5rem' }}>
           <div className={styles.sortSelector}>
-            <label htmlFor="sort-select">並び順: </label>
-            <select id="sort-select" value={sortBy} onChange={handleSortChange}>
-              <option value="created_at">新着順</option>
-              <option value="likes">人気順</option>
-            </select>
+            <Select
+              name="sort-select"
+              options={sortOptions.map(option => option.label)}
+              defaultValue={sortOptions.find(option => option.value === sortBy)?.label || ''}
+              onChange={selectedLabel => {
+                const option = sortOptions.find(option => option.label === selectedLabel);
+                if (option) {
+                  handleSortChange(option.value);
+                }
+              }}
+            />
           </div>
           <div className={styles.tankaBox}>
             {isLoading ? (

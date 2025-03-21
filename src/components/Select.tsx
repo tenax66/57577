@@ -2,7 +2,7 @@
 
 'use client';
 
-import styles from '@components/Select.module.scss';
+import styles from '@/components/Select.module.scss';
 
 import * as React from 'react';
 import * as Utilities from '../common/srcl/utilities';

@@ -109,3 +109,14 @@
 .tankaBlock {
   padding: 0 0 0 0.75rem;
 }
+
+.sortSelector {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+
+  /* Selectコンポーネントの幅を制限 */
+  > section {
+    width: 150px;
+  }
+}
