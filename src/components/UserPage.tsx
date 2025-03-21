@@ -1,6 +1,6 @@
 import { useUser } from '@clerk/clerk-react';
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import type { TankaWithLikes, TankasResponse } from '../types/types';
 import styles from './UserPage.module.scss';
 import { Header } from './Header/Header';
@@ -8,7 +8,6 @@ import BlockLoader from './BlockLoader';
 import ActionButton from './ActionButton';
 import ActionListItem from './ActionListItem';
 import Button from './Button';
-import DeleteButton from './DeleteButton';
 import { useClerk } from '@clerk/clerk-react';
 import TankaList from './TankaList';
 
@@ -200,7 +199,14 @@ export const UserPage = () => {
                   />
                   {isOwnProfile && (
                     <ActionButton onClick={handleAvatarUpdate} disabled={isUpdatingAvatar}>
-                      {isUpdatingAvatar ? '更新中...' : '画像を変更'}
+                      {isUpdatingAvatar ? (
+                        <span>
+                          更新中
+                          <BlockLoader mode={6} />
+                        </span>
+                      ) : (
+                        '画像を変更'
+                      )}
                     </ActionButton>
                   )}
                 </div>
