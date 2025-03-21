@@ -1,7 +1,7 @@
 import { useState, useEffect, Fragment } from 'react';
 import styles from '@/App.module.scss';
 import type { TankaWithLikes, PaginationInfo } from './types/types';
-import { ClerkProvider, useUser } from '@clerk/clerk-react';
+import { ClerkProvider, SignUpButton, useUser } from '@clerk/clerk-react';
 import { jaJP } from './localization/ja-JP';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { UserPage } from './components/UserPage';
@@ -28,6 +28,7 @@ import { AccountManagePage } from './components/AccountManagePage';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import AlertBanner from './components/AlertBanner';
 import Select from './components/Select';
+import ActionButton from './components/ActionButton';
 
 type APIResponse = {
   tankas: TankaWithLikes[];
@@ -144,7 +145,10 @@ const TankaApp = () => {
         <p>
           {!user && (
             <span>
-              🚧 短歌の投稿には<a href="https://accounts.57577.net/sign-up">ユーザ登録</a>
+              🚧 短歌の投稿には
+              <SignUpButton mode="modal">
+                <ActionButton>ユーザ登録</ActionButton>
+              </SignUpButton>
               が必要です。
             </span>
           )}
