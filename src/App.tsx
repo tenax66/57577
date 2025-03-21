@@ -116,6 +116,7 @@ const TankaApp = () => {
   // ソート順変更のハンドラー
   const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSortBy(event.target.value);
+    setCurrentPage(1); // ソート順変更時にページを1に戻す
   };
 
   return (
@@ -141,7 +142,7 @@ const TankaApp = () => {
             <label htmlFor="sort-select">並び順: </label>
             <select id="sort-select" value={sortBy} onChange={handleSortChange}>
               <option value="created_at">新着順</option>
-              <option value="likes_count">人気順</option>
+              <option value="likes">人気順</option>
             </select>
           </div>
           <div className={styles.tankaBox}>
