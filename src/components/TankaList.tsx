@@ -47,10 +47,10 @@ const TankaList = ({
                 <p>{tanka.content}</p>
               </Link>
               <div className={styles.tankaMetadata}>
-                <small>
+                {/* empty elemnt for spacing */}
+                <span></span>
+                <div className={styles.rightAlignedItems}>
                   <span>{new Date(tanka.created_at).toISOString().split('T')[0]}</span>
-                </small>
-                <div className={styles.rightActions}>
                   <LikeButton
                     tankaId={tanka.id}
                     initialLiked={tanka.is_liked}
