@@ -48,10 +48,10 @@ const TankaList = ({
                 <p>{tanka.content}</p>
               </Link>
               <div className={styles.tankaMetadata}>
-                <Link to={`/users/${tanka.clerk_id}`}>{tanka.display_name}</Link>
                 <a href={`/users/${tanka.clerk_id}`} style={{ background: 'none' }}>
                   <UserAvatar clerkId={tanka.clerk_id} />
                 </a>
+                <Link to={`/users/${tanka.clerk_id}`}>{tanka.display_name}</Link>
                 <div className={styles.rightAlignedItems}>
                   <span>{new Date(tanka.created_at).toISOString().split('T')[0]}</span>
                   <LikeButton
