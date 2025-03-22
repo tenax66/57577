@@ -1,4 +1,4 @@
-import { useUser } from '@clerk/clerk-react';;
+import { useUser } from '@clerk/clerk-react';
 import { useState, useEffect } from 'react';
 import Avatar from './Avatar';
 import styles from './UserMenu.module.scss';
@@ -42,7 +42,7 @@ export const UserMenu = () => {
   return (
     <div className={styles.userMenu}>
       <a href={`/users/${clerkUser.id}`} className={styles.userProfile}>
-        <Avatar src={user.avatar_url || ''}></Avatar>
+        <Avatar src={user.avatar_url || ''} style={{ width: '2.5rem', height: '2.5rem' }}></Avatar>
       </a>
     </div>
   );

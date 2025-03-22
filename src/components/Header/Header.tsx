@@ -14,7 +14,7 @@ export const Header = () => {
       <Link to="/" className={styles.logo}>
         57577.net
       </Link>
-      <div className={styles.auth}>
+      <div className={styles.menu}>
         {!isLoaded ? (
           <p>
             Loading <BlockLoader mode={6} />
