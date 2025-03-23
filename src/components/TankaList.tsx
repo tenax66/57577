@@ -53,7 +53,13 @@ const TankaList = ({
                 </a>
                 <Link to={`/users/${tanka.clerk_id}`}>{tanka.display_name}</Link>
                 <div className={styles.rightAlignedItems}>
-                  <span>{new Date(tanka.created_at).toISOString().split('T')[0]}</span>
+                  <span>
+                    {
+                      new Date(new Date(tanka.created_at).getTime() + 9 * 60 * 60 * 1000)
+                        .toISOString()
+                        .split('T')[0]
+                    }
+                  </span>
                   <LikeButton
                     tankaId={tanka.id}
                     initialLiked={tanka.is_liked}

@@ -96,7 +96,11 @@ export const TankaPage = () => {
           </div>
           <div className={styles.rightAlignedItems}>
             <time className={styles.date}>
-              {new Date(tanka.created_at).toISOString().split('T')[0]}
+              {
+                new Date(new Date(tanka.created_at).getTime() + 9 * 60 * 60 * 1000)
+                  .toISOString()
+                  .split('T')[0]
+              }
             </time>
             <LikeButton
               tankaId={tanka.id}
