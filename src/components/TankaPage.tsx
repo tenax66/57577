@@ -8,6 +8,7 @@ import { useUser } from '@clerk/clerk-react';
 import BlockLoader from './BlockLoader';
 import DeleteButton from './DeleteButton';
 import Card from './Card';
+import ButtonGroup from './ButtonGroup';
 
 type APIResponse = {
   tanka: TankaWithLikes;
@@ -18,6 +19,7 @@ export const TankaPage = () => {
   const [tanka, setTanka] = useState<TankaWithLikes | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isCopied, setIsCopied] = useState(false);
   const navigate = useNavigate();
   const { user } = useUser();
 
@@ -56,6 +58,24 @@ export const TankaPage = () => {
     } catch (e) {
       setError(e instanceof Error ? e.message : '短歌の削除に失敗しました');
     }
+  };
+
+  const handleCopyLink = () => {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url).then(() => {
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+    });
+  };
+
+  const handleTweet = () => {
+    if (!tanka) return;
+
+    const url = window.location.href;
+    const text = `${tanka.content}\n／${tanka.display_name}\n\n`;
+    const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+
+    window.open(tweetUrl, '_blank');
   };
 
   if (!tankaId)
@@ -114,6 +134,27 @@ export const TankaPage = () => {
           </div>
         </div>
       </Card>
+
+      <div style={{ marginTop: '1.5rem' }}>
+        <ButtonGroup
+          items={[
+            {
+              body: (
+                <div onClick={handleCopyLink} title="Copy link">
+                  {isCopied ? 'コピーしました' : 'リンクをコピー'}
+                </div>
+              ),
+            },
+            {
+              body: (
+                <div onClick={handleTweet} title="Share on X">
+                  X でシェア
+                </div>
+              ),
+            },
+          ]}
+        />
+      </div>
     </div>
   );
 };
