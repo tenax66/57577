@@ -7,6 +7,7 @@ import { LikeButton } from './LikeButton';
 import { useUser } from '@clerk/clerk-react';
 import BlockLoader from './BlockLoader';
 import DeleteButton from './DeleteButton';
+import Card from './Card';
 
 type APIResponse = {
   tanka: TankaWithLikes;
@@ -86,7 +87,7 @@ export const TankaPage = () => {
   return (
     <div className={styles.container}>
       <Header />
-      <div className={styles.tankaCard}>
+      <Card>
         <p className={styles.content}>{tanka.content}</p>
         <div className={styles.metadata}>
           <div className={styles.authorInfo}>
@@ -112,7 +113,7 @@ export const TankaPage = () => {
             )}
           </div>
         </div>
-      </div>
+      </Card>
     </div>
   );
 };
