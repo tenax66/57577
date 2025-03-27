@@ -116,13 +116,10 @@ app.get('/:clerk_id/likes', async c => {
           tankas.content,
           tankas.user_id,
           tankas.created_at,
-          users.clerk_id,
-          users.display_name,
           COUNT(likes.id) as likes_count,
           1 as is_liked
         FROM likes
         JOIN tankas ON likes.tanka_id = tankas.id
-        JOIN users ON tankas.user_id = users.id
         LEFT JOIN likes AS all_likes ON tankas.id = all_likes.tanka_id
         WHERE likes.user_id = ?
         GROUP BY tankas.id
