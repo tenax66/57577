@@ -254,6 +254,12 @@ export const UserPage = () => {
         </table>
       </div>
 
+      <div style={{ margin: '2rem 0' }}>
+        <ActionListItem icon={`⭢`} href={`/users/${userId}/likes`}>
+          いいねした短歌
+        </ActionListItem>
+      </div>
+
       {isOwnProfile && (
         <div style={{ margin: '2rem 0' }}>
           <ActionListItem icon={`⭢`} onClick={() => signOut()}>
