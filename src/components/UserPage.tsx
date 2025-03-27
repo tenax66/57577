@@ -262,6 +262,9 @@ export const UserPage = () => {
           <ActionListItem icon={`⭢`} href={`/users/${userId}/manage`}>
             アカウント管理
           </ActionListItem>
+          <ActionListItem icon={`⭢`} href={`/users/${userId}/likes`}>
+            いいねした短歌
+          </ActionListItem>
         </div>
       )}
 

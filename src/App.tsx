@@ -30,6 +30,7 @@ import AlertBanner from './components/AlertBanner';
 import Select from './components/Select';
 import ActionButton from './components/ActionButton';
 import UserAvatar from './components/UserAvatar';
+import LikesPage from './components/LikesPage';
 
 type APIResponse = {
   tankas: TankaWithLikes[];
@@ -46,6 +47,7 @@ const App = () => {
           <Route path="/" element={<TankaApp />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/users/:userId" element={<UserPage />} />
+          <Route path="/users/:userId/likes" element={<LikesPage />} />
           <Route element={<ProtectedRoute requireAuth={true} requireOwnership={true} />}>
             <Route path="/users/:userId/manage" element={<AccountManagePage />} />
           </Route>
