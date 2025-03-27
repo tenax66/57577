@@ -201,7 +201,7 @@ const TankaApp = () => {
                         >
                           <TableColumn className={styles.metadataColumn}>
                             <div className={styles.metadataRow}>
-                              <div className={styles.userInfo}>
+                              <div>
                                 <a href={`/users/${tanka.clerk_id}`} style={{ background: 'none' }}>
                                   <UserAvatar clerkId={tanka.clerk_id} />
                                 </a>
