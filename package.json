@@ -33,7 +33,7 @@
     "@clerk/localizations": "^3.13.1",
     "@clerk/types": "^4.49.0",
     "@hono/clerk-auth": "^2.0.0",
-    "hono": "^4.7.4",
+    "hono": "^4.7.5",
     "react": "^19.0.0",
     "react-cookie-consent": "^9.0.0",
     "react-dom": "^19.0.0",

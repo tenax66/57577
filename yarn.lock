@@ -1708,10 +1708,10 @@ hast-util-whitespace@^3.0.0:
   dependencies:
     "@types/hast" "^3.0.0"
 
-hono@^4.7.4:
-  version "4.7.4"
-  resolved "https://registry.yarnpkg.com/hono/-/hono-4.7.4.tgz#27294b29792242486ed83de3e9fc25c46768c372"
-  integrity sha512-Pst8FuGqz3L7tFF+u9Pu70eI0xa5S3LPUmrNd5Jm8nTHze9FxLTK9Kaj5g/k4UcwuJSXTP65SyHOPLrffpcAJg==
+hono@^4.7.5:
+  version "4.7.5"
+  resolved "https://registry.yarnpkg.com/hono/-/hono-4.7.5.tgz#5e28b48384971c16e011fe6f7b95668655d4b855"
+  integrity sha512-fDOK5W2C1vZACsgLONigdZTRZxuBqFtcKh7bUQ5cVSbwI2RWjloJDcgFOVzbQrlI6pCmhlTsVYZ7zpLj4m4qMQ==
 
 html-url-attributes@^3.0.0:
   version "3.0.1"
