@@ -48,10 +48,17 @@ const TankaList = ({
                 <p>{tanka.content}</p>
               </Link>
               <div className={styles.tankaMetadata}>
-                <a href={`/users/${tanka.clerk_id}`} style={{ background: 'none' }}>
-                  <UserAvatar clerkId={tanka.clerk_id} />
-                </a>
-                <Link to={`/users/${tanka.clerk_id}`}>{tanka.display_name}</Link>
+                <div className={styles.userInfo}>
+                  {/* FIXME ここでいろいろ判定するかわりにオプションをつけたい */}
+                  {tanka.clerk_id && tanka.display_name && (
+                    <>
+                      <a href={`/users/${tanka.clerk_id}`} style={{ background: 'none' }}>
+                        <UserAvatar clerkId={tanka.clerk_id} />
+                      </a>
+                      <Link to={`/users/${tanka.clerk_id}`}>{tanka.display_name}</Link>
+                    </>
+                  )}
+                </div>
                 <div className={styles.rightAlignedItems}>
                   <span>
                     {
