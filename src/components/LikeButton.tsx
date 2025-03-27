@@ -55,14 +55,25 @@ export const LikeButton = ({ tankaId, initialLiked, likesCount: initialLikesCoun
     if (!user || isProcessing) return;
 
     setIsProcessing(true);
+
+    // 即時にUIを更新
+    const newIsLiked = !isLiked;
+    setIsLiked(newIsLiked);
+    setLikesCount(prevCount => (newIsLiked ? prevCount + 1 : prevCount - 1));
+
     try {
       const response = await fetch(`/api/tankas/${tankaId}/likes`, {
         method: 'POST',
       });
 
-      if (!response.ok) throw new Error('Failed to toggle like');
+      if (!response.ok) {
+        // エラーの場合は元に戻す
+        setIsLiked(!newIsLiked);
+        setLikesCount(prevCount => (!newIsLiked ? prevCount + 1 : prevCount - 1));
+        throw new Error('Failed to toggle like');
+      }
 
-      // いいねの状態といいね数を再取得
+      // サーバーからの応答で正確な値に更新
       const [{ liked }, { count }] = await Promise.all([
         response.json() as Promise<LikeResponse>,
         (await fetch(`/api/tankas/${tankaId}/likes/count`)).json() as Promise<LikeCountResponse>,
