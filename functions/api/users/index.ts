@@ -79,6 +79,73 @@ app.get('/:clerk_id/tankas', async c => {
   }
 });
 
+// ユーザーがいいねした短歌一覧取得API
+app.get('/:clerk_id/likes', async c => {
+  try {
+    const clerk_id = c.req.param('clerk_id');
+    const page = parseInt(c.req.query('page') || '1');
+    const per_page = 10; // 1ページあたりの短歌数
+
+    // まずユーザーIDを取得
+    const { results: users } = await c.env.DB.prepare('SELECT id FROM users WHERE clerk_id = ?')
+      .bind(clerk_id)
+      .all<{ id: number }>();
+
+    if (users.length === 0) {
+      return c.json({ error: 'User not found' }, 404);
+    }
+
+    // いいねした短歌の総数を取得
+    const { results: countResult } = await c.env.DB.prepare(
+      `SELECT COUNT(*) as count 
+       FROM likes 
+       JOIN tankas ON likes.tanka_id = tankas.id
+       WHERE likes.user_id = ?`
+    )
+      .bind(users[0].id)
+      .all<{ count: number }>();
+
+    const total = countResult[0].count;
+    const offset = (page - 1) * per_page;
+
+    // ユーザーがいいねした短歌を取得（ページネーション付き）
+    const { results: tankas } = await c.env.DB.prepare(
+      `
+        SELECT
+          tankas.id,
+          tankas.content,
+          tankas.user_id,
+          tankas.created_at,
+          users.clerk_id,
+          users.display_name,
+          COUNT(likes.id) as likes_count,
+          1 as is_liked
+        FROM likes
+        JOIN tankas ON likes.tanka_id = tankas.id
+        JOIN users ON tankas.user_id = users.id
+        LEFT JOIN likes AS all_likes ON tankas.id = all_likes.tanka_id
+        WHERE likes.user_id = ?
+        GROUP BY tankas.id
+        ORDER BY likes.created_at DESC
+        LIMIT ? OFFSET ?
+      `
+    )
+      .bind(users[0].id, per_page, offset)
+      .all<TankaWithLikes>();
+
+    return c.json({
+      tankas,
+      pagination: {
+        current_page: page,
+        has_next: offset + tankas.length < total,
+      },
+    });
+  } catch (e) {
+    console.error(e);
+    return c.json({ error: 'Internal Server Error' }, 500);
+  }
+});
+
 // ユーザー情報更新API
 app.patch('/:clerk_id', clerkMiddleware(), async c => {
   const auth = getAuth(c);
