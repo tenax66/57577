@@ -49,6 +49,7 @@ const TankaList = ({
               </Link>
               <div className={styles.tankaMetadata}>
                 <div className={styles.userInfo}>
+                  {/* FIXME ここでいろいろ判定するかわりにオプションをつけたい */}
                   {tanka.clerk_id && tanka.display_name && (
                     <>
                       <a href={`/users/${tanka.clerk_id}`} style={{ background: 'none' }}>
