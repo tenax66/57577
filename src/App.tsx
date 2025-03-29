@@ -32,6 +32,7 @@ import ActionButton from './components/ActionButton';
 import UserAvatar from './components/UserAvatar';
 import LikesPage from './components/LikesPage';
 import RankingPage from './components/RankingPage';
+import ActionListItem from './components/ActionListItem';
 
 type APIResponse = {
   tankas: TankaWithLikes[];
@@ -160,8 +161,17 @@ const TankaApp = () => {
         </p>
       </AlertBanner>
 
+      <div className={styles.actionList}>
+        <ActionListItem icon={`⭢`} href="/ranking">
+          ランキング
+        </ActionListItem>
+        <ActionListItem icon={`⭢`} href="/search">
+          検索
+        </ActionListItem>
+      </div>
+
       <main>
-        <Card title="最新の短歌" style={{ padding: '0.5rem', marginTop: '1.5rem' }}>
+        <Card title="最新の短歌">
           <div className={styles.sortSelector}>
             <Select
               name="sort-select"
