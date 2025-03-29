@@ -6,6 +6,7 @@ import tankaRoutes from './tankas';
 import userRoutes from './users';
 import type { Bindings } from '../types';
 import searchRoutes from './search';
+import rankingRoutes from './ranking';
 
 const app = new Hono<{ Bindings: Bindings }>();
 
@@ -19,6 +20,7 @@ app.get('/health-check', c => {
 app.route('/api/tankas', tankaRoutes);
 app.route('/api/users', userRoutes);
 app.route('/api/search', searchRoutes);
+app.route('/api/ranking', rankingRoutes);
 
 // Webhookエンドポイント
 app.post('/api/webhooks/clerk', async c => {

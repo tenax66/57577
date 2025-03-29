@@ -18,6 +18,7 @@ type TankaListProps = {
   } | null;
   currentPage: number;
   setCurrentPage: (page: number | ((prev: number) => number)) => void;
+  showRank?: boolean;
 };
 
 const TankaList = ({
@@ -29,6 +30,7 @@ const TankaList = ({
   pagination,
   currentPage,
   setCurrentPage,
+  showRank,
 }: TankaListProps) => {
   return (
     <div className={styles.tankaSection}>
@@ -42,8 +44,13 @@ const TankaList = ({
         <p>まだ短歌をいいねしていません</p>
       ) : (
         <div className={styles.tankaList}>
-          {tankas.map(tanka => (
+          {tankas.map((tanka, index) => (
             <div key={tanka.id} className={styles.tankaCard}>
+              {showRank && (
+                <div className={styles.rankBadge}>
+                  {currentPage === 1 ? index + 1 : (currentPage - 1) * 10 + index + 1}
+                </div>
+              )}
               <Link to={`/tankas/${tanka.id}`} className={styles.tankaLink}>
                 <p>{tanka.content}</p>
               </Link>
