@@ -141,14 +141,14 @@ export const TankaPage = () => {
             {
               body: (
                 <div onClick={handleCopyLink} title="Copy link">
-                  {isCopied ? 'コピーしました' : 'リンクをコピー'}
+                  {isCopied ? 'Copied!' : 'Copy Link'}
                 </div>
               ),
             },
             {
               body: (
                 <div onClick={handleTweet} title="Share on X">
-                  X でシェア
+                  Share on 𝕏
                 </div>
               ),
             },
