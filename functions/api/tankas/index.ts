@@ -27,7 +27,7 @@ app.get('/', async c => {
 
     // ソート順に応じたORDER BY句を設定
     const orderByClause =
-      sortBy === 'likes' ? 'COUNT(l.id) DESC, t.created_at DESC' : 't.created_at DESC';
+      sortBy === 'likes' ? 'likes_count DESC, t.created_at DESC' : 't.created_at DESC';
 
     // 短歌とライク情報を取得
     const { results } = await c.env.DB.prepare(
@@ -39,12 +39,15 @@ app.get('/', async c => {
         t.created_at,
         u.display_name,
         u.clerk_id,
-        COUNT(l.id) as likes_count,
+        COALESCE(l.likes_count, 0) AS likes_count,
         ${dbUserId ? 'EXISTS(SELECT 1 FROM likes WHERE user_id = ? AND tanka_id = t.id) as is_liked' : 'FALSE as is_liked'}
       FROM tankas t
       JOIN users u ON t.user_id = u.id
-      LEFT JOIN likes l ON t.id = l.tanka_id
-      GROUP BY t.id
+      LEFT JOIN (
+        SELECT tanka_id, COUNT(*) AS likes_count
+        FROM likes
+        GROUP BY tanka_id
+      ) l ON t.id = l.tanka_id
       ORDER BY ${orderByClause}
       LIMIT ? OFFSET ?
     `

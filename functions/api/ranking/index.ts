@@ -64,14 +64,17 @@ app.get('/', async c => {
       LIMIT ? OFFSET ?
     `
     )
-      .bind(...(dbUserId ? [dbUserId, per_page, offset] : [per_page, offset]))
+      .bind(...(dbUserId ? [dbUserId, per_page +1, offset] : [per_page +1, offset]))
       .all<TankaWithLikes>();
 
+    const hasNextPage = results.length > per_page;
+    const tankas = results.slice(0, per_page);
+
     return c.json({
-      tankas: results,
+      tankas: tankas,
       pagination: {
         current_page: page,
-        has_next: offset + results.length < total,
+        has_next: hasNextPage,
       },
     });
   } catch (e) {
