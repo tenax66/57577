@@ -11,6 +11,7 @@
   padding: 1rem;
 
   &.vertical {
+    letter-spacing: 0.05em;
     writing-mode: vertical-rl;
     -ms-writing-mode: tb-rl;
     overflow-x: auto;
