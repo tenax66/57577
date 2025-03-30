@@ -9,10 +9,13 @@ import BlockLoader from './BlockLoader';
 import DeleteButton from './DeleteButton';
 import Card from './Card';
 import ButtonGroup from './ButtonGroup';
+import Select from './Select';
 
 type APIResponse = {
   tanka: TankaWithLikes;
 };
+
+type DisplayMode = 'vertical' | 'horizontal';
 
 export const TankaPage = () => {
   const { tankaId } = useParams<{ tankaId: string }>();
@@ -20,6 +23,7 @@ export const TankaPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isCopied, setIsCopied] = useState(false);
+  const [displayMode, setDisplayMode] = useState<DisplayMode>('vertical');
   const navigate = useNavigate();
   const { user } = useUser();
 
@@ -78,6 +82,11 @@ export const TankaPage = () => {
     window.open(tweetUrl, '_blank');
   };
 
+  const displayOptions = [
+    { value: 'vertical', label: '縦書き' },
+    { value: 'horizontal', label: '横書き' },
+  ];
+
   if (!tankaId)
     return (
       <div className={styles.container}>
@@ -107,53 +116,70 @@ export const TankaPage = () => {
   return (
     <div className={styles.container}>
       <Header />
-      <Card>
-        <p className={styles.content}>{tanka.content}</p>
-        <div className={styles.metadata}>
-          <div className={styles.authorInfo}>
-            <Link to={`/users/${tanka.clerk_id}`} className={styles.author}>
-              {tanka.display_name}
-            </Link>
-          </div>
-          <div className={styles.rightAlignedItems}>
-            <time className={styles.date}>
-              {
-                new Date(new Date(tanka.created_at).getTime() + 9 * 60 * 60 * 1000)
-                  .toISOString()
-                  .split('T')[0]
+      <div className={`${styles.cardContainer} ${styles[displayMode]}`}>
+        <div className={styles.displayModeSelector}>
+          <Select
+            name="display-mode-select"
+            options={displayOptions.map(option => option.label)}
+            defaultValue={displayOptions.find(option => option.value === displayMode)?.label || ''}
+            onChange={selectedLabel => {
+              const option = displayOptions.find(option => option.label === selectedLabel);
+              if (option) {
+                setDisplayMode(option.value as DisplayMode);
               }
-            </time>
-            <LikeButton
-              tankaId={tanka.id}
-              initialLiked={tanka.is_liked}
-              likesCount={tanka.likes_count}
-            />
-            {user?.id === tanka.clerk_id && (
-              <DeleteButton onClick={handleDelete}>削除</DeleteButton>
-            )}
-          </div>
+            }}
+          />
         </div>
-      </Card>
+        <Card>
+          <div className={styles.contentWrapper}>
+            <p className={`${styles.content} ${styles[displayMode]}`}>{tanka.content}</p>
+          </div>
+          <div className={styles.metadata}>
+            <div className={styles.authorInfo}>
+              <Link to={`/users/${tanka.clerk_id}`} className={styles.author}>
+                {tanka.display_name}
+              </Link>
+            </div>
+            <div className={styles.rightAlignedItems}>
+              <time className={styles.date}>
+                {
+                  new Date(new Date(tanka.created_at).getTime() + 9 * 60 * 60 * 1000)
+                    .toISOString()
+                    .split('T')[0]
+                }
+              </time>
+              <LikeButton
+                tankaId={tanka.id}
+                initialLiked={tanka.is_liked}
+                likesCount={tanka.likes_count}
+              />
+              {user?.id === tanka.clerk_id && (
+                <DeleteButton onClick={handleDelete}>削除</DeleteButton>
+              )}
+            </div>
+          </div>
+        </Card>
 
-      <div style={{ marginTop: '1.5rem' }}>
-        <ButtonGroup
-          items={[
-            {
-              body: (
-                <div onClick={handleCopyLink} title="Copy link">
-                  {isCopied ? 'Copied!' : 'Copy Link'}
-                </div>
-              ),
-            },
-            {
-              body: (
-                <div onClick={handleTweet} title="Share on X">
-                  Share on 𝕏
-                </div>
-              ),
-            },
-          ]}
-        />
+        <div style={{ marginTop: '1.5rem' }}>
+          <ButtonGroup
+            items={[
+              {
+                body: (
+                  <div onClick={handleCopyLink} title="Copy link">
+                    {isCopied ? 'Copied!' : 'Copy Link'}
+                  </div>
+                ),
+              },
+              {
+                body: (
+                  <div onClick={handleTweet} title="Share on X">
+                    Share on 𝕏
+                  </div>
+                ),
+              },
+            ]}
+          />
+        </div>
       </div>
     </div>
   );

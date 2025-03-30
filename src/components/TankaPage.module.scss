@@ -7,9 +7,22 @@
 
 .content {
   font-size: 1rem;
-  line-height: 1.5;
-  margin: 0 0 1.5rem;
-  text-align: center;
+  margin: 0 auto 1rem;
+  padding: 1rem;
+
+  &.vertical {
+    writing-mode: vertical-rl;
+    -ms-writing-mode: tb-rl;
+    overflow-x: auto;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  &.horizontal {
+    writing-mode: horizontal-tb;
+    text-align: left;
+    line-height: 1.8;
+  }
 }
 
 .metadata {
@@ -39,4 +52,30 @@
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+.contentWrapper {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.displayModeSelector {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+}
+
+.cardContainer {
+  margin: 0 auto;
+  width: 90%;
+  transition: max-width 0.3s ease;
+
+  &.vertical {
+    max-width: 330px;
+  }
+
+  &.horizontal {
+    max-width: 800px;
+  }
 }
