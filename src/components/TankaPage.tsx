@@ -157,7 +157,21 @@ export const TankaPage = () => {
         </div>
         <Card>
           <div className={styles.contentWrapper}>
-            <p className={`${styles.content} ${styles[displayMode]}`}>{tanka.content}</p>
+            <p className={`${styles.content} ${styles[displayMode]}`}>
+              {displayMode === 'vertical'
+                ? tanka.content.split('').map((char, index) => {
+                    // 英数字かどうかを判定
+                    const isAlphaNumeric = /[a-zA-Z0-9]/.test(char);
+                    return isAlphaNumeric ? (
+                      char
+                    ) : (
+                      <span key={index} className={styles.japanese}>
+                        {char}
+                      </span>
+                    );
+                  })
+                : tanka.content}
+            </p>
           </div>
           <div className={styles.metadata}>
             <div className={styles.authorInfo}>

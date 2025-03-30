@@ -13,11 +13,18 @@
   &.vertical {
     letter-spacing: 0.05em;
     writing-mode: vertical-rl;
-    text-orientation: upright;
     -ms-writing-mode: tb-rl;
     overflow-x: auto;
     white-space: nowrap;
     text-align: center;
+
+    // 基本設定は混在モード
+    text-orientation: mixed;
+
+    // 日本語文字のみuprightにする
+    .japanese {
+      text-orientation: upright;
+    }
   }
 
   &.horizontal {
