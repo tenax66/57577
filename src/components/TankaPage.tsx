@@ -27,6 +27,31 @@ export const TankaPage = () => {
   const navigate = useNavigate();
   const { user } = useUser();
 
+  // 画面幅に基づいて初期表示モードを設定
+  useEffect(() => {
+    const setInitialDisplayMode = () => {
+      // モバイルデバイスや狭い画面では横書きをデフォルトに
+      if (window.innerWidth < 768) {
+        setDisplayMode('vertical');
+      } else {
+        setDisplayMode('horizontal');
+      }
+    };
+
+    // 初期設定
+    setInitialDisplayMode();
+
+    // ウィンドウサイズ変更時にも対応
+    const handleResize = () => {
+      setInitialDisplayMode();
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   useEffect(() => {
     const fetchTanka = async () => {
       if (!tankaId) return;
