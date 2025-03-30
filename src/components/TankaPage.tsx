@@ -162,13 +162,24 @@ export const TankaPage = () => {
                 ? tanka.content.split('').map((char, index) => {
                     // 英数字かどうかを判定
                     const isAlphaNumeric = /[a-zA-Z0-9]/.test(char);
-                    return isAlphaNumeric ? (
-                      char
-                    ) : (
-                      <span key={index} className={styles.japanese}>
-                        {char}
-                      </span>
-                    );
+                    // 長音符（ー）かどうかを判定
+                    const isChoonpu = char === 'ー';
+
+                    if (isChoonpu) {
+                      return (
+                        <span key={index} className={styles.specialChars}>
+                          {char}
+                        </span>
+                      );
+                    } else if (isAlphaNumeric) {
+                      return char;
+                    } else {
+                      return (
+                        <span key={index} className={styles.japanese}>
+                          {char}
+                        </span>
+                      );
+                    }
                   })
                 : tanka.content}
             </p>

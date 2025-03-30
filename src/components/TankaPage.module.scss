@@ -25,6 +25,16 @@
     .japanese {
       text-orientation: upright;
     }
+
+    // 長音符（ー）の特別対応
+    .specialChars {
+      text-orientation: upright;
+      // Safariでの表示を修正
+      -webkit-text-orientation: upright;
+      // 回転を調整
+      display: inline-block;
+      transform: rotate(90deg);
+    }
   }
 
   &.horizontal {
