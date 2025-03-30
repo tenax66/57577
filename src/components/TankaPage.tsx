@@ -112,6 +112,12 @@ export const TankaPage = () => {
     { value: 'horizontal', label: '横書き' },
   ];
 
+  // Safariかどうかを検出する関数を追加
+  const isSafari = () => {
+    const ua = navigator.userAgent.toLowerCase();
+    return ua.indexOf('safari') !== -1 && ua.indexOf('chrome') === -1;
+  };
+
   if (!tankaId)
     return (
       <div className={styles.container}>
@@ -166,8 +172,12 @@ export const TankaPage = () => {
                     const isChoonpu = char === 'ー';
 
                     if (isChoonpu) {
+                      // Safariの場合のみ特別なクラスを適用
                       return (
-                        <span key={index} className={styles.specialChars}>
+                        <span
+                          key={index}
+                          className={isSafari() ? styles.safariSpecificChars : styles.japanese}
+                        >
                           {char}
                         </span>
                       );
@@ -175,7 +185,7 @@ export const TankaPage = () => {
                       return char;
                     } else {
                       return (
-                        <span key={index} className={styles.japanese}>
+                        <span key={index}>
                           {char}
                         </span>
                       );
