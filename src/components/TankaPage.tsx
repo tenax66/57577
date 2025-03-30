@@ -168,27 +168,29 @@ export const TankaPage = () => {
                 ? tanka.content.split('').map((char, index) => {
                     // 英数字かどうかを判定
                     const isAlphaNumeric = /[a-zA-Z0-9]/.test(char);
-                    // 長音符（ー）かどうかを判定
-                    const isChoonpu = char === 'ー';
 
-                    if (isChoonpu) {
-                      // Safariの場合のみ特別なクラスを適用
-                      return (
-                        <span
-                          key={index}
-                          className={isSafari() ? styles.safariSpecificChars : styles.japanese}
-                        >
-                          {char}
-                        </span>
-                      );
-                    } else if (isAlphaNumeric) {
+                    // Safariの場合のみ句読点の置換処理
+                    if (isSafari()) {
+                      if (char === '。') {
+                        return <span key={index}>&#xFE12;</span>; // U+FE12
+                      } else if (char === '、') {
+                        return <span key={index}>&#xFE11;</span>; // U+FE11
+                      } else if (char === 'ー') {
+                        return (
+                          <span
+                            key={index}
+                            className={isSafari() ? styles.safariSpecificChars : styles.japanese}
+                          >
+                            {char}
+                          </span>
+                        );
+                      }
+                    }
+
+                    if (isAlphaNumeric) {
                       return char;
                     } else {
-                      return (
-                        <span key={index}>
-                          {char}
-                        </span>
-                      );
+                      return <span key={index}>{char}</span>;
                     }
                   })
                 : tanka.content}
