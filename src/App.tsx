@@ -33,6 +33,7 @@ import UserAvatar from './components/UserAvatar';
 import LikesPage from './components/LikesPage';
 import RankingPage from './components/RankingPage';
 import ActionListItem from './components/ActionListItem';
+import { HelmetProvider, Helmet } from 'react-helmet-async';
 
 type APIResponse = {
   tankas: TankaWithLikes[];
@@ -43,25 +44,27 @@ const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 const App = () => {
   return (
-    <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY} localization={jaJP}>
-      <Router>
-        <Routes>
-          <Route path="/" element={<TankaApp />} />
-          <Route path="/search" element={<SearchPage />} />
-          <Route path="/ranking" element={<RankingPage />} />
-          <Route path="/users/:userId" element={<UserPage />} />
-          <Route path="/users/:userId/likes" element={<LikesPage />} />
-          <Route element={<ProtectedRoute requireAuth={true} requireOwnership={true} />}>
-            <Route path="/users/:userId/manage" element={<AccountManagePage />} />
-          </Route>
-          <Route path="/tankas/:tankaId" element={<TankaPage />} />
-          <Route path="/terms-of-service" element={<TermsOfService />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/cookie-policy" element={<CookiePolicy />} />
-        </Routes>
-        <CookieConsentBanner />
-      </Router>
-    </ClerkProvider>
+    <HelmetProvider>
+      <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY} localization={jaJP}>
+        <Router>
+          <Routes>
+            <Route path="/" element={<TankaApp />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/ranking" element={<RankingPage />} />
+            <Route path="/users/:userId" element={<UserPage />} />
+            <Route path="/users/:userId/likes" element={<LikesPage />} />
+            <Route element={<ProtectedRoute requireAuth={true} requireOwnership={true} />}>
+              <Route path="/users/:userId/manage" element={<AccountManagePage />} />
+            </Route>
+            <Route path="/tankas/:tankaId" element={<TankaPage />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/cookie-policy" element={<CookiePolicy />} />
+          </Routes>
+          <CookieConsentBanner />
+        </Router>
+      </ClerkProvider>
+    </HelmetProvider>
   );
 };
 
@@ -136,6 +139,23 @@ const TankaApp = () => {
   return (
     <div className={styles.container}>
       <Header />
+      <Helmet>
+        <meta property="og:title" content="57577.net - 短歌投稿サイト" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://57577.net/" />
+        <meta property="og:image" content="https://images.57577.net/Self-replicating_machine.png" />
+        <meta property="og:site_name" content="57577.net" />
+        <meta property="og:description" content="57577.netは短歌を投稿できるサイトです。" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@57577_net" />
+        <meta name="twitter:title" content="57577.net - 短歌投稿サイト" />
+        <meta name="twitter:description" content="57577.netは短歌を投稿できるサイトです。" />
+        <meta
+          name="twitter:image"
+          content="https://images.57577.net/Self-replicating_machine.png"
+        />
+      </Helmet>
       <Grid>
         <Row>
           <TextArea
