@@ -164,19 +164,11 @@ const TankaApp = () => {
             disabled={true}
             isBlink={true}
           />
-          {!user && (
-            <TextArea
-              autoPlay="57577.netは短歌投稿サイトです。"
-              autoPlaySpeedMS={50}
-              disabled={true}
-              isBlink={true}
-            />
-          )}
         </Row>
       </Grid>
-      <AlertBanner>
-        <p>
-          {!user && (
+      {!user && (
+        <AlertBanner>
+          <p>
             <span>
               短歌の投稿には
               <SignUpButton mode="modal">
@@ -184,9 +176,9 @@ const TankaApp = () => {
               </SignUpButton>
               が必要です。
             </span>
-          )}
-        </p>
-      </AlertBanner>
+          </p>
+        </AlertBanner>
+      )}
 
       <div className={styles.actionList}>
         <ActionListItem icon={`⭢`} href="/ranking">
