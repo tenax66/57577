@@ -222,7 +222,7 @@ export const TankaPage = () => {
           </div>
         </Card>
 
-        <div style={{ marginTop: '1.5rem' }}>
+        <div className={styles.buttonGroup}>
           <ButtonGroup
             items={[
               {
