@@ -159,20 +159,6 @@ export const TankaPage = () => {
           <meta name="twitter:description" content={tanka.content} />
         </Helmet>
       )}
-      <Card>
-        <p className={styles.content}>{tanka.content}</p>
-        <div className={styles.metadata}>
-          <div className={styles.authorInfo}>
-            <Link to={`/users/${tanka.clerk_id}`} className={styles.author}>
-              {tanka.display_name}
-            </Link>
-          </div>
-          <div className={styles.rightAlignedItems}>
-            <time className={styles.date}>
-              {
-                new Date(new Date(tanka.created_at).getTime() + 9 * 60 * 60 * 1000)
-                  .toISOString()
-                  .split('T')[0]
       <div className={`${styles.cardContainer} ${styles[displayMode]}`}>
         <div className={styles.displayModeSelector}>
           <Select
