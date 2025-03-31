@@ -164,14 +164,21 @@ const TankaApp = () => {
             disabled={true}
             isBlink={true}
           />
+          {!user && (
+            <TextArea
+              autoPlay="57577.netは短歌投稿サイトです。"
+              autoPlaySpeedMS={50}
+              disabled={true}
+              isBlink={true}
+            />
+          )}
         </Row>
       </Grid>
       <AlertBanner>
-        <p>🚧 ベータテスト中です。ユーザや短歌のデータは予告なく削除されることがあります。</p>
         <p>
           {!user && (
             <span>
-              🚧 短歌の投稿には
+              短歌の投稿には
               <SignUpButton mode="modal">
                 <ActionButton>ユーザ登録</ActionButton>
               </SignUpButton>
