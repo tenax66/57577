@@ -18,21 +18,7 @@
     overflow-x: auto;
     white-space: nowrap;
     text-align: center;
-
-    // 基本設定は混在モード
     text-orientation: mixed;
-
-    .japanese {
-      // do nothing
-    }
-
-    // Safari用の長音符対応
-    .safariSpecificChars {
-      text-orientation: upright;
-      -webkit-text-orientation: upright;
-      display: inline-block;
-      transform: rotate(90deg);
-    }
   }
 
   &.horizontal {
