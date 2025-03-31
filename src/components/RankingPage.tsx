@@ -22,12 +22,12 @@ const RankingPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [pagination, setPagination] = useState<PaginationInfo | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [period, setPeriod] = useState<string>('all');
+  const [period, setPeriod] = useState<string>('week');
 
   const periodOptions: PeriodOption[] = [
-    { value: 'all', label: '全期間' },
-    { value: 'month', label: '今月' },
     { value: 'week', label: '今週' },
+    { value: 'month', label: '今月' },
+    { value: 'all', label: '全期間' },
   ];
 
   useEffect(() => {
@@ -77,7 +77,7 @@ const RankingPage = () => {
               onChange={handlePeriodChange}
             />
           </div>
-          
+
           <TankaList
             tankas={tankas}
             isLoading={isLoading}
@@ -95,4 +95,4 @@ const RankingPage = () => {
   );
 };
 
-export default RankingPage; 
+export default RankingPage;

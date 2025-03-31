@@ -1,11 +1,13 @@
 // https://github.com/internet-development/www-sacred
 
 @font-face {
-  font-family: 'PlemolJPHS-Text';
-  src: url('/src/styles/fonts/PlemolJPHS-Text.ttf');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
+  font-family: 'NotoSansJP-Regular';
+  src: url('/src/styles/fonts/NotoSansJP-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'JetBrainsMonoNL-Regular';
+  src: url('/src/styles/fonts/JetBrainsMonoNL-Regular.ttf');
 }
 
 a,
@@ -425,9 +427,8 @@ body {
   --color-white-2: rgba(255, 255, 255, 0.2);
   --color-white-4: rgba(255, 255, 255, 0.4);
 
-  --font-family: -apple-system, BlinkMacSystemFont, helvetica neue, helvetica, sans-serif;
-  --font-family-mono: 'PlemolJPHS-Text', Consolas, monaco, monospace;
-  --font-family-serif: Georgia, Times New Roman, serif;
+  --font-family-mono: 'NotoSansJP-Regular', 'JetBrainsMonoNL-Regular', Consolas, monaco, monospace;
+  --font-family-mono-roman: 'JetBrainsMonoNL-Regular', Consolas, monaco, monospace;
 
   --theme-text: var(--color-black-100);
   --theme-line-height-base: 1.25;
