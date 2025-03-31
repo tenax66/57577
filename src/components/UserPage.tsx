@@ -240,12 +240,14 @@ export const UserPage = () => {
                   </div>
                 ) : (
                   <div className={styles.nameContainer}>
-                    {user.display_name}
-                    {isOwnProfile && (
-                      <div className={styles.editButtonWrapper}>
-                        <ActionButton onClick={() => setIsEditing(true)}>編集</ActionButton>
-                      </div>
-                    )}
+                    <div>{user.display_name}</div>
+                    <div>
+                      {isOwnProfile && (
+                        <div className={styles.editButtonWrapper}>
+                          <ActionButton onClick={() => setIsEditing(true)}>編集</ActionButton>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 )}
               </td>
