@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { UserPage } from './components/UserPage';
 import { TankaPage } from './components/TankaPage';
 import { Header } from './components/Header/Header';
+import { Footer } from './components/Footer/Footer';
 import { LikeButton } from './components/LikeButton';
 import { PostTankaModal } from './components/PostTankaModal';
 import Button from './components/Button';
@@ -47,20 +48,25 @@ const App = () => {
     <HelmetProvider>
       <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY} localization={jaJP}>
         <Router>
-          <Routes>
-            <Route path="/" element={<TankaApp />} />
-            <Route path="/search" element={<SearchPage />} />
-            <Route path="/ranking" element={<RankingPage />} />
-            <Route path="/users/:userId" element={<UserPage />} />
-            <Route path="/users/:userId/likes" element={<LikesPage />} />
-            <Route element={<ProtectedRoute requireAuth={true} requireOwnership={true} />}>
-              <Route path="/users/:userId/manage" element={<AccountManagePage />} />
-            </Route>
-            <Route path="/tankas/:tankaId" element={<TankaPage />} />
-            <Route path="/terms-of-service" element={<TermsOfService />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-            <Route path="/cookie-policy" element={<CookiePolicy />} />
-          </Routes>
+          <div className={styles.appContainer}>
+            <div className={styles.content}>
+              <Routes>
+                <Route path="/" element={<TankaApp />} />
+                <Route path="/search" element={<SearchPage />} />
+                <Route path="/ranking" element={<RankingPage />} />
+                <Route path="/users/:userId" element={<UserPage />} />
+                <Route path="/users/:userId/likes" element={<LikesPage />} />
+                <Route element={<ProtectedRoute requireAuth={true} requireOwnership={true} />}>
+                  <Route path="/users/:userId/manage" element={<AccountManagePage />} />
+                </Route>
+                <Route path="/tankas/:tankaId" element={<TankaPage />} />
+                <Route path="/terms-of-service" element={<TermsOfService />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/cookie-policy" element={<CookiePolicy />} />
+              </Routes>
+            </div>
+            <Footer />
+          </div>
           <CookieConsentBanner />
         </Router>
       </ClerkProvider>
