@@ -40,6 +40,9 @@ export const BentoMenu = () => {
                 <ActionListItem icon={`⭢`} href="/">
                   トップページ
                 </ActionListItem>
+                <ActionListItem icon={`⭢`} href="/tips">
+                  Tips
+                </ActionListItem>
                 <ActionListItem icon={`⭢`} href="/ranking">
                   ランキング
                 </ActionListItem>
