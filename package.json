@@ -16,8 +16,8 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@types/react": "^19.1.0",
     "@cloudflare/workers-types": "^4.20250407.0",
-    "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.23.0",
