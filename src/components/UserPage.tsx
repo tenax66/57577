@@ -259,8 +259,14 @@ export const UserPage = () => {
                   </div>
                 )}
               </td>
-              <td>
-                <div className={styles.totalLikes}>総いいね数: {totalLikes}</div>
+            </tr>
+            <tr>
+              <td className={styles.infoCell}>
+                <div className={styles.totalLikes}>
+                  総いいね数
+                  <br />
+                  {totalLikes}
+                </div>
               </td>
             </tr>
           </tbody>
