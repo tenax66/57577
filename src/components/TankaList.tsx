@@ -41,7 +41,7 @@ const TankaList = ({
       ) : error ? (
         <p className={styles.error}>{error}</p>
       ) : tankas.length === 0 ? (
-        <p>まだ短歌をいいねしていません</p>
+        <p>該当なし</p>
       ) : (
         <div className={styles.tankaList}>
           {tankas.map((tanka, index) => (

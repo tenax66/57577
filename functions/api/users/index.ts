@@ -185,4 +185,37 @@ app.patch('/:clerk_id', clerkMiddleware(), async c => {
   }
 });
 
+// ユーザーの総いいね数取得API
+app.get('/:clerk_id/total-likes', async c => {
+  try {
+    const clerk_id = c.req.param('clerk_id');
+
+    // まずユーザーIDを取得
+    const { results: users } = await c.env.DB.prepare('SELECT id FROM users WHERE clerk_id = ?')
+      .bind(clerk_id)
+      .all<{ id: number }>();
+
+    if (users.length === 0) {
+      return c.json({ error: 'ユーザーが見つかりません' }, 404);
+    }
+
+    // ユーザーの投稿した短歌に対する総いいね数を取得
+    const { results: likesCount } = await c.env.DB.prepare(
+      `
+      SELECT COUNT(*) as total_likes
+      FROM likes
+      JOIN tankas ON likes.tanka_id = tankas.id
+      WHERE tankas.user_id = ?
+      `
+    )
+      .bind(users[0].id)
+      .all<{ total_likes: number }>();
+
+    return c.json({ total_likes: likesCount[0].total_likes });
+  } catch (e) {
+    console.error(e);
+    return c.json({ error: 'Internal Server Error' }, 500);
+  }
+});
+
 export default app;

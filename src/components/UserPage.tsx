@@ -40,6 +40,7 @@ export const UserPage = () => {
   const [avatarHash, setAvatarHash] = useState<string>(Date.now().toString());
   const [currentPage, setCurrentPage] = useState(1);
   const [pagination, setPagination] = useState<TankasResponse['pagination'] | null>(null);
+  const [totalLikes, setTotalLikes] = useState<number>(0);
 
   // 自分のページかどうかを判定
   const isOwnProfile = clerkUser?.id === userId;
@@ -55,6 +56,13 @@ export const UserPage = () => {
         const userData = (await userResponse.json()) as UserResponse;
         setUser(userData.user);
         setNewDisplayName(userData.user.display_name);
+
+        // 総いいね数を取得
+        const totalLikesResponse = await fetch(`/api/users/${userId}/total-likes`);
+        if (totalLikesResponse.ok) {
+          const likesData = (await totalLikesResponse.json()) as { total_likes: number };
+          setTotalLikes(likesData.total_likes);
+        }
 
         // 短歌を取得（ページネーション付き）
         const tankasResponse = await fetch(`/api/users/${userId}/tankas?page=${currentPage}`);
@@ -250,6 +258,15 @@ export const UserPage = () => {
                     </div>
                   </div>
                 )}
+              </td>
+            </tr>
+            <tr>
+              <td className={styles.infoCell}>
+                <div className={styles.totalLikes}>
+                  総いいね数
+                  <br />
+                  {totalLikes}
+                </div>
               </td>
             </tr>
           </tbody>
