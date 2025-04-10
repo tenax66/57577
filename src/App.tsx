@@ -35,6 +35,7 @@ import LikesPage from './components/LikesPage';
 import RankingPage from './components/RankingPage';
 import ActionListItem from './components/ActionListItem';
 import { HelmetProvider } from 'react-helmet-async';
+import TipsPage from './components/TipsPage';
 
 type APIResponse = {
   tankas: TankaWithLikes[];
@@ -63,6 +64,7 @@ const App = () => {
                 <Route path="/terms-of-service" element={<TermsOfService />} />
                 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                 <Route path="/cookie-policy" element={<CookiePolicy />} />
+                <Route path="/tips" element={<TipsPage />} />
               </Routes>
             </div>
             <Footer />
