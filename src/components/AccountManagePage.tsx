@@ -2,7 +2,7 @@ import { useUser, useClerk } from '@clerk/clerk-react';
 import { useState, useEffect } from 'react';
 import { useParams, Navigate } from 'react-router-dom';
 import styles from './AccountManagePage.module.scss';
-import { Header } from './Header/Header';
+
 import Button from './Button';
 import Card from './Card';
 import BlockLoader from './BlockLoader';
@@ -33,7 +33,6 @@ export const AccountManagePage = () => {
 
   return (
     <div className={styles.container}>
-      <Header />
       <main className={styles.main}>
         <h1 className={styles.title}>アカウント管理</h1>
 

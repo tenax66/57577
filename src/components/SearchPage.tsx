@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styles from './SearchPage.module.scss';
-import { Header } from './Header/Header';
+
 import Card from './Card';
 import Button from './Button';
 import TankaList from './TankaList';
@@ -63,7 +63,6 @@ export const SearchPage = () => {
 
   return (
     <div className={styles.container}>
-      <Header />
       <Card title="検索">
         <form onSubmit={handleSearch} className={styles.searchForm}>
           <input

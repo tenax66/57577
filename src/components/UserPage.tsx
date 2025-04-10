@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import type { TankaWithLikes, TankasResponse } from '../types/types';
 import styles from './UserPage.module.scss';
-import { Header } from './Header/Header';
+
 import BlockLoader from './BlockLoader';
 import ActionButton from './ActionButton';
 import ActionListItem from './ActionListItem';
@@ -168,7 +168,6 @@ export const UserPage = () => {
   if (!userId)
     return (
       <div className={styles.container}>
-        <Header />
         <div>ユーザーが見つかりません</div>
       </div>
     );
@@ -176,7 +175,6 @@ export const UserPage = () => {
   if (isLoading)
     return (
       <div className={styles.container}>
-        <Header />
         <p>
           Loading <BlockLoader mode={6} />
         </p>
@@ -186,14 +184,12 @@ export const UserPage = () => {
   if (!user)
     return (
       <div className={styles.container}>
-        <Header />
         <div>ユーザーが見つかりません</div>
       </div>
     );
 
   return (
     <div className={styles.container}>
-      <Header />
       <div>
         <table className={styles.profileTable}>
           <tbody>

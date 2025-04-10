@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Header } from './Header/Header';
+
 import styles from './RankingPage.module.scss';
 import Card from './Card';
 import TankaList from './TankaList';
@@ -66,7 +66,6 @@ const RankingPage = () => {
 
   return (
     <div className={styles.rankingPage}>
-      <Header />
       <main>
         <Card title="ランキング" style={{ padding: '0.5rem', marginTop: '1.5rem' }}>
           <div className={styles.periodSelector}>

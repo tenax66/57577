@@ -45,31 +45,32 @@ const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 const App = () => {
   return (
-      <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY} localization={jaJP}>
-        <Router>
-          <div className={styles.appContainer}>
-            <div className={styles.content}>
-              <Routes>
-                <Route path="/" element={<TankaApp />} />
-                <Route path="/search" element={<SearchPage />} />
-                <Route path="/ranking" element={<RankingPage />} />
-                <Route path="/users/:userId" element={<UserPage />} />
-                <Route path="/users/:userId/likes" element={<LikesPage />} />
-                <Route element={<ProtectedRoute requireAuth={true} requireOwnership={true} />}>
-                  <Route path="/users/:userId/manage" element={<AccountManagePage />} />
-                </Route>
-                <Route path="/tankas/:tankaId" element={<TankaPage />} />
-                <Route path="/terms-of-service" element={<TermsOfService />} />
-                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                <Route path="/cookie-policy" element={<CookiePolicy />} />
-                <Route path="/tips" element={<TipsPage />} />
-              </Routes>
-            </div>
-            <Footer />
+    <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY} localization={jaJP}>
+      <Router>
+        <div className={styles.appContainer}>
+          <Header />
+          <div className={styles.content}>
+            <Routes>
+              <Route path="/" element={<TankaApp />} />
+              <Route path="/search" element={<SearchPage />} />
+              <Route path="/ranking" element={<RankingPage />} />
+              <Route path="/users/:userId" element={<UserPage />} />
+              <Route path="/users/:userId/likes" element={<LikesPage />} />
+              <Route element={<ProtectedRoute requireAuth={true} requireOwnership={true} />}>
+                <Route path="/users/:userId/manage" element={<AccountManagePage />} />
+              </Route>
+              <Route path="/tankas/:tankaId" element={<TankaPage />} />
+              <Route path="/terms-of-service" element={<TermsOfService />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/cookie-policy" element={<CookiePolicy />} />
+              <Route path="/tips" element={<TipsPage />} />
+            </Routes>
           </div>
-          <CookieConsentBanner />
-        </Router>
-      </ClerkProvider>
+          <Footer />
+        </div>
+        <CookieConsentBanner />
+      </Router>
+    </ClerkProvider>
   );
 };
 
@@ -143,7 +144,6 @@ const TankaApp = () => {
 
   return (
     <div className={styles.container}>
-      <Header />
       <Grid>
         <Row>
           <TextArea

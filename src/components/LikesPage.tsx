@@ -4,7 +4,6 @@ import { useUser } from '@clerk/clerk-react';
 import TankaList from './TankaList';
 import type { TankaWithLikes } from '../types/types';
 import styles from './LikesPage.module.scss';
-import { Header } from './Header/Header';
 
 type PaginationData = {
   current_page: number;
@@ -75,7 +74,6 @@ const LikesPage = () => {
 
   return (
     <div className={styles.likesPage}>
-      <Header />
       <h1 className={styles.pageTitle}>{userName}がいいねした短歌</h1>
       <TankaList
         tankas={tankas}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import type { TankaWithLikes } from '../types/types';
-import { Header } from './Header/Header';
+
 import styles from './TankaPage.module.scss';
 import { LikeButton } from './LikeButton';
 import { useUser } from '@clerk/clerk-react';
@@ -121,7 +121,6 @@ export const TankaPage = () => {
   if (!tankaId)
     return (
       <div className={styles.container}>
-        <Header />
         <div>短歌が見つかりません</div>
       </div>
     );
@@ -129,7 +128,6 @@ export const TankaPage = () => {
   if (isLoading)
     return (
       <div className={styles.container}>
-        <Header />
         <p>
           Loading <BlockLoader mode={6} />
         </p>
@@ -139,14 +137,12 @@ export const TankaPage = () => {
   if (!tanka)
     return (
       <div className={styles.container}>
-        <Header />
         <div>短歌が見つかりません</div>
       </div>
     );
 
   return (
     <div className={styles.container}>
-      <Header />
       <div className={`${styles.cardContainer} ${styles[displayMode]}`}>
         <div className={styles.displayModeSelector}>
           <Select
