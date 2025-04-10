@@ -10,7 +10,7 @@ export const TipsPage: React.FC = () => {
     <div className={styles.container}>
       <Card title="Tips & FAQ" style={{ marginTop: 0 }}>
         <Message>
-          各短歌のページで短歌が縦書きになったとき、数字や記号が90°回転した状態で表示されてしまいます。
+          個別ページで短歌が縦書きになったとき、数字や記号が90°回転した状態で表示されてしまいます。
         </Message>
         <MessageViewer>
           数字や記号を縦中横で表示したい場合は、全角数字で入力してみてください。
