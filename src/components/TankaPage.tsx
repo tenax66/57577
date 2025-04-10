@@ -10,7 +10,6 @@ import DeleteButton from './DeleteButton';
 import Card from './Card';
 import ButtonGroup from './ButtonGroup';
 import Select from './Select';
-import { Helmet } from 'react-helmet-async';
 
 type APIResponse = {
   tanka: TankaWithLikes;
@@ -148,17 +147,6 @@ export const TankaPage = () => {
   return (
     <div className={styles.container}>
       <Header />
-      {tanka && (
-        <Helmet>
-          <title>{tanka.content.substring(0, 30)}... - 57577.net</title>
-          <meta property="og:title" content={`${tanka.content.substring(0, 30)}... - 57577.net`} />
-          <meta property="og:description" content={tanka.content} />
-          <meta property="og:url" content={`https://57577.net/tankas/${tankaId}`} />
-          <meta property="og:type" content="article" />
-          <meta name="twitter:title" content={`${tanka.content.substring(0, 30)}... - 57577.net`} />
-          <meta name="twitter:description" content={tanka.content} />
-        </Helmet>
-      )}
       <div className={`${styles.cardContainer} ${styles[displayMode]}`}>
         <div className={styles.displayModeSelector}>
           <Select

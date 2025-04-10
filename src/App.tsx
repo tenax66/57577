@@ -34,7 +34,6 @@ import UserAvatar from './components/UserAvatar';
 import LikesPage from './components/LikesPage';
 import RankingPage from './components/RankingPage';
 import ActionListItem from './components/ActionListItem';
-import { HelmetProvider } from 'react-helmet-async';
 import TipsPage from './components/TipsPage';
 
 type APIResponse = {
@@ -46,7 +45,6 @@ const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 const App = () => {
   return (
-    <HelmetProvider>
       <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY} localization={jaJP}>
         <Router>
           <div className={styles.appContainer}>
@@ -72,7 +70,6 @@ const App = () => {
           <CookieConsentBanner />
         </Router>
       </ClerkProvider>
-    </HelmetProvider>
   );
 };
 
