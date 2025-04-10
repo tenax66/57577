@@ -1,61 +1,6 @@
-.faqContainer {
-  max-width: 800px;
+.container {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 0.5rem;
+  margin-top: 64px; // ヘッダーの高さ分のマージン
 }
-
-.faqTitle {
-  font-size: 2rem;
-  text-align: center;
-  margin-bottom: 2rem;
-  color: #333;
-}
-
-.faqList {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.faqItem {
-  background-color: #fff;
-  border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
-
-  &:hover {
-    transform: translateY(-3px);
-  }
-}
-
-.question {
-  font-size: 1.2rem;
-  color: #333;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-}
-
-.answer {
-  font-size: 1rem;
-  color: #555;
-  line-height: 1.6;
-}
-
-@media (max-width: 768px) {
-  .faqContainer {
-    padding: 1rem;
-  }
-  
-  .faqTitle {
-    font-size: 1.5rem;
-  }
-  
-  .faqItem {
-    padding: 1rem;
-  }
-  
-  .question {
-    font-size: 1.1rem;
-  }
-} 

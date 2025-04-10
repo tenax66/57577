@@ -40,14 +40,14 @@ export const BentoMenu = () => {
                 <ActionListItem icon={`⭢`} href="/">
                   トップページ
                 </ActionListItem>
-                <ActionListItem icon={`⭢`} href="/tips">
-                  Tips
-                </ActionListItem>
                 <ActionListItem icon={`⭢`} href="/ranking">
                   ランキング
                 </ActionListItem>
                 <ActionListItem icon={`⭢`} href="/search">
                   検索
+                </ActionListItem>
+                <ActionListItem icon={`⭢`} href="/tips">
+                  Tips & FAQ
                 </ActionListItem>
                 <ActionListItem icon={`⭡`} href="https://tanka.cc">
                   FLATLINE
