@@ -49,7 +49,7 @@ export const BentoMenu = () => {
                 <ActionListItem icon={`⭢`} href="/tips">
                   Tips & FAQ
                 </ActionListItem>
-                <ActionListItem icon={`⭡`} href="https://tanka.cc">
+                <ActionListItem icon={`⭠`} href="https://tanka.cc">
                   FLATLINE
                 </ActionListItem>
                 <ActionListItem icon={`⊹`} href="/terms-of-service">
