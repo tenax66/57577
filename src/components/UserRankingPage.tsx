@@ -103,7 +103,7 @@ const UserRankingPage = () => {
               {users.map((user, index) => (
                 <div key={user.clerk_id} className={styles.userCard}>
                   <div className={styles.rankBadge}>
-                    {currentPage === 1 ? index + 1 : (currentPage - 1) * 10 + index + 1}
+                    {currentPage === 1 ? index + 1 : (currentPage - 1) * 10 + index + 1}. 
                   </div>
                   <div className={styles.userInfo}>
                       <a href={`/users/${user.clerk_id}`} className={styles.userProfile}>
