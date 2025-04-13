@@ -1,5 +1,10 @@
 # 57577
 
+## License
+
+The source code to display the content is distributed under the MIT License.  
+The license does not apply to the content itself.
+
 ## Getting Started
 
 ```bash
