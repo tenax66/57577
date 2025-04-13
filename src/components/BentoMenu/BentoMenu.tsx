@@ -43,6 +43,9 @@ export const BentoMenu = () => {
                 <ActionListItem icon={`⭢`} href="/ranking">
                   短歌ランキング
                 </ActionListItem>
+                <ActionListItem icon={`⭢`} href="/user-ranking">
+                  ユーザランキング
+                </ActionListItem>
                 <ActionListItem icon={`⭢`} href="/search">
                   検索
                 </ActionListItem>
