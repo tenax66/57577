@@ -5,12 +5,13 @@ import Card from './Card';
 import Select from '../components/Select';
 import BlockLoader from './BlockLoader';
 import Button from './Button';
-import UserAvatar from './UserAvatar';
+import Avatar from './Avatar';
 
 type UserWithLikes = {
   id: number;
   clerk_id: string;
   display_name: string;
+  avatar_url: string | null;
   total_likes: number;
 };
 
@@ -105,15 +106,18 @@ const UserRankingPage = () => {
                     {currentPage === 1 ? index + 1 : (currentPage - 1) * 10 + index + 1}
                   </div>
                   <div className={styles.userInfo}>
-                    <Link to={`/users/${user.clerk_id}`} className={styles.avatarLink}>
-                      <UserAvatar clerkId={user.clerk_id} />
-                    </Link>
+                      <a href={`/users/${user.clerk_id}`} className={styles.userProfile}>
+                        <Avatar
+                          src={user.avatar_url || ''}
+                          style={{ width: '2.5rem', height: '2.5rem' }}
+                        ></Avatar>
+                      </a>
                     <div className={styles.userDetails}>
                       <Link to={`/users/${user.clerk_id}`} className={styles.userName}>
                         {user.display_name}
                       </Link>
                       <div className={styles.likesCount}>
-                        <span className={styles.likesIcon}>♥</span>
+                        <span>総いいね数 </span>
                         <span>{user.total_likes}</span>
                       </div>
                     </div>
@@ -140,4 +144,4 @@ const UserRankingPage = () => {
   );
 };
 
-export default UserRankingPage; 
+export default UserRankingPage;

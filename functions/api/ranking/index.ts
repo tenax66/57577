@@ -64,7 +64,7 @@ app.get('/', async c => {
       LIMIT ? OFFSET ?
     `
     )
-      .bind(...(dbUserId ? [dbUserId, per_page +1, offset] : [per_page +1, offset]))
+      .bind(...(dbUserId ? [dbUserId, per_page + 1, offset] : [per_page + 1, offset]))
       .all<TankaWithLikes>();
 
     const hasNextPage = results.length > per_page;
@@ -123,6 +123,7 @@ app.get('/users', async c => {
         u.id,
         u.clerk_id,
         u.display_name,
+        u.avatar_url,
         COUNT(l.id) as total_likes
       FROM users u
       JOIN tankas t ON u.id = t.user_id
@@ -153,4 +154,4 @@ app.get('/users', async c => {
   }
 });
 
-export default app; 
+export default app;
