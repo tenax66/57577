@@ -67,7 +67,7 @@ const RankingPage = () => {
   return (
     <div className={styles.rankingPage}>
       <main>
-        <Card title="ランキング" style={{ padding: '0.5rem', marginTop: '1.5rem' }}>
+        <Card title="短歌ランキング" style={{ padding: '0.5rem', marginTop: '1.5rem' }}>
           <div className={styles.periodSelector}>
             <Select
               name="period-select"
