@@ -35,6 +35,7 @@ import LikesPage from './components/LikesPage';
 import RankingPage from './components/RankingPage';
 import ActionListItem from './components/ActionListItem';
 import TipsPage from './components/TipsPage';
+import UserRankingPage from './components/UserRankingPage';
 
 type APIResponse = {
   tankas: TankaWithLikes[];
@@ -54,6 +55,7 @@ const App = () => {
               <Route path="/" element={<TankaApp />} />
               <Route path="/search" element={<SearchPage />} />
               <Route path="/ranking" element={<RankingPage />} />
+              <Route path="/user-ranking" element={<UserRankingPage />} />
               <Route path="/users/:userId" element={<UserPage />} />
               <Route path="/users/:userId/likes" element={<LikesPage />} />
               <Route element={<ProtectedRoute requireAuth={true} requireOwnership={true} />}>
@@ -171,6 +173,9 @@ const TankaApp = () => {
       <div className={styles.actionList}>
         <ActionListItem icon={`⭢`} href="/ranking">
           短歌ランキング
+        </ActionListItem>
+        <ActionListItem icon={`⭢`} href="/user-ranking">
+          ユーザランキング
         </ActionListItem>
         <ActionListItem icon={`⭢`} href="/search">
           検索

@@ -64,7 +64,7 @@ app.get('/', async c => {
       LIMIT ? OFFSET ?
     `
     )
-      .bind(...(dbUserId ? [dbUserId, per_page +1, offset] : [per_page +1, offset]))
+      .bind(...(dbUserId ? [dbUserId, per_page + 1, offset] : [per_page + 1, offset]))
       .all<TankaWithLikes>();
 
     const hasNextPage = results.length > per_page;
@@ -83,4 +83,75 @@ app.get('/', async c => {
   }
 });
 
-export default app; 
+type UserWithLikes = {
+  id: number;
+  clerk_id: string;
+  display_name: string;
+  total_likes: number;
+};
+
+app.get('/users', async c => {
+  try {
+    const page = parseInt(c.req.query('page') || '1');
+    const per_page = 10;
+    const offset = (page - 1) * per_page;
+    const period = c.req.query('period') || 'all'; // all, week, month
+
+    // 期間に応じたWHERE句を設定
+    let whereClause = '';
+    if (period === 'week') {
+      whereClause = 'WHERE l.created_at >= datetime("now", "-7 days")';
+    } else if (period === 'month') {
+      whereClause = 'WHERE l.created_at >= datetime("now", "-30 days")';
+    }
+
+    // ユーザーの総数を取得
+    const { results: countResult } = await c.env.DB.prepare(
+      `SELECT COUNT(DISTINCT u.id) as count 
+       FROM users u 
+       JOIN tankas t ON u.id = t.user_id
+       JOIN likes l ON t.id = l.tanka_id
+       ${whereClause}`
+    ).all<{ count: number }>();
+
+    const total = countResult[0].count;
+
+    // いいね数でランキングされたユーザーを取得
+    const { results } = await c.env.DB.prepare(
+      `
+      SELECT
+        u.id,
+        u.clerk_id,
+        u.display_name,
+        u.avatar_url,
+        COUNT(l.id) as total_likes
+      FROM users u
+      JOIN tankas t ON u.id = t.user_id
+      JOIN likes l ON t.id = l.tanka_id
+      ${whereClause}
+      GROUP BY u.id
+      HAVING total_likes > 0
+      ORDER BY total_likes DESC, u.created_at ASC
+      LIMIT ? OFFSET ?
+    `
+    )
+      .bind(per_page + 1, offset)
+      .all<UserWithLikes>();
+
+    const hasNextPage = results.length > per_page;
+    const users = results.slice(0, per_page);
+
+    return c.json({
+      users: users,
+      pagination: {
+        current_page: page,
+        has_next: hasNextPage,
+      },
+    });
+  } catch (e) {
+    console.error(e);
+    return c.json({ error: 'Internal Server Error' }, 500);
+  }
+});
+
+export default app;
