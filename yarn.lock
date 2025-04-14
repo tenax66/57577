@@ -174,14 +174,14 @@
     snakecase-keys "8.0.1"
     tslib "2.8.1"
 
-"@clerk/clerk-react@^5.24.2":
-  version "5.24.2"
-  resolved "https://registry.yarnpkg.com/@clerk/clerk-react/-/clerk-react-5.24.2.tgz#e5e147cd8a1402e4c6bb2515c9f39abadbb9a738"
-  integrity sha512-gWYhuC8K4GOw+jtYEEs4y7ypT6W6Pk3SkxPwW8GXtrBvqGyJKapq+d2EHFYMZvQCnFKAW4hE+nsTyy7NqP9RJg==
+"@clerk/clerk-react@^5.27.0":
+  version "5.27.0"
+  resolved "https://registry.yarnpkg.com/@clerk/clerk-react/-/clerk-react-5.27.0.tgz#4b8850baa1a5418e529ee00ed36a75e42170808e"
+  integrity sha512-OD6ZYREAtlxVLUgGJu1S6A6kUzXKo9VX+x5ZlGWjdPqfxXdrlFx7n8WqgJKREOGV8f20DcuphNCnBdLzbRCvHg==
   dependencies:
-    "@clerk/shared" "^3.0.1"
-    "@clerk/types" "^4.48.0"
-    tslib "2.4.1"
+    "@clerk/shared" "^3.6.0"
+    "@clerk/types" "^4.53.0"
+    tslib "2.8.1"
 
 "@clerk/localizations@^3.13.4":
   version "3.13.4"
@@ -190,22 +190,22 @@
   dependencies:
     "@clerk/types" "^4.50.1"
 
-"@clerk/shared@^3.0.1", "@clerk/shared@^3.3.0":
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/@clerk/shared/-/shared-3.3.0.tgz#fa7b47f13eddc5754995d7a655f8b03e090dd85d"
-  integrity sha512-hO1M5aRMzJVqkw6lWJ7NFVG5hWEnTZBUZGeHMYRwSPQzQNsgqsRMvpmaJO0Y2o0HNk50PpwZHaiFHcghUpfMiw==
+"@clerk/shared@^3.3.0", "@clerk/shared@^3.6.0":
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/@clerk/shared/-/shared-3.6.0.tgz#ed20ac8d5b61dfa2b314990b42b8a4a4ab66afd2"
+  integrity sha512-rAbXmwXTgexye+og4iFyfyzve3is5TQL03n5k0K3qEbH7TjxUx5MbHpdTg1zRhNvrzwxpxJmcduoOuyQh1W9DA==
   dependencies:
-    "@clerk/types" "^4.50.2"
+    "@clerk/types" "^4.53.0"
     dequal "2.0.3"
     glob-to-regexp "0.4.1"
     js-cookie "3.0.5"
     std-env "^3.8.1"
     swr "^2.3.3"
 
-"@clerk/types@^4.48.0", "@clerk/types@^4.50.1", "@clerk/types@^4.50.2", "@clerk/types@^4.52.0":
-  version "4.52.0"
-  resolved "https://registry.yarnpkg.com/@clerk/types/-/types-4.52.0.tgz#63de1be0cf51e29274f5147eff259237467fe97b"
-  integrity sha512-6cMEhvYYT5K471LmbFzfhThnDmScQULGsOIq9Yefj/IZ3yVPIKbk2HvljrNmoVrEBDqZ5xNTV2IiMH/4JubxqQ==
+"@clerk/types@^4.50.1", "@clerk/types@^4.50.2", "@clerk/types@^4.52.0", "@clerk/types@^4.53.0":
+  version "4.53.0"
+  resolved "https://registry.yarnpkg.com/@clerk/types/-/types-4.53.0.tgz#7846f4fd4c695e1aa4eea11f2e3d43004df11a18"
+  integrity sha512-MkJckVDQtxPK9WTbPZugsqO5dbatiX1uCtSdu4b16OKtt0adZSXX72RKQLKdRfcP/eIbijruBMrGIuZR9qLEeQ==
   dependencies:
     csstype "3.1.3"
 
@@ -2801,11 +2801,6 @@ trough@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/trough/-/trough-2.2.0.tgz#94a60bd6bd375c152c1df911a4b11d5b0256f50f"
   integrity sha512-tmMpK00BjZiUyVyvrBK7knerNgmgvcV/KLVyuma/SC+TQN167GrMRciANTz09+k3zW8L8t60jWO1GpfkZdjTaw==
-
-tslib@2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.1.tgz#0d0bfbaac2880b91e22df0768e55be9753a5b17e"
-  integrity sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==
 
 tslib@2.8.1, tslib@^2.0.3, tslib@^2.4.0:
   version "2.8.1"
