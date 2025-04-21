@@ -40,6 +40,6 @@
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.4.1",
     "sass": "^1.86.3",
-    "svix": "^1.64.0"
+    "svix": "^1.64.1"
   }
 }
