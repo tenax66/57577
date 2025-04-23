@@ -2760,10 +2760,10 @@ svix-fetch@^3.0.0:
     node-fetch "^2.6.1"
     whatwg-fetch "^3.4.1"
 
-svix@^1.64.0:
-  version "1.64.0"
-  resolved "https://registry.yarnpkg.com/svix/-/svix-1.64.0.tgz#bc3cfb1c6fc46d8047723d1bcd325ac659cc675e"
-  integrity sha512-qY77OJIvo4HnxLP+ayMY/SOxRCyOIxl9K/Vws0hIMkIfmR15Tr+1jIlCXFJkK/O/9q4qvJUwHvqy3yimHh/RPg==
+svix@^1.64.1:
+  version "1.64.1"
+  resolved "https://registry.yarnpkg.com/svix/-/svix-1.64.1.tgz#26658ac859361900e72dc86ec9399a2f913ca2bf"
+  integrity sha512-9qq8h7Ex6IjtaDiuq93tL4/YfnV431/e1ieVfkwVaiyVbLUuOfScgary1a+uGygdbqARj9ye/yO+kBun7oCnbA==
   dependencies:
     "@stablelib/base64" "^1.0.0"
     "@types/node" "^22.7.5"
