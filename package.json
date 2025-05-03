@@ -21,7 +21,7 @@
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.23.0",
-    "eslint-config-prettier": "^10.1.1",
+    "eslint-config-prettier": "^10.1.2",
     "prettier": "^3.5.3",
     "rollup-plugin-visualizer": "^5.14.0",
     "wrangler": "^4.13.2",
