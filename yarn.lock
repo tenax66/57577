@@ -202,10 +202,10 @@
     std-env "^3.8.1"
     swr "^2.3.3"
 
-"@clerk/types@^4.50.1", "@clerk/types@^4.50.2", "@clerk/types@^4.54.2", "@clerk/types@^4.55.1":
-  version "4.55.1"
-  resolved "https://registry.yarnpkg.com/@clerk/types/-/types-4.55.1.tgz#6b0c78695feea9e92f37ce873b7642d1e495c2a5"
-  integrity sha512-BS/shDMWfQ7M8Jlms/RJFH20N8cK1EfAWKTpiIiICFi5e/5H0gpaaWx277x341GQz4gZzVDPGdF+EhoknYOrWQ==
+"@clerk/types@^4.50.1", "@clerk/types@^4.50.2", "@clerk/types@^4.54.2", "@clerk/types@^4.58.0":
+  version "4.58.0"
+  resolved "https://registry.yarnpkg.com/@clerk/types/-/types-4.58.0.tgz#43e1ba2260596d8706132f81162bf5c53a4e4b54"
+  integrity sha512-P30Vnqaw2UzoSZivNG61NvF9WiAVbKItOvkVJzUbwqDkISdmNOio8mWCeFuKq+bxjPESvS+S615Uplm7dl6jpg==
   dependencies:
     csstype "3.1.3"
 
