@@ -183,12 +183,12 @@
     "@clerk/types" "^4.54.2"
     tslib "2.8.1"
 
-"@clerk/localizations@^3.13.4":
-  version "3.13.4"
-  resolved "https://registry.yarnpkg.com/@clerk/localizations/-/localizations-3.13.4.tgz#46e99b18b4d84bc00f8abcaf24d2e4fd0a65d91e"
-  integrity sha512-E4GQuy0yosdWCIrD59EYc7MbbiMBAzdEQ0+GK0LIGVVy09vZefkBf4+dCSxHMsMZsUyRwTrc3Gsv+DdrSP4sOQ==
+"@clerk/localizations@^3.16.3":
+  version "3.16.3"
+  resolved "https://registry.yarnpkg.com/@clerk/localizations/-/localizations-3.16.3.tgz#21012ee2e04cbec06e0e22939e93f472a04240f2"
+  integrity sha512-vbEsitmvBWTfY4PrJdVVYa9MgQddDWBnIarlEGwn61I5I9BjRJsZXG/s/JS4x2pEM4LDrFE7z4p43646NDwYrA==
   dependencies:
-    "@clerk/types" "^4.50.1"
+    "@clerk/types" "^4.59.3"
 
 "@clerk/shared@^3.3.0", "@clerk/shared@^3.7.2":
   version "3.7.2"
@@ -202,10 +202,10 @@
     std-env "^3.8.1"
     swr "^2.3.3"
 
-"@clerk/types@^4.50.1", "@clerk/types@^4.50.2", "@clerk/types@^4.54.2", "@clerk/types@^4.55.1":
-  version "4.55.1"
-  resolved "https://registry.yarnpkg.com/@clerk/types/-/types-4.55.1.tgz#6b0c78695feea9e92f37ce873b7642d1e495c2a5"
-  integrity sha512-BS/shDMWfQ7M8Jlms/RJFH20N8cK1EfAWKTpiIiICFi5e/5H0gpaaWx277x341GQz4gZzVDPGdF+EhoknYOrWQ==
+"@clerk/types@^4.50.2", "@clerk/types@^4.54.2", "@clerk/types@^4.55.1", "@clerk/types@^4.59.3":
+  version "4.59.3"
+  resolved "https://registry.yarnpkg.com/@clerk/types/-/types-4.59.3.tgz#2aea47c1a57c4f1c29035694d675f6de2206cc13"
+  integrity sha512-xwOO/hfABzbFr3f1RaVXHsDDQ0+jYpm84GiaUDxo+mLsYUgD9f2GmGjKkgWybXzvsBsgZlycSwRXkeDD6utFqg==
   dependencies:
     csstype "3.1.3"
 
